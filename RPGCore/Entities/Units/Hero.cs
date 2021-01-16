@@ -19,10 +19,10 @@ namespace RPGCore.Entities
         /// Мешок. Эффект от предметов, находящихся в нем не учитывается.
         /// </summary>
         public Inventory Bag = new Inventory() { Limited = false };
-        public int XP, SkillPoints = 1;
-        public static int BaseLevelXP = 10;
-        public static double PerLevelXPMult = 1.5;
-        public static double PerLevelStep = 5;
+        public int XP = 0;
+        public int SkillPoints = 1;
+        public static int XpPerLevel = 1000;
+
 
 
         public Hero()
@@ -38,10 +38,23 @@ namespace RPGCore.Entities
         /// <returns>Возвращает количество опыта, требуемого для достижения следующего уровня</returns>
         public int ToNextLevel()
         {
-            return LevelXP(Level + 1);
+            return LevelXP(Level + 1)-XP;
         }
 
 
+
+        public void AddXP(int xp)
+		{
+            XP += xp;
+			if (LevelForXp(XP)>Level)
+			{
+                int levels = LevelForXp(XP) - Level;
+				for (int i = 1; i<=levels; )
+				{
+                    LevelUp();
+				}
+			}
+		}
 
 
         /// <summary>
@@ -51,20 +64,7 @@ namespace RPGCore.Entities
         /// <returns></returns>
         public int LevelXP(int level)
         {
-            level = Math.Max(level, 1);
-            int currentXP = BaseLevelXP;
-
-            if (level == 1)
-            {
-                return currentXP;
-            }
-
-            for (int i = 1; i <= level; i++)
-            {
-                currentXP += (int)(PerLevelStep * (i));
-            }
-
-            return currentXP;
+            return XpPerLevel * (level - 1);
 
         }
 
@@ -76,20 +76,9 @@ namespace RPGCore.Entities
         /// </summary>
         /// <param name="xp">Требуемый опыт</param>
         /// <returns></returns>
-        public int XPLevel(int xp)
+        public int LevelForXp(int xp)
         {
-            bool got = false;
-            int level = 1;
-
-            while (!got || level < 200)
-            {
-                if (LevelXP(level) > xp)
-                {
-                    return level - 1;
-                }
-
-            }
-            return 200;
+            return (int)Math.Floor((double)xp / XpPerLevel)+1;
         }
 
         public virtual void LevelUp()

@@ -39,5 +39,29 @@ namespace RPGCore.Events
 
 	}
 
+	public class HeroLevelUpEventArgs : EventArgs
+	{
+
+	}
+
+	public class HeroRessurectedEventArgs : EventArgs
+	{
+
+	}
+
+	public class UnitCastingSpellEventArgs : EventArgs
+	{
+
+	}
+
+	public class HeroSoldItemEventArgs : EventArgs
+	{
+
+	}
+
+	public class HeroBoughtItemEventArgs : EventArgs
+	{
+
+	}
 
 }

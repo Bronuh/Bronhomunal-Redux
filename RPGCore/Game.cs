@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace RPGCore
 {
+    [Serializable]
     public class Game
     {
         public static World World = new World();
@@ -21,5 +22,15 @@ namespace RPGCore
             
         }
 
+
+        public static void Load()
+		{
+
+		}
+
+        public static void Save()
+		{
+
+		}
     }
 }

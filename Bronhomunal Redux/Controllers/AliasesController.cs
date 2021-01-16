@@ -9,7 +9,7 @@ namespace Bronuh
 {
 	public class AliasesController
 	{
-		public static Sequence<Alias> Aliases = new Sequence<Alias>();
+		public static Sequence<Alias> Aliases { get; private set; } = new Sequence<Alias>();
 
 		public static void Load()
 		{

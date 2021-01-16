@@ -8,8 +8,8 @@ namespace Bronuh.Libs
 {
     public class Wastificator
     {
-        public static Random Rnd = new Random();
-        public static bool Initialized { get; private set; } = false;
+        private static Random Rnd = new Random();
+        private static bool Initialized = false;
 
 
         public static string Wastificate(String Arg)
@@ -121,12 +121,12 @@ namespace Bronuh.Libs
             return Arg;
         }
 
-        public static bool prob(double Prob)
+        internal static bool prob(double Prob)
         {
             return (Rnd.NextDouble() <= Prob);
         }
 
-        public static void Initialize()
+        private static void Initialize()
         {
             new Word("БЛЕНДЕР", "БЛЗНДЗР", 1);
             new Word("ЖЕНЩИНА", "САРДУЛЬКА", 0.5);

@@ -12,7 +12,7 @@ namespace Bronuh
 	
 	public static class MembersController
 	{
-		public static Sequence<Member> Members = new Sequence<Member>();
+		public static Sequence<Member> Members { get; private set; } = new Sequence<Member>();
 		
 
 

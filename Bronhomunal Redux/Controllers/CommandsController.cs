@@ -10,7 +10,7 @@ namespace Bronuh
 {
 	public static class CommandsController
 	{
-		public static List<Command> Commands = new List<Command>();
+		public static List<Command> Commands { get; private set; } = new List<Command>();
 
 		public static Command AddCommand(string name, CommandAction action)
 		{

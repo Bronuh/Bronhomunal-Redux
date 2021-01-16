@@ -13,12 +13,12 @@ namespace Bronuh.Types
 
 	public class Command
 	{
-		public string Name;
-		public string Description;
+		public string Name { get; private set; }
+		public string Description { get; private set; }
 		private CommandAction _action;
-		public int Rank = 0;
-		public List<string> Aliases = new List<string>();
-		public bool OpOnly = false;
+		public int Rank { get; private set; } = 0;
+		public List<string> Aliases { get; private set; } = new List<string>();
+		public bool OpOnly { get; private set; } = false;
 
 		public Command() { }
 		public Command(string name, CommandAction action) {

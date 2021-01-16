@@ -29,7 +29,8 @@ namespace Bronuh.Events
 
 		private static async Task MessageCreateEventHandler(MessageCreateEventArgs e)
 		{
-			
+			e.Message.Author.ToMember().XP++;
+
 			if (e.Message.Content.StartsWith(Settings.GetSign()))
 			{
 				await CommandsController.TryExecuteCommand(e);

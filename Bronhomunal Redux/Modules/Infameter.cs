@@ -10,7 +10,8 @@ namespace Bronuh.Modules
 	class Infameter
 	{
 
-		public static Sequence<Infa> Infos = new Sequence<Infa>();
+		private static Sequence<Infa> Infos = new Sequence<Infa>();
+        private static bool _initialized = false;
 
 		public static void Load()
 		{
@@ -28,6 +29,11 @@ namespace Bronuh.Modules
 
         public static Infa FindInfo(String search)
         {
+            if (!_initialized)
+            {
+                Load();
+                _initialized = true;
+            }
             Infa found = null;
             foreach (Infa infa in Infos)
             {
@@ -50,5 +56,18 @@ namespace Bronuh.Modules
             return found;
         }
 
+    }
+
+    [Serializable]
+    public class Infa
+    {
+        public string Text;
+        public double Value;
+
+        public static Infa CheckInfo(String infa)
+        {
+            String text = infa.ToLower().Replace("?", "").Replace("!", "").Replace(".", "").Replace("ё", "е").Trim().Replace("   ", "").Replace("  ", " ");
+            return Modules.Infameter.FindInfo(infa);
+        }
     }
 }

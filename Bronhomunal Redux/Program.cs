@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Bronuh.Events;
+using Bronuh.Modules;
 using Bronuh.Types;
 using DSharpPlus;
 using DSharpPlus.Entities;
@@ -41,6 +42,7 @@ namespace Bronuh
 			MembersController.Save();
 			AliasesController.Save();
 			Settings.Save();
+			Infameter.Save();
 		}
 
 

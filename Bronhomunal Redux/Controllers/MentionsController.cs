@@ -10,7 +10,9 @@ namespace Bronuh.Controllers
 	public class MentionsController
 	{
         private static bool _initialized = false;
-        public static List<Mention> Mentions = new List<Mention>();
+        public static List<Mention> Mentions { get; private set; } = new List<Mention>();
+
+
         public static async Task<bool> Execute(MessageCreateEventArgs e)
         {
 			if (!_initialized)
