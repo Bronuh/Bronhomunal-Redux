@@ -12,9 +12,11 @@ namespace Bronuh
 	{
 		public static List<Command> Commands = new List<Command>();
 
-		public static void AddCommand(string name, CommandAction action)
+		public static Command AddCommand(string name, CommandAction action)
 		{
-			Commands.Add(new Command(name, action));
+			Command command = new Command(name, action);
+			Commands.Add(command);
+			return command;
 		}
 
 

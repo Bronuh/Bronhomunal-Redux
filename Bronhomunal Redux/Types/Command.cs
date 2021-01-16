@@ -18,6 +18,7 @@ namespace Bronuh.Types
 		private CommandAction _action;
 		public int Rank = 0;
 		public List<string> Aliases = new List<string>();
+		public bool OpOnly = false;
 
 		public Command() { }
 		public Command(string name, CommandAction action) {
@@ -25,11 +26,13 @@ namespace Bronuh.Types
 			_action = action;
 		}
 
+
 		public Command SetDescription(String description)
 		{
 			Description = description;
 			return this;
 		}
+
 
 		public Command SetRank(int rank)
 		{
@@ -37,11 +40,21 @@ namespace Bronuh.Types
 			return this;
 		}
 
+
+		public Command SetOp(bool op)
+		{
+			OpOnly = op;
+			return this;
+		}
+
+
 		public Command AddAlias(string alias)
 		{
 			Aliases.Add(alias);
 			return this;
 		}
+
+
 
 		public async Task<bool> TryExecute(ChatMessage message)
 		{
@@ -56,6 +69,12 @@ namespace Bronuh.Types
 				Logger.Debug("Обнаружена команда "+ Name);
 				if (author.IsOP||author.Rank>=Rank)
 				{
+					if (OpOnly && !author.IsOP)
+					{
+						Logger.Warning("Команда только для операторов");
+						return true;
+					}
+
 					await _action(message);
 				}
 				

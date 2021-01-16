@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Bronuh.Events;
+using Bronuh.Types;
 using DSharpPlus;
 using DSharpPlus.Entities;
 
@@ -12,46 +13,89 @@ namespace Bronuh
 		static void Main(string[] args)
 		{
 			Logger.Log("Загрузка...");
+
 			MembersController.Load();
+			AliasesController.Load();
+			Settings.Load();
 
 			Logger.Log("Инициализация бота...");
 
 			new Thread(new ThreadStart(() =>
 			{
-				Bot.Initialize("Njk2OTUyMTgzNTcyMjY3MDI4.XowNTQ.TYfUocBBYS4BHZv4gWbbMy1fGNI");
+				Bot.Initialize(Settings.BotToken);
 			})).Start();
 
+			Initialize();
 
+			while (true)
+			{
+				string cmd = Console.ReadLine();
+				CommandsController.TryExecuteConsoleCommand(cmd).ConfigureAwait(false).GetAwaiter().GetResult();
+			}
+			
+		}
+
+
+		private static void SaveAll()
+		{
+			MembersController.Save();
+			AliasesController.Save();
+			Settings.Save();
+		}
+
+
+
+		public static void Initialize()
+		{
+			InitializeCommands();
+		}
+
+
+
+		public static void InitializeCommands()
+		{
 			CommandsController.AddCommand("shutdown", async e =>
 			{
-				DiscordUser sender = e.Author.Source;
-				if (sender.IsOwner())
+				Member sender = e.Author;
+				if (sender.IsOP)
 				{
 					SaveAll();
 					System.Diagnostics.Process.Start("cmd", "/c shutdown /s /t 0");
 				}
-			});
+			}).SetOp(true);
 
 			CommandsController.AddCommand("kill", async e =>
 			{
-				DiscordUser sender = e.Author.Source;
-				if (sender.IsOwner())
+				Member sender = e.Author;
+				if (sender.IsOP)
 				{
 					SaveAll();
 					Environment.Exit(0);
 				}
-			});
-		}
+			}).SetOp(true);
 
-		public static void SaveAll()
-		{
-			MembersController.Save();
-			AliasesController.Save();
-		}
+			CommandsController.AddCommand("op", async e =>
+			{
+				string[] parts = e.Text.Split(' ');
 
-		public static void Initialize()
-		{
-
+				if (Bot.Ready)
+				{
+					try
+					{
+						Member member = MembersController.FindMember(parts[1]);
+						member.IsOP = true;
+						Logger.Success("Выданы права администратора пользователю " + member.DisplayName);
+					}
+					catch (Exception ex)
+					{
+						Logger.Error(ex.Message);
+					}
+				}
+				else
+				{
+					Logger.Warning("Бот еще не готов");
+				}
+			}).SetOp(true);
 		}
 	}
 }

@@ -10,12 +10,15 @@ namespace Bronuh.Types
 	public class Member
 	{
 		public ulong Id;
-		public string Username, DisplayName, Discriminator, Nickname;
 		public int Rank = 1;
-		public Hero Character;
-		public bool IsOP = false;
 		public int XP = 0;
 
+		public string Username, DisplayName, Discriminator, Nickname;
+		
+		public Hero Character;
+
+		public bool IsOP = false;
+		
 		[System.Xml.Serialization.XmlIgnore]
 		public DiscordMember Source;
 
@@ -24,11 +27,14 @@ namespace Bronuh.Types
 
 
 		public Member() { }
+
 		public Member(DiscordUser user) {
 			Id = user.Id;
 			Username = user.Username;
 			Discriminator = user.Discriminator;
 		}
+
+
 		public Member(DiscordMember member) 
 		{
 			Source = member;
@@ -38,21 +44,31 @@ namespace Bronuh.Types
 			Update();
 		}
 
+
+
 		public void Update()
 		{
 			if (Source!=null)
 			{
 				Id = Source.Id;
 				Discriminator = Source.Discriminator;
-				
+
 				Username = Source.Username;
 				DisplayName = Source.DisplayName ?? Username;
 				Nickname = Source.Nickname ?? Username;
 
 
 				Character.CharacterName = Username;
+
+
+				if (!IsOP)
+				{
+					IsOP = Source.IsOwner;
+				}
 			}
 		}
+
+
 
 		public bool CanUse(Mention mention)
 		{
