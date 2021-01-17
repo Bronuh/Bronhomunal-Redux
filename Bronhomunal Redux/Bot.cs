@@ -16,8 +16,8 @@ namespace Bronuh
 		public static IReadOnlyList<DiscordChannel> Channels = new List<DiscordChannel>();
 		public static DiscordChannel BotChannel, LastChannel, OutpostChannel;
 		public static DiscordGuild Guild;
-		private static ulong RequiredGuildId = 308653152054280195;
-		private static ulong BotID = 696952183572267028;
+		private static readonly ulong RequiredGuildId = 308653152054280195;
+		private static readonly ulong BotID = 696952183572267028;
 		public static List<DiscordMember> DiscordMembers = new List<DiscordMember>();
 
 

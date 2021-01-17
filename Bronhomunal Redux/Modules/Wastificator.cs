@@ -9,10 +9,10 @@ namespace Bronuh.Libs
     public class Wastificator
     {
         private static Random Rnd = new Random();
-        private static bool Initialized = false;
+        private static readonly bool Initialized = false;
 
 
-        public static string Wastificate(String Arg)
+        public static string Wastificate(string Arg)
         {
             if (!Initialized)
             {
@@ -23,8 +23,8 @@ namespace Bronuh.Libs
             Arg = Arg.ToUpper();
 
             string[] Words = Arg.Split(' ');
-            String _Arg = "";
-            foreach (String word in Words)
+            string _Arg = "";
+            foreach (string word in Words)
             {
 
                 _Arg += RandomWord.TryPaste(Word.Parse(word)) + " ";
@@ -39,7 +39,7 @@ namespace Bronuh.Libs
                 char _Char = Char;
                 if (_Char == 'С')
                 {
-                    if (prob(0.05))
+                    if (Prob(0.05))
                     {
                         _Char = 'Ы';
                     }
@@ -47,7 +47,7 @@ namespace Bronuh.Libs
 
                 if (_Char == 'Д')
                 {
-                    if (prob(0.005))
+                    if (Prob(0.005))
                     {
                         _Char = 'В';
                     }
@@ -55,7 +55,7 @@ namespace Bronuh.Libs
 
                 if (_Char == 'S')
                 {
-                    if (prob(0.9))
+                    if (Prob(0.9))
                     {
                         _Char = 'Ы';
                     }
@@ -63,7 +63,7 @@ namespace Bronuh.Libs
 
                 if (_Char == 'Р')
                 {
-                    if (prob(0.1))
+                    if (Prob(0.1))
                     {
                         _Char = 'Я';
                     }
@@ -71,7 +71,7 @@ namespace Bronuh.Libs
 
                 if (_Char == 'Г')
                 {
-                    if (prob(0.1))
+                    if (Prob(0.1))
                     {
                         _Char = 'Ж';
                     }
@@ -79,7 +79,7 @@ namespace Bronuh.Libs
 
                 if (_Char == 'Е')
                 {
-                    if (prob(0.03))
+                    if (Prob(0.03))
                     {
                         _Char = 'З';
                     }
@@ -87,7 +87,7 @@ namespace Bronuh.Libs
 
                 if (_Char == 'П')
                 {
-                    if (prob(0.01))
+                    if (Prob(0.01))
                     {
                         _Arg += "ТТ";
                         continue;
@@ -96,7 +96,7 @@ namespace Bronuh.Libs
 
                 if (_Char == '.')
                 {
-                    if (prob(0.01))
+                    if (Prob(0.01))
                     {
                         _Arg += ", esse?";
                         continue;
@@ -105,7 +105,7 @@ namespace Bronuh.Libs
 
                 if (_Char == '.')
                 {
-                    if (prob(0.01))
+                    if (Prob(0.01))
                     {
                         _Arg += "(ФЫРКАЮТ).";
                         continue;
@@ -121,7 +121,7 @@ namespace Bronuh.Libs
             return Arg;
         }
 
-        internal static bool prob(double Prob)
+        private static bool Prob(double Prob)
         {
             return (Rnd.NextDouble() <= Prob);
         }
@@ -191,73 +191,73 @@ namespace Bronuh.Libs
             // new RandomWord("",0.01);
             // new Word("","",0.5);
         }
-    }
 
-
-    class Word
-    {
-        public static List<Word> Words = new List<Word>();
-
-        public string Find, Repace;
-        public double Prob;
-
-        public Word(String Find, String Replace, double Prob)
+        private class Word
         {
-            this.Find = Find;
-            this.Repace = Replace;
-            this.Prob = Prob;
-            Words.Add(this);
-        }
+            private static readonly List<Word> _words = new List<Word>();
+			private readonly string _find, _repace;
+			private readonly double _prob;
 
-        public static string Parse(String Arg)
-        {
-            foreach (Word word in Words)
+            public Word(string find, string replace, double prob)
             {
-                if (Arg.Contains(word.Find))
-                {
-                    if (Wastificator.prob(word.Prob))
-                    {
-                        return Arg.Replace(word.Find, word.Repace);
-
-                    }
-                }
-            }
-            return Arg;
-        }
-
-
-    }
-
-    class RandomWord
-    {
-        public static List<RandomWord> RandomWords = new List<RandomWord>();
-        public string word;
-        public double Prob;
-
-        public RandomWord(String word, double Prob)
-        {
-            this.word = word;
-            this.Prob = Prob;
-            RandomWords.Add(this);
-        }
-
-        public static string TryPaste(String Arg)
-        {
-            if (Wastificator.prob(0.02))
-            {
-                foreach (RandomWord randomWord in RandomWords)
-                {
-
-                    if (Wastificator.prob(randomWord.Prob))
-                    {
-                        return Arg + " " + randomWord.word;
-
-                    }
-                }
+                _find = find;
+                _repace = replace;
+                _prob = prob;
+                _words.Add(this);
             }
 
-            
-            return Arg;
+            public static string Parse(string arg)
+            {
+                foreach (Word word in _words)
+                {
+                    if (arg.Contains(word._find))
+                    {
+                        if (Prob(word._prob))
+                        {
+                            return arg.Replace(word._find, word._repace);
+
+                        }
+                    }
+                }
+                return arg;
+            }
+
+
+        }
+
+        private class RandomWord
+        {
+            private static readonly List<RandomWord> _randomWords = new List<RandomWord>();
+            private readonly string _word;
+            private readonly double _prob;
+
+            public RandomWord(string word, double prob)
+            {
+                _word = word;
+                _prob = prob;
+                _randomWords.Add(this);
+            }
+
+            public static string TryPaste(string arg)
+            {
+                if (Prob(0.02))
+                {
+                    foreach (RandomWord randomWord in _randomWords)
+                    {
+
+                        if (Prob(randomWord._prob))
+                        {
+                            return arg + " " + randomWord._word;
+
+                        }
+                    }
+                }
+
+                return arg;
+            }
         }
     }
+
+
+    
 }

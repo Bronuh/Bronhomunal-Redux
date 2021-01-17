@@ -11,15 +11,13 @@ namespace Bronuh.Events
 {
 	public static class EventsHandler
 	{
-
 		
-
 		public static async Task HandleEvent(EventArgs e)
 		{
-			if (e is MessageCreateEventArgs)
+			if (e is MessageCreateEventArgs args)
 			{
 				Logger.Debug("Обработка события " + e.GetType().Name + "...");
-				await MessageCreateEventHandler((MessageCreateEventArgs)e);
+				await MessageCreateEventHandler(args);
 			}
 			else
 			{
@@ -31,7 +29,7 @@ namespace Bronuh.Events
 		{
 			e.Message.Author.ToMember().XP++;
 
-			if (e.Message.Content.StartsWith(Settings.GetSign()))
+			if (e.Message.Content.StartsWith(Settings.Sign))
 			{
 				await CommandsController.TryExecuteCommand(e);
 			}
