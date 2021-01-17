@@ -65,7 +65,7 @@ namespace Bronuh.Types
 
 				Character.CharacterName = Username;
 
-				IsOP = Source.IsOwner;
+				//IsOP = Source.IsOwner;
 			}
 		}
 
