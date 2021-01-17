@@ -62,8 +62,20 @@ namespace Bronuh
 			})
 			.SetRank(1)
 			.SetDescription("!alias username alias\nЗапоминает псевдоним указанного пользователя")
-			.AddAlias("запомни");
+			.AddAlias("запомни").AddAlias("алиас");
 
+
+			AddCommand("forget", async (m) => {
+				string text = m.Text;
+				string[] parts = text.Split(' ');
+				
+				Alias alias = AliasesController.RemoveAlias(parts[1]);
+
+				await m.RespondAsync($"Забыл: {alias.Name}");
+			})
+			.SetRank(1)
+			.SetDescription("!forget alias\nЗабывает псевдоним указанного пользователя")
+			.AddAlias("забудь");
 
 
 			_initialized = true;

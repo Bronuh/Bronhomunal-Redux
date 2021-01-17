@@ -54,11 +54,12 @@ namespace Bronuh
 		/// Удаляет первую в списке связку псевдоним-участник
 		/// </summary>
 		/// <param name="name">Удаляемый псевдоним</param>
-		public static void RemoveAlias(String name)
+		public static Alias RemoveAlias(String name)
 		{
 			Alias alias = FindAlias(name);
 			Aliases.Remove(alias);
 			Save();
+			return alias;
 		}
 
 		/// <summary>
