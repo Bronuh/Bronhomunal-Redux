@@ -55,16 +55,38 @@ namespace Bronuh.Types
 		}
 
 
+		private bool CheckCommand(string text)
+		{
+			string command = text.Split(' ')[0];
+			
+			if (command.ToLower()==Name)
+			{
+				return true;
+			}
+			else
+			{
+				foreach (string alias in Aliases)
+				{
+					if (command.ToLower() == alias)
+					{
+						return true;
+					}
+				}
+			}
+
+			return false;
+		}
+
 
 		public async Task<bool> TryExecute(ChatMessage message)
 		{
 			string text = message.Text;
 			Member author = message.Author;
 
-			text = text.Substring(Settings.GetSign().Length, text.Length-1);
+			text = text.Substring(Settings.Sign.Length, text.Length-1);
 
-			Logger.Debug("Попытка выполнения "+ Settings.GetSign() + Name +" ("+text+")");
-			if (text.StartsWith(Name))
+			Logger.Debug("Попытка выполнения "+ Settings.Sign + Name +" ("+text+")");
+			if (CheckCommand(text))
 			{
 				Logger.Debug("Обнаружена команда "+ Name);
 				if (author.IsOP||author.Rank>=Rank)

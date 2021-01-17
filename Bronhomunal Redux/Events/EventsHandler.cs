@@ -28,6 +28,7 @@ namespace Bronuh.Events
 		private static async Task MessageCreateEventHandler(MessageCreateEventArgs e)
 		{
 			e.Message.Author.ToMember().XP++;
+			Logger.Log($"{e.Author.ToMember().DisplayName}: {e.Message.Content}");
 
 			if (e.Message.Content.StartsWith(Settings.Sign))
 			{

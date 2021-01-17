@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Bronuh.Types
 {
@@ -17,6 +18,13 @@ namespace Bronuh.Types
 			Author = MembersController.FindMember(source.Author.Id);
 			Text = source.Content;
 		}
+
+
+		public async Task<DiscordMessage> RespondAsync(string text)
+		{
+			return await Source?.RespondAsync(text);
+		}
+
 
 		public ChatMessage(string text)
 		{

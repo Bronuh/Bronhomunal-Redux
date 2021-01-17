@@ -10,15 +10,15 @@ namespace Bronuh
 		private static SettingsContainer _container = new SettingsContainer();
 
 
-		public static string BotToken;
-		public static string Sign = "!";
-		private static string SettingsPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BronhomunalSettings.xml";
+		public static string BotToken { get; private set; }
+		public static string Sign { get; private set; } = "!";
+		private static string _settingsPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BronhomunalSettings.xml";
 
 		public static void Load()
 		{
 
 			Logger.Log("Загрузка настроек...");
-			_container = SaveLoad.LoadObject<SettingsContainer>(SettingsPath) ?? new SettingsContainer();
+			_container = SaveLoad.LoadObject<SettingsContainer>(_settingsPath) ?? new SettingsContainer();
 
 			BotToken = _container.BotToken;
 			Sign = _container.Sign;
@@ -33,7 +33,7 @@ namespace Bronuh
 			_container.Sign = Sign;
 			_container.BotToken = BotToken;
 
-			SaveLoad.SaveObject<SettingsContainer>(_container, SettingsPath);
+			SaveLoad.SaveObject<SettingsContainer>(_container, _settingsPath);
 			Logger.Success("Сохранение завершено");
 		}
 

@@ -31,10 +31,12 @@ namespace Bronuh
 		/// </summary>
 		/// <param name="name">Псевдоним</param>
 		/// <param name="target">Ссылка на объект Member, которому он принадлежит</param>
-		public static void AddAlias(String name, Member target)
+		public static Alias AddAlias(String name, Member target)
 		{
-			Aliases.Add(new Alias(name, target.Id));
+			Alias alias = new Alias(name, target.Id);
+			Aliases.Add(alias);
 			Save();
+			return alias;
 		}
 
 		/// <summary>

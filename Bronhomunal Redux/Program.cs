@@ -11,7 +11,7 @@ namespace Bronuh
 {
 	class Program
 	{
-		static void Main(string[] args)
+		static void Main()
 		{
 			Logger.Log("Загрузка...");
 
@@ -43,6 +43,7 @@ namespace Bronuh
 			AliasesController.Save();
 			Settings.Save();
 			Infameter.Save();
+			Logger.SaveLog();
 		}
 
 
@@ -87,6 +88,29 @@ namespace Bronuh
 						Member member = MembersController.FindMember(parts[1]);
 						member.IsOP = true;
 						Logger.Success("Выданы права администратора пользователю " + member.DisplayName);
+					}
+					catch (Exception ex)
+					{
+						Logger.Error(ex.Message);
+					}
+				}
+				else
+				{
+					Logger.Warning("Бот еще не готов");
+				}
+			}).SetOp(true);
+
+			CommandsController.AddCommand("deop", async e =>
+			{
+				string[] parts = e.Text.Split(' ');
+
+				if (Bot.Ready)
+				{
+					try
+					{
+						Member member = MembersController.FindMember(parts[1]);
+						member.IsOP = false;
+						Logger.Success("Пользователь лишен прав администратора" + member.DisplayName);
 					}
 					catch (Exception ex)
 					{
