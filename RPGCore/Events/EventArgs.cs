@@ -80,7 +80,7 @@ namespace RPGCore.Events
 	public delegate void HeroSoldEventHandler(object sender, HeroSoldItemEventArgs eventArgs);
 	public class HeroSoldItemEventArgs : EventArgs
 	{
-
+		
 	}
 
 
@@ -90,4 +90,24 @@ namespace RPGCore.Events
 
 	}
 
+
+	public delegate void UnitThinkingEventHandler(object sender, UnitThinkingEventArgs eventArgs);
+	public class UnitThinkingEventArgs : EventArgs
+	{
+
+	}
+
+
+	public delegate void AddedEffectEventHandler(object sender, AddedEffectEventArgs eventArgs);
+	public class AddedEffectEventArgs : EventArgs
+	{
+
+	}
+
+
+	public delegate void RemovedEffectEventHandler(object sender, RemovedEffectEventArgs eventArgs);
+	public class RemovedEffectEventArgs : EventArgs
+	{
+
+	}
 }
