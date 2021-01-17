@@ -102,6 +102,30 @@ namespace Bronuh
 			.SetDescription("Выводит список доступных команд")
 			.SetUsage(Settings.Sign+"commands");
 
+
+			AddCommand("debug", async (m) =>
+			{
+				Settings.DEBUG = !Settings.DEBUG;
+
+				string respond = "Отображение сообщений отладки: "+Settings.DEBUG;
+
+				await m.RespondAsync(respond);
+			})
+			.SetOp(true)
+			.SetDescription("Включает/выключает вывод отладочных сообщений в консоль")
+			.SetUsage(Settings.Sign+"debug");
+
+			/*
+			AddCommand("",async (m) => 
+			{
+				string text = m.Text;
+				string[] parts = text.Split(' ');
+				int userRank = m.Author.Rank;
+
+				string respond = "Ответ: ";
+				await m.RespondAsync(respond);
+			});
+			*/
 			_initialized = true;
 		}
 	}

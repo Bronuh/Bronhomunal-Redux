@@ -35,7 +35,14 @@ namespace Bronuh.Types
 		public string GetInfo()
 		{
 			string info = "";
+			string aliases = "";
+			foreach (string alias in Aliases)
+			{
+				aliases += alias+" ";
+			}
+
 			info += "Команда: "+Settings.Sign+Name+"\n";
+			info += "Аналоги: "+aliases;
 			info += "Использование: "+Usage+"\n";
 			info += "Описание: "+Description+"\n";
 			info += "Требуемый ранг: "+Rank+"\n";

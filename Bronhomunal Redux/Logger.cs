@@ -17,7 +17,7 @@ namespace Bronuh
 		public static List<LogMessage> MessagesLog = new List<LogMessage>();
 		public static List<LogMessage> DebugsLog = new List<LogMessage>();
 
-		public static bool DEBUG = true;
+		
 
 		public static void SaveLog()
 		{
@@ -132,11 +132,13 @@ namespace Bronuh
 
 			if (type == Type.Debug)
 			{
-				Console.ForegroundColor = ConsoleColor.DarkGray;
+				if(Settings.DEBUG)
+					Console.ForegroundColor = ConsoleColor.DarkGray;
+
 				Logger.DebugsLog.Add(this);
 			}
 
-			if (type == Type.Debug && !Logger.DEBUG)
+			if (type == Type.Debug && !Settings.DEBUG)
 			{
 				return;
 			}
