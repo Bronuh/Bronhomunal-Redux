@@ -12,7 +12,7 @@ namespace Bronuh
 
 		public static string BotToken { get; private set; }
 		public static string Sign { get; private set; } = "!";
-		private static string _settingsPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BronhomunalSettings.xml";
+		private static readonly string _settingsPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BronhomunalSettings.xml";
 
 		public static void Load()
 		{

@@ -14,10 +14,10 @@ namespace Bronuh.Types
 		public int XP = 0;
 
 		public string Username, DisplayName, Discriminator, Nickname;
-		
-		public Hero Character;
 
 		public bool IsOP = false;
+
+		public Hero Character;
 		
 		[System.Xml.Serialization.XmlIgnore]
 		public DiscordMember Source;
@@ -45,6 +45,11 @@ namespace Bronuh.Types
 		}
 
 
+		public bool IsConsole()
+		{
+			return (Id==0&&IsOP&&Discriminator=="0000"&&Username=="CONSOLE");
+		}
+
 
 		public void Update()
 		{
@@ -60,11 +65,7 @@ namespace Bronuh.Types
 
 				Character.CharacterName = Username;
 
-
-				if (!IsOP)
-				{
-					IsOP = Source.IsOwner;
-				}
+				IsOP = Source.IsOwner;
 			}
 		}
 

@@ -22,7 +22,15 @@ namespace Bronuh.Types
 
 		public async Task<DiscordMessage> RespondAsync(string text)
 		{
-			return await Source?.RespondAsync(text);
+			if (!Author.IsConsole())
+			{
+				return await Source?.RespondAsync(text);
+			}
+			else
+			{
+				Logger.Log(text);
+			}
+			return null;
 		}
 
 

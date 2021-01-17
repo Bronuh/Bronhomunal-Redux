@@ -108,7 +108,7 @@ namespace Bronuh.File
             catch(Exception e)
             {
                 Logger.Error("(LOAD) "+e.Message);
-                return default(T);
+                return default;
             }
         }
 

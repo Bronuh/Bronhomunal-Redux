@@ -14,11 +14,17 @@ namespace Bronuh.Types
 	public class Command
 	{
 		public string Name { get; private set; }
-		public string Description { get; private set; }
-		private CommandAction _action;
-		public int Rank { get; private set; } = 0;
+		public string Description { get; private set; } = "нет описания";
+		public string Usage { get; private set; } = "нет примера использования";
 		public List<string> Aliases { get; private set; } = new List<string>();
+
+		private readonly CommandAction _action;
+
+		public int Rank { get; private set; } = 0;
+
 		public bool OpOnly { get; private set; } = false;
+
+
 
 		public Command() { }
 		public Command(string name, CommandAction action) {
@@ -26,6 +32,17 @@ namespace Bronuh.Types
 			_action = action;
 		}
 
+		public string GetInfo()
+		{
+			string info = "";
+			info += "Команда: "+Settings.Sign+Name+"\n";
+			info += "Использование: "+Usage+"\n";
+			info += "Описание: "+Description+"\n";
+			info += "Требуемый ранг: "+Rank+"\n";
+			info += "Только для админов: "+OpOnly;
+
+			return info;
+		}
 
 		public Command SetDescription(String description)
 		{
@@ -33,6 +50,11 @@ namespace Bronuh.Types
 			return this;
 		}
 
+		public Command SetUsage(String usage)
+		{
+			Usage = usage;
+			return this;
+		}
 
 		public Command SetRank(int rank)
 		{
@@ -59,15 +81,17 @@ namespace Bronuh.Types
 		{
 			string command = text.Split(' ')[0];
 			
-			if (command.ToLower()==Name)
+			if (command.ToLower()==Name.ToLower())
 			{
 				return true;
 			}
 			else
 			{
+				Logger.Debug("Имя команды не найдено, поиск псевдонимов");
 				foreach (string alias in Aliases)
 				{
-					if (command.ToLower() == alias)
+					Logger.Debug("Псевдоним: " + alias);
+					if (command.ToLower() == alias.ToLower())
 					{
 						return true;
 					}

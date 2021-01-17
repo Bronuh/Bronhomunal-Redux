@@ -61,22 +61,46 @@ namespace Bronuh
 				await m.RespondAsync($"Запомнил: {target.DisplayName} -> {alias.Name}");
 			})
 			.SetRank(1)
-			.SetDescription("!alias username alias\nЗапоминает псевдоним указанного пользователя")
+			.SetDescription("Запоминает псевдоним указанного пользователя")
+			.SetUsage(Settings.Sign+"alias user alias")
 			.AddAlias("запомни").AddAlias("алиас");
 
 
 			AddCommand("forget", async (m) => {
 				string text = m.Text;
 				string[] parts = text.Split(' ');
-				
+
 				Alias alias = AliasesController.RemoveAlias(parts[1]);
 
 				await m.RespondAsync($"Забыл: {alias.Name}");
 			})
 			.SetRank(1)
-			.SetDescription("!forget alias\nЗабывает псевдоним указанного пользователя")
+			.SetDescription("Забывает псевдоним указанного пользователя")
+			.SetUsage(Settings.Sign+"forget alias")
 			.AddAlias("забудь");
 
+
+			AddCommand("commands", async (m) =>
+			{
+				string text = m.Text;
+				string[] parts = text.Split(' ');
+				int userRank = m.Author.Rank;
+
+				string respond = "Список команд: \n\n";
+
+				foreach (Command command in Commands)
+				{
+					if (m.Author.IsOP || userRank >= command.Rank)
+					{
+						respond += command.GetInfo() + "\n\n";
+					}
+				}
+
+				await m.RespondAsync(respond);
+			})
+			.AddAlias("команды")
+			.SetDescription("Выводит список доступных команд")
+			.SetUsage(Settings.Sign+"commands");
 
 			_initialized = true;
 		}
