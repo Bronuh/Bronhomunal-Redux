@@ -15,21 +15,19 @@ namespace Bronuh.Libs
         public static string Wastificate(string Arg)
         {
             if (!Initialized)
-            {
                 Initialize();
-            }
+
 
             Rnd = new Random(1);
             Arg = Arg.ToUpper();
 
             string[] Words = Arg.Split(' ');
             string _Arg = "";
-            foreach (string word in Words)
-            {
 
+            foreach (string word in Words)
                 _Arg += RandomWord.TryPaste(Word.Parse(word)) + " ";
 
-            }
+
             Arg = _Arg;
             _Arg = "";
 

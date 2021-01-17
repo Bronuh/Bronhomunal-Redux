@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace RPGCore.Entities.Items
 {
     [Serializable]
-    public class Effected
+    public class Effected : Item
     {
         public List<Ability> abilities = new List<Ability>();
     }

@@ -64,9 +64,12 @@ namespace RPGCore.Entities
         {
             Damage damage = BaseDamage.Copy();
             damage.Source = this;
-            foreach (Item weapon in Inventory.Items)
+            foreach (Item item in Inventory.Items)
             {
-
+				if (item is Weapon weapon)
+				{
+                    damage.Add(weapon.WeaponDamage);
+				}
             }
             
 

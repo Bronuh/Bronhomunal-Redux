@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace RPGCore.Entities
 {
-    // TODO: Переделать систему опыта
     [Serializable]
     public class Hero : Unit
     {

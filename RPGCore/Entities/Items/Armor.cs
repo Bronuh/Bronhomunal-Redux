@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace RPGCore.Entities.Items
 {
     [Serializable]
-    public class Armor
+    public class Armor : Item
     {
         public double ItemArmor;
     }
