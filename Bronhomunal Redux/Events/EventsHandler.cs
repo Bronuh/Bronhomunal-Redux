@@ -27,7 +27,10 @@ namespace Bronuh.Events
 
 		private static async Task MessageCreateEventHandler(MessageCreateEventArgs e)
 		{
-			e.Message.Author.ToMember().XP++;
+			Member sender = e.Message.Author.ToMember();
+			sender.LastMessage = new ChatMessage(e.Message);
+			await sender.AddXPAsync(1);
+			
 			Logger.Log($"{e.Author.ToMember().DisplayName}: {e.Message.Content}");
 
 			if (e.Message.Content.StartsWith(Settings.Sign))

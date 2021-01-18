@@ -49,18 +49,18 @@ namespace Bronuh
 
 
 
-			Logger.Log("Обработчик события Ready");
+			Logger.Debug("Обработчик события Ready");
 			Discord.Ready += async (Discord, e) =>
 			{
 				Logger.Log("Поиск целевого сервера...");
 				if (Discord.Guilds.Count == 1)
 				{
 					Guild = new List<DiscordGuild>(Discord.Guilds.Values)[0];
-					Logger.Log("Сервер: "+Guild.Id);
+					Logger.Debug("Сервер: "+Guild.Id);
 				}
 				else
 				{
-					Logger.Log("Серверов в списке больше чем 1");
+					Logger.Debug("Серверов в списке больше чем 1");
 					foreach (KeyValuePair<ulong, DiscordGuild> KV in Discord.Guilds)
 					{
 						DiscordGuild currentGuild = KV.Value;
