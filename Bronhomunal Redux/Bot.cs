@@ -26,7 +26,15 @@ namespace Bronuh
 		{
 			Token = token;
 			Logger.Log("Запуск асинхронного метода...");
-			MainAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+			try
+			{
+				MainAsync().ConfigureAwait(false).GetAwaiter().GetResult();
+			}
+			catch(Exception e)
+			{
+				Logger.Error(e.Message);
+			}
+			
 		}
 
 		public static async Task MainAsync()
@@ -148,14 +156,14 @@ namespace Bronuh
 		{
 			if (Ready)
 			{
-				if (LastChannel != null)
+				if (BotChannel != null)
 				{
 					await LastChannel.SendMessageAsync(msg);
 				}
 				else
 				{
 					Logger.Warning("Нет последнего канала!1!");
-					if (BotChannel != null)
+					if (LastChannel != null)
 					{
 						await BotChannel.SendMessageAsync(msg);
 					}
@@ -170,5 +178,6 @@ namespace Bronuh
 				Logger.Error("Инициализация не закончена!");
 			}
 		}
+
 	}
 }

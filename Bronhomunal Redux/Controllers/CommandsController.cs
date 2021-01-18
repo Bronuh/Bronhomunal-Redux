@@ -115,6 +115,19 @@ namespace Bronuh
 			.SetDescription("Включает/выключает вывод отладочных сообщений в консоль")
 			.SetUsage(Settings.Sign+"debug");
 
+
+			AddCommand("token", async (m) =>
+			{
+				string text = m.Text;
+				string[] parts = text.Split(' ');
+				string token = parts[1];
+				Settings.SetToken(token);
+
+				await CommandsController.TryExecuteConsoleCommand("kill");
+
+				string respond = "Установлен токен: "+token;
+				await m.RespondAsync(respond);
+			});
 			/*
 			AddCommand("",async (m) => 
 			{
@@ -126,6 +139,7 @@ namespace Bronuh
 				await m.RespondAsync(respond);
 			});
 			*/
+			// 
 			_initialized = true;
 		}
 	}

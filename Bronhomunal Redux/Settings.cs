@@ -48,6 +48,12 @@ namespace Bronuh
 			return Sign;
 		}
 
+		public static void SetToken(string token)
+		{
+			BotToken = token;
+			Save();
+		}
+
 	}
 
 

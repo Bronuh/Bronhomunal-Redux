@@ -72,6 +72,7 @@ namespace Bronuh
 				Member sender = e.Author;
 				if (sender.IsOP)
 				{
+					await e.RespondAsync("DED");
 					SaveAll();
 					Environment.Exit(0);
 				}
