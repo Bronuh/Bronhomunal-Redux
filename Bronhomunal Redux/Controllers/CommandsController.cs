@@ -5,6 +5,8 @@ using DSharpPlus;
 using DSharpPlus.EventArgs;
 using Bronuh.Types;
 using System.Threading.Tasks;
+using Bronuh.Libs;
+using Bronuh.Modules;
 
 namespace Bronuh
 {
@@ -85,6 +87,8 @@ namespace Bronuh
 				string text = m.Text;
 				string[] parts = text.Split(' ');
 				int userRank = m.Author.Rank;
+				int maxCommandsPerMessage = 5;
+				int cmdInMessage = 0;
 
 				string respond = "Список команд: \n\n";
 
@@ -92,11 +96,18 @@ namespace Bronuh
 				{
 					if (m.Author.IsOP || userRank >= command.Rank)
 					{
+						if (cmdInMessage >= maxCommandsPerMessage)
+						{
+							await m.RespondPersonalAsync(respond);
+							cmdInMessage = 0;
+							respond = "\n";
+						}
 						respond += command.GetInfo() + "\n\n";
+						cmdInMessage++;
 					}
 				}
 
-				await m.RespondAsync(respond);
+				await m.RespondPersonalAsync(respond);
 			})
 			.AddAlias("команды")
 			.SetDescription("Выводит список доступных команд")
@@ -128,11 +139,85 @@ namespace Bronuh
 				string respond = "Установлен токен: "+token;
 				await m.RespondAsync(respond);
 			});
+
+
+			AddCommand("whois", async (m) =>
+			{
+				string text = m.Text;
+				string[] parts = text.Split(' ');
+				int userRank = m.Author.Rank;
+
+				Member target = null;
+
+				if (parts.Length>1)
+				{
+					target = MembersController.FindMember(parts[1]);
+				}
+				else if (parts.Length==1)
+				{
+					target = m.Author;
+				}
+
+				string respond = target?.GetInfo()??"";
+				await m.RespondAsync(respond);
+			})
+			.AddAlias("who").AddAlias("кто")
+			.SetUsage(Settings.Sign + "whois [username]")
+			.SetDescription("Выводит информацию о пользователе");
+
+
+
+			AddCommand("say", async (m) =>
+			{
+				string text = m.Text;
+				string[] parts = text.Split(' ');
+				int userRank = m.Author.Rank;
+
+				Member target = m.Author;
+
+				string respond = text.Replace(parts[0] + " ", "");
+				await m.RespondAsync(respond);
+			})
+			.AddAlias("скажи")
+			.SetOp(true)
+			.SetDescription("Заставляет бота сказать что-то");
+
+
+			AddCommand("waste", async (m) =>
+			{
+				string text = m.Text;
+				string[] parts = text.Split(' ');
+				int userRank = m.Author.Rank;
+
+				Member target = m.Author;
+
+				string respond = Wastificator.Wastificate(text.Replace(Settings.Sign + parts[0] + " ", ""));
+				await m.RespondAsync(respond);
+			})
+			.AddAlias("потратить")
+			.SetOp(true)
+			.SetDescription("Заставляет бота потратить что-то");
+
+
+			AddCommand("infa", async (m) =>
+			{
+				string text = m.Text;
+				string[] parts = text.Split(' ');
+				string args = text.Replace(parts[0] + " ", "");
+				int userRank = m.Author.Rank;
+
+				string respond = args+"\nИнфа: " + Math.Round(Infa.CheckInfo(text).Value, 0) + "%";
+				await m.RespondAsync(respond);
+			})
+			.AddAlias("info").AddAlias("инфа")
+			.SetDescription("Измеряет запрошенную инфу");
+
 			/*
 			AddCommand("",async (m) => 
 			{
 				string text = m.Text;
 				string[] parts = text.Split(' ');
+				string args = text.Replace(Settings.Sign + parts[0] + " ", "");
 				int userRank = m.Author.Rank;
 
 				string respond = "Ответ: ";

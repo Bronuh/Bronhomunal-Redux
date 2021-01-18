@@ -27,20 +27,25 @@ namespace Bronuh.Events
 
 		private static async Task MessageCreateEventHandler(MessageCreateEventArgs e)
 		{
-			Member sender = e.Message.Author.ToMember();
-			sender.LastMessage = new ChatMessage(e.Message);
-			await sender.AddXPAsync(1);
 			
-			Logger.Log($"{e.Author.ToMember().DisplayName}: {e.Message.Content}");
+			Member sender = e.Message.Author.ToMember();
+			if (!sender.IsBronomunal())
+			{
+				sender.LastMessage = new ChatMessage(e.Message);
+				await sender.AddXPAsync(1);
 
-			if (e.Message.Content.StartsWith(Settings.Sign))
-			{
-				await CommandsController.TryExecuteCommand(e);
+				Logger.Log($"{e.Author.ToMember().DisplayName}: {e.Message.Content}");
+
+				if (e.Message.Content.StartsWith(Settings.Sign))
+				{
+					await CommandsController.TryExecuteCommand(e);
+				}
+				else
+				{
+					await MentionsController.Execute(e);
+				}
 			}
-			else
-			{
-				await MentionsController.Execute(e);
-			}
+			
 			
 		}
 	}

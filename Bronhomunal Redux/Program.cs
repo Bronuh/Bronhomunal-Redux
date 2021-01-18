@@ -76,7 +76,15 @@ namespace Bronuh
 					SaveAll();
 					Environment.Exit(0);
 				}
-			}).SetOp(true);
+			}).SetOp(true).AddAlias("умри");
+
+			CommandsController.AddCommand("save", async e =>
+			{
+				Member sender = e.Author;
+				await e.RespondAsync("Сохраняю...");
+				SaveAll();
+					
+			}).SetOp(true).AddAlias("сохранить");
 
 			CommandsController.AddCommand("op", async e =>
 			{

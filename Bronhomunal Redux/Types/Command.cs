@@ -24,6 +24,8 @@ namespace Bronuh.Types
 
 		public bool OpOnly { get; private set; } = false;
 
+		public bool ConsoleOnly { get; private set; } = false;
+
 
 
 		public Command() { }
@@ -38,10 +40,11 @@ namespace Bronuh.Types
 			string aliases = "";
 			foreach (string alias in Aliases)
 			{
-				aliases += alias+" ";
+				aliases += alias+ (alias == Aliases[Aliases.Count - 1] ? "" : ", ");
 			}
 
-			info += "Команда: "+Settings.Sign+Name+"\n";
+			info += "Команда ["+(CommandsController.Commands.IndexOf(this)+1)+"/"+ CommandsController.Commands .Count+ "]: " +
+				Settings.Sign+Name+"\n";
 			info += "Аналоги: "+aliases+"\n";
 			info += "Использование: "+Usage+"\n";
 			info += "Описание: "+Description+"\n";
@@ -73,6 +76,13 @@ namespace Bronuh.Types
 		public Command SetOp(bool op)
 		{
 			OpOnly = op;
+			return this;
+		}
+
+
+		public Command SetConsole(bool console)
+		{
+			ConsoleOnly = console;
 			return this;
 		}
 

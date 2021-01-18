@@ -33,6 +33,19 @@ namespace Bronuh.Types
 			return null;
 		}
 
+		public async Task<DiscordMessage> RespondPersonalAsync(string text)
+		{
+			if (!Author.IsConsole())
+			{
+				return await Source?.Author.ToDiscordMember().SendMessageAsync(text);
+			}
+			else
+			{
+				Logger.Log(text);
+			}
+			return null;
+		}
+
 
 		public ChatMessage(string text)
 		{

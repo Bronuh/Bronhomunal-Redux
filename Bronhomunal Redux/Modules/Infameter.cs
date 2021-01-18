@@ -67,7 +67,7 @@ namespace Bronuh.Modules
         public static Infa CheckInfo(String infa)
         {
             String text = infa.ToLower().Replace("?", "").Replace("!", "").Replace(".", "").Replace("ё", "е").Trim().Replace("   ", "").Replace("  ", " ");
-            return Modules.Infameter.FindInfo(infa);
+            return Modules.Infameter.FindInfo(text);
         }
     }
 }

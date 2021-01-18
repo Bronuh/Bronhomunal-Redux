@@ -55,6 +55,12 @@ namespace Bronuh.Types
 		}
 
 
+		public bool IsBronomunal()
+		{
+			return Id == 696952183572267028;
+		}
+
+
 		public string GetInfo()
 		{
 
@@ -62,16 +68,16 @@ namespace Bronuh.Types
 			var aliasList = AliasesController.FindAliases(Id);
 			foreach (Alias alias in aliasList)
 			{
-				aliases += alias.Name + (alias==aliasList[aliasList.Count-1] ? "," : "");
+				aliases += alias.Name + (alias==aliasList[aliasList.Count-1] ? "" : ", ");
 			}
 
 
 			string info = $"Информация о пользователе {DisplayName}:\n" +
-				$"Также известен как: {aliases}" +
-				$"Ранг: {Rank}" +
-				$"Опыт: {XP}" +
-				$"Админ: {IsOP}" +
-				$"Консоль: {IsConsole()}";
+				$"Также известен как: {aliases}\n" +
+				$"Ранг: {Rank}\n" +
+				$"Опыт: {XP}\n" +
+				$"Админ: {IsOP}\n" +
+				$"Консоль: {IsConsole()}\n";
 
 
 			return info;
@@ -97,11 +103,13 @@ namespace Bronuh.Types
 			return (int)Math.Floor((double)xp / XpPerRank) + 1;
 		}
 
+
 		private async Task RankUpAsync()
 		{
 			Rank++;
-			await LastMessage.RespondAsync($"{DisplayName} получил ранг {Rank}!11!!");
+			await LastMessage?.RespondAsync($"{DisplayName} получил ранг {Rank}!11!!");
 		}
+
 
 		public void Update()
 		{
@@ -114,11 +122,7 @@ namespace Bronuh.Types
 				Nickname = Source.Nickname ?? Username;
 				DisplayName = Source.DisplayName ?? Nickname;
 				
-
-
 				Character.CharacterName = Username;
-
-				//IsOP = Source.IsOwner;
 			}
 		}
 
