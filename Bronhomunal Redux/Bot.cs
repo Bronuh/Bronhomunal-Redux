@@ -137,6 +137,8 @@ namespace Bronuh
 				} 
 			};
 
+			Discord.GuildMemberAdded += async (Discord, e) => { await EventsHandler.HandleEvent(e); };
+
 			await Discord.ConnectAsync();
 			await Task.Delay(-1);
 		}

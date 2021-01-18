@@ -14,16 +14,23 @@ namespace Bronuh.Events
 		
 		public static async Task HandleEvent(EventArgs e)
 		{
-			if (e is MessageCreateEventArgs args)
+			if (e is MessageCreateEventArgs messageCreateEventArgs)
 			{
 				Logger.Debug("Обработка события " + e.GetType().Name + "...");
-				await MessageCreateEventHandler(args);
+				await MessageCreateEventHandler(messageCreateEventArgs);
+			}
+
+			if (e is GuildMemberAddEventArgs guildMemberAddEventArgs)
+			{
+				Logger.Debug("Обработка события " + e.GetType().Name + "...");
+				await GuildMemberAddEventHandler(guildMemberAddEventArgs);
 			}
 			else
 			{
 				Logger.Warning("Нет обработчика для события "+e.GetType().Name);
 			}
 		}
+
 
 		private static async Task MessageCreateEventHandler(MessageCreateEventArgs e)
 		{
@@ -45,8 +52,12 @@ namespace Bronuh.Events
 					await MentionsController.Execute(e);
 				}
 			}
-			
-			
+		}
+
+
+		private static async Task GuildMemberAddEventHandler(GuildMemberAddEventArgs e)
+		{
+
 		}
 	}
 }
