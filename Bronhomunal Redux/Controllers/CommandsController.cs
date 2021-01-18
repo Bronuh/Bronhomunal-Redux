@@ -217,7 +217,7 @@ namespace Bronuh
 			{
 				string text = m.Text;
 				string[] parts = text.Split(' ');
-				string args = text.Replace(Settings.Sign + parts[0] + " ", "");
+				string args = text.Replace(parts[0] + " ", "");
 				int userRank = m.Author.Rank;
 
 				string respond = "Ответ: ";
