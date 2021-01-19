@@ -36,7 +36,10 @@ namespace Bronuh
 
 		
 
-
+		/// <summary>
+		/// Связывает каждого участника типа DiscordMember с соответствующим участником Member
+		/// </summary>
+		/// <param name="discordMembers"></param>
 		public static void LinkDiscordMembers(List<DiscordMember> discordMembers)
 		{
 			foreach (DiscordMember discordMember in discordMembers)
@@ -62,11 +65,19 @@ namespace Bronuh
 			}
 		}
 
+
+		/// <summary>
+		/// Обновляет базовую информацию о каждом пользователе
+		/// </summary>
 		public static void Update()
 		{
 			Members.Each((m)=> { m.Update(); });
 		}
 
+		/// <summary>
+		/// Запрашивает новый список участников и заново связывает списки
+		/// </summary>
+		/// <returns></returns>
 		public static async Task HardUpdate()
 		{
 			Bot.DiscordMembers = new List<DiscordMember>();

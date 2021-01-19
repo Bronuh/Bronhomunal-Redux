@@ -16,6 +16,12 @@ namespace Bronuh
 		private static bool _initialized = false;
 
 
+		/// <summary>
+		/// Добавляет команду в общий список
+		/// </summary>
+		/// <param name="name">Сама команда</param>
+		/// <param name="action">Делегат действия</param>
+		/// <returns>Ссылка на добавленную команду</returns>
 		public static Command AddCommand(string name, CommandAction action)
 		{
 			Command command = new Command(name, action);
@@ -24,6 +30,11 @@ namespace Bronuh
 		}
 
 
+		/// <summary>
+		/// Пробует выполнить команду, отправленную из дискорда
+		/// </summary>
+		/// <param name="e"></param>
+		/// <returns></returns>
 		public static async Task<bool> TryExecuteCommand(MessageCreateEventArgs e)
 		{
 			if (!_initialized)
@@ -33,11 +44,21 @@ namespace Bronuh
 			foreach (Command command in Commands)
 			{
 				executed = await command.TryExecute(new ChatMessage(e.Message));
+				if (executed)
+				{
+					return true;
+				}
 			}
 
-			return executed;
+			return false;
 		}
 
+
+		/// <summary>
+		/// Пробует выполнить консольную команду
+		/// </summary>
+		/// <param name="cmd">Текст команды</param>
+		/// <returns></returns>
 		public static async Task<bool> TryExecuteConsoleCommand(string cmd)
 		{
 			if (!_initialized)
@@ -47,12 +68,17 @@ namespace Bronuh
 			foreach (Command command in Commands)
 			{
 				executed = await command.TryExecute(new ChatMessage(Settings.Sign+cmd));
+				if (executed)
+				{
+					return true;
+				}
 			}
 
-			return executed;
+			return false;
 		}
 
 
+		
 		private static void InitializeCommands()
 		{
 			AddCommand("alias",async (m) => {

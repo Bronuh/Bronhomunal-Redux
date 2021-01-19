@@ -115,9 +115,6 @@ namespace Bronuh
 			return aliases;
 		}
 
-		public static List<Alias> AliasList()
-		{
-			return Aliases;
-		}
+
 	}
 }

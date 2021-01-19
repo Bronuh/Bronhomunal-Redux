@@ -12,6 +12,7 @@ namespace Bronuh.Events
 	public static class EventsHandler
 	{
 		
+
 		public static async Task HandleEvent(EventArgs e)
 		{
 			if (e is MessageCreateEventArgs messageCreateEventArgs)
@@ -30,6 +31,7 @@ namespace Bronuh.Events
 				Logger.Warning("Нет обработчика для события "+e.GetType().Name);
 			}
 		}
+
 
 
 		private static async Task MessageCreateEventHandler(MessageCreateEventArgs e)
@@ -55,6 +57,7 @@ namespace Bronuh.Events
 		}
 
 
+		//TODO: добавить приветствие и обновление списков при подключении
 		private static async Task GuildMemberAddEventHandler(GuildMemberAddEventArgs e)
 		{
 

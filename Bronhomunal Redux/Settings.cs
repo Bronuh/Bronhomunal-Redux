@@ -42,12 +42,6 @@ namespace Bronuh
 		}
 
 
-		[Obsolete]
-		public static string GetSign()
-		{
-			return Sign;
-		}
-
 		public static void SetToken(string token)
 		{
 			BotToken = token;

@@ -13,6 +13,11 @@ namespace Bronuh.Controllers
         public static List<Mention> Mentions { get; private set; } = new List<Mention>();
 
 
+        /// <summary>
+        /// Попытка обработать сообщение как упоминание
+        /// </summary>
+        /// <param name="e"></param>
+        /// <returns></returns>
         public static async Task<bool> Execute(MessageCreateEventArgs e)
         {
 			if (!_initialized)
@@ -73,7 +78,7 @@ namespace Bronuh.Controllers
             return false;
         }
 
-        public static void InitializeMentions()
+        private static void InitializeMentions()
         {
             new Mention()
             {
