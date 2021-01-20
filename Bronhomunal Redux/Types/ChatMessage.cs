@@ -33,6 +33,32 @@ namespace Bronuh.Types
 			return null;
 		}
 
+		public async Task<DiscordMessage> RespondAsync(string text, DiscordEmbed embed)
+		{
+			if (!Author.IsConsole())
+			{
+				return await Source?.RespondAsync(text,embed);
+			}
+			else
+			{
+				Logger.Log(text);
+			}
+			return null;
+		}
+
+		public async Task<DiscordMessage> RespondAsync(DiscordMessageBuilder builder)
+		{
+			if (!Author.IsConsole())
+			{
+				return await Source?.RespondAsync(builder);
+			}
+			else
+			{
+				Logger.Log(builder.Content);
+			}
+			return null;
+		}
+
 		public async Task<DiscordMessage> RespondPersonalAsync(string text)
 		{
 			if (!Author.IsConsole())

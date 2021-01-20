@@ -7,6 +7,7 @@ using Bronuh.Types;
 using System.Threading.Tasks;
 using Bronuh.Libs;
 using Bronuh.Modules;
+using DSharpPlus.Entities;
 
 namespace Bronuh
 {
@@ -217,10 +218,10 @@ namespace Bronuh
 
 				Member target = m.Author;
 
-				string respond = Wastificator.Wastificate(text.Replace(Settings.Sign + parts[0] + " ", ""));
+				string respond = Wastificator.Wastificate(text.Replace(parts[0] + " ", ""));
 				await m.RespondAsync(respond);
 			})
-			.AddAlias("потратить")
+			.AddAlias("потратить").AddAlias("потрачено")
 			.SetOp(true)
 			.SetDescription("Заставляет бота потратить что-то");
 
@@ -237,6 +238,23 @@ namespace Bronuh
 			})
 			.AddAlias("info").AddAlias("инфа")
 			.SetDescription("Измеряет запрошенную инфу");
+
+			AddCommand("test", async (m) =>
+			{
+				string text = m.Text;
+				string[] parts = text.Split(' ');
+				string args = text.Replace(parts[0] + " ", "");
+				int userRank = m.Author.Rank;
+
+				await m.RespondAsync(new DiscordMessageBuilder()
+					.WithContent("Ок, тест")
+					.WithEmbed(new DiscordEmbedBuilder()
+						.WithImageUrl("https://puu.sh/H8LYq.png")
+						.Build())
+					.WithFile(@"Files\Test.jpg"));
+			})
+			.AddAlias("тест")
+			.SetOp(true);
 
 			/*
 			AddCommand("",async (m) => 

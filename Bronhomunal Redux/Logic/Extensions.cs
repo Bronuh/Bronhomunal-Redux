@@ -13,10 +13,12 @@ namespace Bronuh
             return user.Id == 263705631549161472;
         }
 
+
         public static bool IsOwner(this DiscordMember member)
         {
             return member.Id == 263705631549161472;
         }
+
 
 		public static DiscordMember ToDiscordMember(this DiscordUser user)
 		{
@@ -34,6 +36,7 @@ namespace Bronuh
 			return null;
 		}
 
+
 		public static Member ToMember(this DiscordMember user)
 		{
 			if (Bot.Ready)
@@ -44,6 +47,7 @@ namespace Bronuh
 			return null;
 		}
 
+
 		public static Member ToMember(this DiscordUser user)
 		{
 			if (Bot.Ready)
@@ -52,6 +56,12 @@ namespace Bronuh
 			}
 
 			return null;
+		}
+
+
+		public static T GetRandom<T>(this List<T> list)
+		{
+			return list[new Random().Next(0,list.Count-1)];
 		}
 	}
 }

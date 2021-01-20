@@ -26,6 +26,13 @@ namespace Bronuh.Events
 				Logger.Debug("Обработка события " + e.GetType().Name + "...");
 				await GuildMemberAddEventHandler(guildMemberAddEventArgs);
 			}
+
+			if (e is GuildMemberRemoveEventArgs guildMemberRemoveEventArgs)
+			{
+				Logger.Debug("Обработка события " + e.GetType().Name + "...");
+				await GuildMemberRemoveEventHandler(guildMemberRemoveEventArgs);
+			}
+
 			else
 			{
 				Logger.Warning("Нет обработчика для события "+e.GetType().Name);
@@ -57,10 +64,19 @@ namespace Bronuh.Events
 		}
 
 
-		//TODO: добавить приветствие и обновление списков при подключении
+		
 		private static async Task GuildMemberAddEventHandler(GuildMemberAddEventArgs e)
 		{
+			await Bot.OutpostChannel.SendMessageAsync(e.Member.Username+"#"+e.Member.Discriminator+" зашел на сервер");
+			await MembersController.HardUpdate();
+		}
 
+
+		private static async Task GuildMemberRemoveEventHandler(GuildMemberRemoveEventArgs e)
+		{
+			await Bot.OutpostChannel.SendMessageAsync(e.Member.Username + "#" + e.Member.Discriminator + " свалил с сервера." +
+				" Но я тебя запомнил...");
+			await MembersController.HardUpdate();
 		}
 	}
 }

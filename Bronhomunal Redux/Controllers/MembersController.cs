@@ -18,11 +18,9 @@ namespace Bronuh
 
 		public static void Load()
 		{
-			
 			Logger.Log("Загрузка списка пользователей...");
 			Members = SaveLoad.LoadObject<Sequence<Member>>("Members.xml") ?? new Sequence<Member>();
 			Logger.Success("Пользователи загружены");
-			
 		}
 
 		public static void Save()
