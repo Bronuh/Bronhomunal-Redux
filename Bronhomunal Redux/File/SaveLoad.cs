@@ -30,45 +30,6 @@ namespace Bronuh.File
 
 
 
-
-        /// <summary>
-        /// Метод загрузки файла в поток
-        /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static Stream LoadStream(string path)
-        {
-            Stream stream = new MemoryStream();
-
-            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
-            {
-                fs.CopyTo(stream);
-            }
-
-            stream.Seek(0,SeekOrigin.Begin);
-            return stream;
-        }
-
-
-
-
-
-        /// <summary>
-        /// Сохраняет поток в файл
-        /// </summary>
-        /// <param name="stream">Записываемый поток</param>
-        /// <param name="path">Путь к файлу</param>
-        public static void SaveStream(Stream stream, string path)
-        {
-            using (FileStream fs = new FileStream(path, FileMode.Create))
-            {
-                stream.CopyTo(fs);
-            }
-        }
-
-
-
-
         /// <summary>
         /// Записывает строку в файл
         /// </summary>
@@ -76,7 +37,7 @@ namespace Bronuh.File
         /// <param name="path">Путь к файлу</param>
         public static void SaveString(String text, string path)
         {
-            using (FileStream fs = new FileStream(path, FileMode.Create))
+            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
             {
                 StreamWriter writer = new StreamWriter(fs);
                 writer.Write(text);
