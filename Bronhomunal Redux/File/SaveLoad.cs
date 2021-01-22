@@ -37,12 +37,10 @@ namespace Bronuh.File
         /// <param name="path">Путь к файлу</param>
         public static void SaveString(String text, string path)
         {
-            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
-            {
-                StreamWriter writer = new StreamWriter(fs);
-                writer.Write(text);
-            }
-        }
+			using FileStream fs = new FileStream(path, FileMode.OpenOrCreate);
+			StreamWriter writer = new StreamWriter(fs);
+			writer.Write(text);
+		}
 
 
 
@@ -60,12 +58,10 @@ namespace Bronuh.File
             try
             {
                 XmlSerializer xs = new XmlSerializer(typeof(T));
-                using (StreamReader sr = new StreamReader(path))
-                {
-                    loadedObject = (T)xs.Deserialize(sr);
-                    return loadedObject;
-                }
-            }
+				using StreamReader sr = new StreamReader(path);
+				loadedObject = (T)xs.Deserialize(sr);
+				return loadedObject;
+			}
             catch(Exception e)
             {
                 Logger.Error("(LOAD) "+e.Message);
@@ -88,11 +84,9 @@ namespace Bronuh.File
                 Logger.Log("Сохранение объекта " + typeof(T));
                 XmlSerializer xs = new XmlSerializer(typeof(T));
 
-                using (StreamWriter writer = new StreamWriter(path))
-                {
-                    xs.Serialize(writer, target);
-                }
-            }
+				using StreamWriter writer = new StreamWriter(path);
+				xs.Serialize(writer, target);
+			}
             catch(Exception e)
             {
                 Logger.Error(e.Message);

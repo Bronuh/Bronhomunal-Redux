@@ -40,7 +40,7 @@ namespace Bronuh.Types
 			string aliases = "";
 			foreach (string alias in Aliases)
 			{
-				aliases += alias+ (alias == Aliases[Aliases.Count - 1] ? "" : ", ");
+				aliases += alias+ (alias == Aliases[^1] ? "" : ", ");
 			}
 
 			info += "Команда ["+(CommandsController.Commands.IndexOf(this)+1)+"/"+ CommandsController.Commands .Count+ "]: " +

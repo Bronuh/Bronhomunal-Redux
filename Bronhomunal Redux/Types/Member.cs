@@ -13,7 +13,7 @@ namespace Bronuh.Types
 		public ulong Id;
 		public int Rank = 1;
 		public int XP = 0;
-		private static int XpPerRank = 100;
+		private static readonly int XpPerRank = 100;
 
 		public string Username, DisplayName, Discriminator, Nickname;
 
@@ -42,8 +42,10 @@ namespace Bronuh.Types
 		public Member(DiscordMember member) 
 		{
 			Source = member;
-			Character = new Hero();
-			Character.Name = "Гирой";
+			Character = new Hero
+			{
+				Name = "Гирой"
+			};
 
 			Update();
 		}
@@ -68,7 +70,7 @@ namespace Bronuh.Types
 			var aliasList = AliasesController.FindAliases(Id);
 			foreach (Alias alias in aliasList)
 			{
-				aliases += alias.Name + (alias==aliasList[aliasList.Count-1] ? "" : ", ");
+				aliases += alias.Name + (alias==aliasList[^1] ? "" : ", ");
 			}
 
 

@@ -9,7 +9,7 @@ namespace Bronuh.Controllers.Commands
 {
 	class Roles : ICommands
 	{
-		private static string[] _restricted = new [] { 
+		private static readonly string[] _restricted = new [] { 
 			"@everyone",
 			"Vaster Lord",
 			"OverLord",
@@ -90,10 +90,6 @@ namespace Bronuh.Controllers.Commands
 		}
 
 
-		private static bool CheckRole(DiscordRole role)
-		{
-			return CheckRole(role, null);
-		}
 
 
 

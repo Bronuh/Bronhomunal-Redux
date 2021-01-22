@@ -48,7 +48,7 @@ namespace Bronuh
 			if (!_initialized)
 				InitializeCommands();
 
-			bool executed = false;
+			bool executed;
 			foreach (Command command in Commands)
 			{
 				executed = await command.TryExecute(new ChatMessage(e.Message));
@@ -72,7 +72,7 @@ namespace Bronuh
 			if (!_initialized)
 				InitializeCommands();
 
-			bool executed = false;
+			bool executed;
 			foreach (Command command in Commands)
 			{
 				executed = await command.TryExecute(new ChatMessage(Settings.Sign+cmd));
