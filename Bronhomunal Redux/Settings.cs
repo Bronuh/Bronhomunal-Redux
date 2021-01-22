@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Bronuh
 {
-	public static class Settings
+	public class Settings : ISaveable, ILoadable
 	{
 		private static SettingsContainer _container = new SettingsContainer();
 
@@ -16,7 +16,7 @@ namespace Bronuh
 		public static bool DEBUG = true;
 
 
-		public static void Load()
+		public void Load()
 		{
 
 			Logger.Log("Загрузка настроек...");
@@ -29,7 +29,7 @@ namespace Bronuh
 			Logger.Success("Настройки загружены");
 		}
 
-		public static void Save()
+		public void Save()
 		{
 			Logger.Log("Сохранение настроек...");
 
@@ -45,7 +45,7 @@ namespace Bronuh
 		public static void SetToken(string token)
 		{
 			BotToken = token;
-			Save();
+			new Settings().Save();
 		}
 
 	}

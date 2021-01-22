@@ -7,22 +7,22 @@ using System.Text;
 
 namespace Bronuh.Modules
 {
-	class Infameter
-	{
+	class Infameter : ISaveable, ILoadable
+    {
 
 		private static Sequence<Infa> Infos = new Sequence<Infa>();
         private static bool _initialized = false;
 
-		public static void Load()
+		public void Load()
 		{
-			Logger.Log("Загрузка списка псевдонимов...");
+			Logger.Log("Загрузка списка инфы...");
 			Infos = SaveLoad.LoadObject<Sequence<Infa>>("Infos.xml") ?? new Sequence<Infa>();
-			Logger.Success("Псевдонимы загружены");
+			Logger.Success("Инфа загружена");
 		}
 
-		public static void Save()
+		public void Save()
 		{
-			Logger.Log("Сохранение списка псевдонимов...");
+			Logger.Log("Сохранение списка инфы...");
 			SaveLoad.SaveObject<Sequence<Infa>>(Infos, "Infos.xml");
 			Logger.Success("Сохранение завершено");
 		}
@@ -31,7 +31,7 @@ namespace Bronuh.Modules
         {
             if (!_initialized)
             {
-                Load();
+                new Infameter().Load();
                 _initialized = true;
             }
             Infa found = null;
@@ -51,7 +51,7 @@ namespace Bronuh.Modules
                     Value = new Random().NextDouble() * 100
                 };
                 Infos.Add(found);
-                Save();
+                new Infameter().Save();
             }
             return found;
         }

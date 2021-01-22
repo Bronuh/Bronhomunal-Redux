@@ -15,9 +15,9 @@ namespace Bronuh
 		{
 			Logger.Log("Загрузка...");
 
-			MembersController.Load();
-			AliasesController.Load();
-			Settings.Load();
+
+			InterfaceExecutor.Execute("ILoadable", "Load");
+
 
 			Logger.Log("Инициализация бота...");
 
@@ -26,7 +26,6 @@ namespace Bronuh
 				Bot.Initialize(Settings.BotToken);
 			})).Start();
 
-			Initialize();
 
 			while (true)
 			{
@@ -39,25 +38,9 @@ namespace Bronuh
 
 		public static void SaveAll()
 		{
-			MembersController.Save();
-			AliasesController.Save();
-			Settings.Save();
-			Infameter.Save();
-			Logger.SaveLog();
+			InterfaceExecutor.Execute("ISaveable", "Save");
 		}
 
 
-
-		public static void Initialize()
-		{
-			InitializeCommands();
-		}
-
-
-
-		public static void InitializeCommands()
-		{
-			
-		}
 	}
 }

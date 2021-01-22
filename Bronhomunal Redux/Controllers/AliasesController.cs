@@ -7,24 +7,28 @@ using System.Text;
 
 namespace Bronuh
 {
-	public class AliasesController
+	public class AliasesController : ISaveable, ILoadable
 	{
 		public static Sequence<Alias> Aliases { get; private set; } = new Sequence<Alias>();
 
-		public static void Load()
+		public void Load()
 		{
 			Logger.Log("Загрузка списка псевдонимов...");
 			Aliases = SaveLoad.LoadObject<Sequence<Alias>>("Aliases.xml") ?? new Sequence<Alias>();
 			Logger.Success("Псевдонимы загружены");
 		}
 
-		public static void Save()
+		public void Save()
 		{
 			Logger.Log("Сохранение списка псевдонимов...");
 			SaveLoad.SaveObject<Sequence<Alias>>(Aliases, "Aliases.xml");
 			Logger.Success("Сохранение завершено");
 		}
 
+		private static void StaticSave()
+		{
+			new AliasesController().Save();
+		}
 
 		/// <summary>
 		/// Создает псевдоним ДЛЯ УЧАСТНИКА
@@ -35,7 +39,7 @@ namespace Bronuh
 		{
 			Alias alias = new Alias(name, target.Id);
 			Aliases.Add(alias);
-			Save();
+			StaticSave();
 			return alias;
 		}
 
@@ -47,7 +51,7 @@ namespace Bronuh
 		public static void AddAlias(String name, ulong target)
 		{
 			Aliases.Add(new Alias(name, target));
-			Save();
+			StaticSave();
 		}
 
 		/// <summary>
@@ -58,7 +62,7 @@ namespace Bronuh
 		{
 			Alias alias = FindAlias(name);
 			Aliases.Remove(alias);
-			Save();
+			StaticSave();
 			return alias;
 		}
 
@@ -72,7 +76,7 @@ namespace Bronuh
 			{
 				Aliases.Remove(alias);
 			}
-			Save();
+			StaticSave();
 		}
 
 

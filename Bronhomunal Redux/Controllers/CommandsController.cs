@@ -13,6 +13,11 @@ using System.Linq;
 
 namespace Bronuh
 {
+
+	
+
+
+
 	public static partial class CommandsController
 	{
 		public static List<Command> Commands { get; private set; } = new List<Command>();
@@ -84,7 +89,7 @@ namespace Bronuh
 		
 		private static void InitializeCommands()
 		{
-			
+
 			/*
 			AddCommand("",async (m) => 
 			{
@@ -100,15 +105,7 @@ namespace Bronuh
 			*/
 			// 
 
-			List<Type> types = new List<Type>(Assembly.GetExecutingAssembly().GetTypes());
-			foreach (Type type in types)
-			{
-				List<Type> interfaces = new List<Type>(type.GetInterfaces());
-				if (interfaces.Find(i => i.Name == "ICommands") != null)
-				{
-					type.GetMethod("InitializeCommands").Invoke(Activator.CreateInstance(type), new object[] { });
-				}
-			}
+			InterfaceExecutor.Execute("ICommands", "InitializeCommands");
 
 			_initialized = true;
 

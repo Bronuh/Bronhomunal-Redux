@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Bronuh.Controllers.Commands
+namespace Bronuh
 {
 	public interface ICommands
 	{

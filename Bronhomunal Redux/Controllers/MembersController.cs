@@ -10,20 +10,20 @@ using System.Threading.Tasks;
 namespace Bronuh
 {
 	
-	public static class MembersController
+	public class MembersController : ISaveable, ILoadable
 	{
 		public static Sequence<Member> Members { get; private set; } = new Sequence<Member>();
 		
 
 
-		public static void Load()
+		public void Load()
 		{
 			Logger.Log("Загрузка списка пользователей...");
 			Members = SaveLoad.LoadObject<Sequence<Member>>("Members.xml") ?? new Sequence<Member>();
 			Logger.Success("Пользователи загружены");
 		}
 
-		public static void Save()
+		public void Save()
 		{
 			Logger.Log("Сохранение списка пользователей...");
 			SaveLoad.SaveObject<Sequence<Member>>(Members, "Members.xml");

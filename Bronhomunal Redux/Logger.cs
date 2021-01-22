@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace Bronuh
 {
-	public static class Logger
+	public class Logger : ISaveable
 	{
 
 		public static List<LogMessage> GlobalLog = new List<LogMessage>();
@@ -19,7 +19,7 @@ namespace Bronuh
 
 		
 
-		public static void SaveLog()
+		public void Save()
 		{
 			if (!Directory.Exists("logs\\"))
 			{
