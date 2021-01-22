@@ -63,5 +63,31 @@ namespace Bronuh
 		{
 			return list[new Random().Next(0,list.Count-1)];
 		}
+
+
+		public static bool HasRole(this Member member, DiscordRole role)
+		{
+			if (member.Source != null)
+			{
+				foreach (DiscordRole memberRole in member.Source.Roles)
+				{
+					if (memberRole.Name == role.Name) return true;
+				}
+			}
+			return false;
+		}
+
+
+		public static bool HasRole(this DiscordMember member, DiscordRole role)
+		{
+			if (member != null)
+			{
+				foreach (DiscordRole memberRole in member.Roles)
+				{
+					if (memberRole.Name == role.Name) return true;
+				}
+			}
+			return false;
+		}
 	}
 }

@@ -37,7 +37,7 @@ namespace Bronuh
 		}
 
 
-		private static void SaveAll()
+		public static void SaveAll()
 		{
 			MembersController.Save();
 			AliasesController.Save();
@@ -57,80 +57,7 @@ namespace Bronuh
 
 		public static void InitializeCommands()
 		{
-			CommandsController.AddCommand("shutdown", async e =>
-			{
-				Member sender = e.Author;
-				if (sender.IsOP)
-				{
-					SaveAll();
-					System.Diagnostics.Process.Start("cmd", "/c shutdown /s /t 0");
-				}
-			}).SetOp(true);
-
-			CommandsController.AddCommand("kill", async e =>
-			{
-				Member sender = e.Author;
-				if (sender.IsOP)
-				{
-					await e.RespondAsync("DED");
-					SaveAll();
-					Environment.Exit(0);
-				}
-			}).SetOp(true).AddAlias("умри").AddAlias("die");
-
-			CommandsController.AddCommand("save", async e =>
-			{
-				Member sender = e.Author;
-				await e.RespondAsync("Сохраняю...");
-				SaveAll();
-					
-			}).SetOp(true).AddAlias("сохранить");
-
-			CommandsController.AddCommand("op", async e =>
-			{
-				string[] parts = e.Text.Split(' ');
-
-				if (Bot.Ready)
-				{
-					try
-					{
-						Member member = MembersController.FindMember(parts[1]);
-						member.IsOP = true;
-						Logger.Success("Выданы права администратора пользователю " + member.DisplayName);
-					}
-					catch (Exception ex)
-					{
-						Logger.Error(ex.Message);
-					}
-				}
-				else
-				{
-					Logger.Warning("Бот еще не готов");
-				}
-			}).SetOp(true);
-
-			CommandsController.AddCommand("deop", async e =>
-			{
-				string[] parts = e.Text.Split(' ');
-
-				if (Bot.Ready)
-				{
-					try
-					{
-						Member member = MembersController.FindMember(parts[1]);
-						member.IsOP = false;
-						Logger.Success("Пользователь лишен прав администратора" + member.DisplayName);
-					}
-					catch (Exception ex)
-					{
-						Logger.Error(ex.Message);
-					}
-				}
-				else
-				{
-					Logger.Warning("Бот еще не готов");
-				}
-			}).SetOp(true);
+			
 		}
 	}
 }
