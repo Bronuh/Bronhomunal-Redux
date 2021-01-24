@@ -41,6 +41,7 @@ namespace RPGCore.Entities
 		/// </summary>
 		public List<string> Tags { get; }
 
+
 		/// <summary>
 		/// Базовый наносимый урон
 		/// </summary>

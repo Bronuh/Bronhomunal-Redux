@@ -74,8 +74,8 @@ namespace Bronuh.Types
 			}
 
 
-			string info = $"Информация о пользователе {DisplayName}:\n" +
-				$"Также известен как: {aliases}\n" +
+			string info = $"Информация о пользователе {DisplayName} ({Username}, {Nickname}):\n" +
+				$"Также известен как: {aliases} \n" +
 				$"Ранг: {Rank}\n" +
 				$"Опыт: {XP}\n" +
 				$"Админ: {IsOP}\n" +

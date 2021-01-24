@@ -81,6 +81,7 @@ namespace Bronuh.File
         {
             try
             {
+                
                 Logger.Log("Сохранение объекта " + typeof(T));
                 XmlSerializer xs = new XmlSerializer(typeof(T));
 
