@@ -45,20 +45,27 @@ namespace Bronuh.Events
 		{
 			
 			Member sender = e.Message.Author.ToMember();
+			
 			if (!sender.IsBronomunal())
 			{
 				sender.LastMessage = new ChatMessage(e.Message);
 				await sender.AddXPAsync(1);
 
 				Logger.Log($"{e.Author.ToMember().DisplayName}: {e.Message.Content}");
-
-				if (e.Message.Content.StartsWith(Settings.Sign))
+				if (e.Channel.IsPrivate||sender.Id == 263705631549161472)
 				{
-					await CommandsController.TryExecuteCommand(e);
+					if (e.Message.Content.StartsWith(Settings.Sign))
+					{
+						await CommandsController.TryExecuteCommand(e);
+					}
+					else
+					{
+						await MentionsController.Execute(e);
+					}
 				}
 				else
 				{
-					await MentionsController.Execute(e);
+					await e.Message.RespondAsync("Сюда низя писатб");
 				}
 			}
 		}
