@@ -14,6 +14,7 @@ namespace Bronuh
 		public static string Sign { get; private set; } = "!";
 		private static readonly string _settingsPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BronhomunalSettings.xml";
 		public static bool DEBUG = true;
+		public static int LaunchCount = 0;
 
 
 		public void Load()
@@ -25,7 +26,9 @@ namespace Bronuh
 			BotToken = _container.BotToken;
 			Sign = _container.Sign;
 			DEBUG = _container.DEBUG;
+			LaunchCount = _container.LaunchCount;
 
+			LaunchCount++;
 			Logger.Success("Настройки загружены");
 		}
 
@@ -36,6 +39,7 @@ namespace Bronuh
 			_container.Sign = Sign;
 			_container.BotToken = BotToken;
 			_container.DEBUG = DEBUG;
+			_container.LaunchCount = LaunchCount;
 
 			SaveLoad.SaveObject<SettingsContainer>(_container, _settingsPath);
 			Logger.Success("Сохранение завершено");
@@ -56,6 +60,7 @@ namespace Bronuh
 	{
 		public SettingsContainer() { }
 
+		public int LaunchCount = 0;
 		public string BotToken;
 		public string Sign = "!";
 		public bool DEBUG = true;

@@ -1,8 +1,10 @@
 ﻿using Bronuh.Libs;
 using Bronuh.Modules;
 using Bronuh.Types;
+using DSharpPlus.Entities;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace Bronuh.Controllers.Commands
@@ -41,6 +43,28 @@ namespace Bronuh.Controllers.Commands
 			})
 			.AddAlias("info").AddAlias("инфа")
 			.SetDescription("Измеряет запрошенную инфу");
+
+
+			CommandsController.AddCommand("popcat", async (m) =>
+			{
+				string text = m.Text;
+				string[] parts = text.Split(' ');
+				string args = text.Replace(parts[0] + " ", "");
+				int userRank = m.Author.Rank;
+
+
+				var bitmap = Bronuh.Properties.Resources.Popcat;
+				MemoryStream memoryStream = new MemoryStream();
+				bitmap.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Gif);
+				memoryStream.Position = 0;
+
+				await m.RespondAsync(new DiscordMessageBuilder()
+					.WithEmbed(new DiscordEmbedBuilder()
+						.Build())
+					.WithFile("Popcat.gif", memoryStream));
+			})
+			.AddAlias("попкот")
+			.SetDescription("Покажет тебе поп-кета"); ;
 		}
 	}
 }

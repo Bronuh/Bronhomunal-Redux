@@ -119,7 +119,7 @@ namespace Bronuh.Controllers.Commands
 
 					Environment.Exit(0);
 				}
-			}).SetOp(true).AddAlias("перезайди");
+			}).SetOp(true).AddAlias("перезайди").AddAlias("рестарт");
 
 
 			CommandsController.AddCommand("save", async e =>

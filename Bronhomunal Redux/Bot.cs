@@ -127,6 +127,9 @@ namespace Bronuh
 				Ready = true;
 
 				Logger.Log("Получен список участников");
+				Logger.Success("Бот запущен");
+
+				await SendMessageAsync("Запуск № "+Settings.LaunchCount);
 			};
 
 
@@ -158,14 +161,14 @@ namespace Bronuh
 		{
 			if (Ready)
 			{
-				if (BotChannel != null)
+				if (LastChannel != null)
 				{
 					await LastChannel.SendMessageAsync(msg);
 				}
 				else
 				{
 					Logger.Warning("Нет последнего канала!1!");
-					if (LastChannel != null)
+					if (BotChannel != null)
 					{
 						await BotChannel.SendMessageAsync(msg);
 					}
