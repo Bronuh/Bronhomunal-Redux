@@ -47,7 +47,8 @@ namespace Bronuh.Controllers.Commands
 				await m.RespondAsync(respond);
 			})
 			.AddAlias("роли")
-			.SetDescription("Выводит список ролей, доступных для использования");
+			.SetDescription("Выводит список ролей, доступных для использования")
+			.AddTag("info");
 
 
 			//TODO: разобраться почему нельзя выдать роли, написанные латиницей
@@ -96,34 +97,10 @@ namespace Bronuh.Controllers.Commands
 
 			})
 			.SetDescription("Выдает пользователю роль")
-			.SetUsage(Settings.Sign+"giverole название_роли");
-
-			CommandsController.AddCommand("roles", async (m) =>
-			{
-				string text = m.Text;
-				string[] parts = text.Split(' ');
-				string args = text.Replace(parts[0] + " ", "");
-				int userRank = m.Author.Rank;
-
-				var roles = Bot.Guild.Roles.Values;
+			.SetUsage(Settings.Sign+"giverole название_роли")
+			.AddTag("misc");
 
 
-				string respond = "Роли: \n";
-
-				foreach (DiscordRole role in roles)
-				{
-					if (CheckRole(role, m.Author.Source))
-					{
-						respond += role.Name + "\n";
-					}
-				}
-				await m.RespondAsync(respond);
-			})
-			.AddAlias("роли")
-			.SetDescription("Выводит список ролей, доступных для использования");
-
-
-			//TODO: разобраться почему нельзя выдать роли, написанные латиницей
 			CommandsController.AddCommand("takerole", async (m) =>
 			{
 				string text = m.Text;
@@ -170,7 +147,8 @@ namespace Bronuh.Controllers.Commands
 
 			})
 			.SetDescription("Отменяет роль пользователя")
-			.SetUsage(Settings.Sign + "takerole название_роли");
+			.SetUsage(Settings.Sign + "takerole название_роли")
+			.AddTag("misc");
 
 
 			CommandsController.AddCommand("createrole", async (m) =>
@@ -198,7 +176,8 @@ namespace Bronuh.Controllers.Commands
 
 			})
 			.SetDescription("Создает новую роль")
-			.SetUsage(Settings.Sign + "giverole название_роли");
+			.SetUsage(Settings.Sign + "giverole название_роли")
+			.AddTag("misc");
 		}
 
 

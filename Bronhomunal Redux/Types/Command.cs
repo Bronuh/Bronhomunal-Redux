@@ -17,6 +17,7 @@ namespace Bronuh.Types
 		public string Description { get; private set; } = "нет описания";
 		public string Usage { get; private set; } = "нет примера использования";
 		public List<string> Aliases { get; private set; } = new List<string>();
+		public List<string> Tags { get; private set; } = new List<string>();
 
 		private readonly CommandAction _action;
 
@@ -42,6 +43,9 @@ namespace Bronuh.Types
 			{
 				aliases += alias+ (alias == Aliases[^1] ? "" : ", ");
 			}
+			string tags = "";
+			foreach (string tag in Tags)
+				tags += tag + (tag == Tags[^1] ? "" : ", ");
 
 			info += "Команда ["+(CommandsController.Commands.IndexOf(this)+1)+"/"+ CommandsController.Commands .Count+ "]: " +
 				Settings.Sign+Name+"\n";
@@ -49,18 +53,25 @@ namespace Bronuh.Types
 			info += "Использование: "+Usage+"\n";
 			info += "Описание: "+Description+"\n";
 			info += "Требуемый ранг: "+Rank+"\n";
-			info += "Только для админов: "+OpOnly;
+			info += "Только для админов: "+OpOnly+"\n";
+			info += "Тэги: " + tags;
 
 			return info;
 		}
 
-		public Command SetDescription(String description)
+		public Command SetDescription(string description)
 		{
 			Description = description;
 			return this;
 		}
 
-		public Command SetUsage(String usage)
+		public Command AddTag(string tag)
+		{
+			Tags.Add(tag.ToLower());
+			return this;
+		}
+
+		public Command SetUsage(string usage)
 		{
 			Usage = usage;
 			return this;
@@ -91,6 +102,20 @@ namespace Bronuh.Types
 		{
 			Aliases.Add(alias);
 			return this;
+		}
+
+
+		public bool HasTag(string searchingTag)
+		{
+			foreach (string tag in Tags)
+			{
+				if (tag.ToLower()==searchingTag.ToLower())
+				{
+					return true;
+				}
+			}
+			return false;
+			//return Tags.Contains(tag.ToLower());
 		}
 
 

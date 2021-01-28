@@ -112,6 +112,10 @@ namespace Bronuh.Types
 			await LastMessage?.RespondAsync($"{DisplayName} получил ранг {Rank}!11!!");
 		}
 
+		public bool IsOwner()
+		{
+			return Id == 263705631549161472;
+		}
 
 		public void Update()
 		{

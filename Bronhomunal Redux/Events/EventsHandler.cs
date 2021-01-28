@@ -29,7 +29,7 @@ namespace Bronuh.Events
 				return;
 			}
 
-			if (e is GuildMemberRemoveEventArgs guildMemberRemoveEventArgs)
+			else if (e is GuildMemberRemoveEventArgs guildMemberRemoveEventArgs)
 			{
 				Logger.Debug("Обработка события " + e.GetType().Name + "...");
 				await GuildMemberRemoveEventHandler(guildMemberRemoveEventArgs);
@@ -55,9 +55,8 @@ namespace Bronuh.Events
 				await sender.AddXPAsync(1);
 
 				Logger.Log($"{e.Author.ToMember().DisplayName}: {e.Message.Content}");
-				// TODO: Пофиксить сообщения в личку
 
-				if (true)
+				if (!e.Channel.IsPrivate||sender.IsOwner())
 				{
 					if (e.Message.Content.StartsWith(Settings.Sign))
 					{

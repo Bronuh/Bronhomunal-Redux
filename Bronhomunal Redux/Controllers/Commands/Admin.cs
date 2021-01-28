@@ -23,7 +23,8 @@ namespace Bronuh.Controllers.Commands
 			})
 			.SetOp(true)
 			.SetDescription("Включает/выключает вывод отладочных сообщений в консоль")
-			.SetUsage(Settings.Sign + "debug");
+			.SetUsage(Settings.Sign + "debug")
+			.AddTag("admin");
 
 
 			CommandsController.AddCommand("token", async (m) =>
@@ -37,7 +38,7 @@ namespace Bronuh.Controllers.Commands
 
 				string respond = "Установлен токен: " + token;
 				await m.RespondAsync(respond);
-			});
+			}).AddTag("admin");
 
 
 			CommandsController.AddCommand("say", async (m) =>
@@ -55,7 +56,8 @@ namespace Bronuh.Controllers.Commands
 			})
 			.AddAlias("скажи")
 			.SetOp(true)
-			.SetDescription("Заставляет бота сказать что-то");
+			.SetDescription("Заставляет бота сказать что-то")
+			.AddTag("admin");
 
 
 
@@ -80,7 +82,7 @@ namespace Bronuh.Controllers.Commands
 					.WithFile("Test.jpg",memoryStream));
 			})
 			.AddAlias("тест")
-			.SetOp(true);
+			.SetOp(true).AddTag("admin").AddTag("test");
 
 
 			CommandsController.AddCommand("shutdown", async e =>
@@ -91,7 +93,7 @@ namespace Bronuh.Controllers.Commands
 					Program.SaveAll();
 					System.Diagnostics.Process.Start("cmd", "/c shutdown /s /t 0");
 				}
-			}).SetOp(true);
+			}).SetOp(true).AddTag("admin");
 
 
 			CommandsController.AddCommand("kill", async e =>
@@ -105,7 +107,7 @@ namespace Bronuh.Controllers.Commands
 					
 					Environment.Exit(0);
 				}
-			}).SetOp(true).AddAlias("умри").AddAlias("die");
+			}).SetOp(true).AddAlias("умри").AddAlias("die").AddTag("admin");
 
 
 			CommandsController.AddCommand("restart", async e =>
@@ -119,7 +121,7 @@ namespace Bronuh.Controllers.Commands
 
 					Environment.Exit(0);
 				}
-			}).SetOp(true).AddAlias("перезайди").AddAlias("рестарт");
+			}).SetOp(true).AddAlias("перезайди").AddAlias("рестарт").AddTag("admin");
 
 
 			CommandsController.AddCommand("save", async e =>
@@ -128,7 +130,7 @@ namespace Bronuh.Controllers.Commands
 				await e.RespondAsync("Сохраняю...");
 				Program.SaveAll();
 
-			}).SetOp(true).AddAlias("сохранить");
+			}).SetOp(true).AddAlias("сохранить").AddTag("admin");
 
 			CommandsController.AddCommand("op", async e =>
 			{
@@ -151,7 +153,7 @@ namespace Bronuh.Controllers.Commands
 				{
 					Logger.Warning("Бот еще не готов");
 				}
-			}).SetOp(true);
+			}).SetOp(true).AddTag("admin");
 
 
 			CommandsController.AddCommand("deop", async e =>
@@ -175,7 +177,7 @@ namespace Bronuh.Controllers.Commands
 				{
 					Logger.Warning("Бот еще не готов");
 				}
-			}).SetOp(true);
+			}).SetOp(true).AddTag("admin");
 		}
 	}
 }

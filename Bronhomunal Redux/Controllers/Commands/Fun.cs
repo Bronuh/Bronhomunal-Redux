@@ -28,7 +28,8 @@ namespace Bronuh.Controllers.Commands
 			})
 			.AddAlias("потратить").AddAlias("потрачено")
 			.SetOp(true)
-			.SetDescription("Заставляет бота потратить что-то");
+			.SetDescription("Заставляет бота потратить что-то")
+			.AddTag("fun");
 
 
 			CommandsController.AddCommand("infa", async (m) =>
@@ -42,7 +43,8 @@ namespace Bronuh.Controllers.Commands
 				await m.RespondAsync(respond);
 			})
 			.AddAlias("info").AddAlias("инфа")
-			.SetDescription("Измеряет запрошенную инфу");
+			.SetDescription("Измеряет запрошенную инфу")
+			.AddTag("fun");
 
 
 			CommandsController.AddCommand("popcat", async (m) =>
@@ -64,7 +66,8 @@ namespace Bronuh.Controllers.Commands
 					.WithFile("Popcat.gif", memoryStream));
 			})
 			.AddAlias("попкот")
-			.SetDescription("Покажет тебе поп-кета"); ;
+			.SetDescription("Покажет тебе поп-кета")
+			.AddTag("fun");
 		}
 	}
 }

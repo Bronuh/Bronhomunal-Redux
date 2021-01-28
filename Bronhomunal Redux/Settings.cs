@@ -13,13 +13,12 @@ namespace Bronuh
 		public static string BotToken { get; private set; }
 		public static string Sign { get; private set; } = "!";
 		private static readonly string _settingsPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BronhomunalSettings.xml";
-		public static bool DEBUG = true;
+		public static bool DEBUG = false;
 		public static int LaunchCount = 0;
 
 
 		public void Load()
 		{
-
 			Logger.Log("Загрузка настроек...");
 			_container = SaveLoad.LoadObject<SettingsContainer>(_settingsPath) ?? new SettingsContainer();
 
@@ -63,7 +62,7 @@ namespace Bronuh
 		public int LaunchCount = 0;
 		public string BotToken;
 		public string Sign = "!";
-		public bool DEBUG = true;
+		public bool DEBUG = false;
 	}
 
 }

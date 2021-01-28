@@ -58,6 +58,14 @@ namespace Bronuh
 			return null;
 		}
 
+		public static string ToLine(this List<string> list)
+		{
+			string respond = "";
+			foreach (string word in list)
+				respond += word + (word == list[^1] ? "" : ", ");
+
+			return respond;
+		}
 
 		public static T GetRandom<T>(this List<T> list)
 		{

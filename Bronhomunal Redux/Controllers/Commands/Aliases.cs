@@ -19,7 +19,8 @@ namespace Bronuh.Controllers.Commands
 			.SetRank(1)
 			.SetDescription("Запоминает псевдоним указанного пользователя")
 			.SetUsage(Settings.Sign + "alias user alias")
-			.AddAlias("запомни").AddAlias("алиас");
+			.AddAlias("запомни").AddAlias("алиас")
+			.AddTag("misc");
 
 
 			CommandsController.AddCommand("forget", async (m) => {
@@ -33,7 +34,8 @@ namespace Bronuh.Controllers.Commands
 			.SetRank(1)
 			.SetDescription("Забывает псевдоним указанного пользователя")
 			.SetUsage(Settings.Sign + "forget alias")
-			.AddAlias("забудь");
+			.AddAlias("забудь")
+			.AddTag("misc");
 		}
 	}
 }
