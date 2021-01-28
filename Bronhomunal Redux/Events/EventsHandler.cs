@@ -55,7 +55,9 @@ namespace Bronuh.Events
 				await sender.AddXPAsync(1);
 
 				Logger.Log($"{e.Author.ToMember().DisplayName}: {e.Message.Content}");
-				if (e.Channel.IsPrivate||sender.Id == 263705631549161472)
+				// TODO: Пофиксить сообщения в личку
+
+				if (true)
 				{
 					if (e.Message.Content.StartsWith(Settings.Sign))
 					{
