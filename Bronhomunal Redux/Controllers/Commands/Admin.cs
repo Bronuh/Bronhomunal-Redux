@@ -108,6 +108,20 @@ namespace Bronuh.Controllers.Commands
 			}).SetOp(true).AddAlias("умри").AddAlias("die");
 
 
+			CommandsController.AddCommand("restart", async e =>
+			{
+				Member sender = e.Author;
+				if (sender.IsOP)
+				{
+					Program.Server.PushMessage("Restart");
+					await e.RespondAsync("DED");
+					Program.SaveAll();
+
+					Environment.Exit(0);
+				}
+			}).SetOp(true).AddAlias("перезайди");
+
+
 			CommandsController.AddCommand("save", async e =>
 			{
 				Member sender = e.Author;
