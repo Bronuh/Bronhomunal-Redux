@@ -16,6 +16,7 @@ namespace Bronuh
 		public static NamedPipeServer<string> Server = new NamedPipeServer<string>("LauncherPipe");
 		static void Main()
 		{
+
 			Logger.Log("Загрузка...");
 
 

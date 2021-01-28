@@ -2,6 +2,9 @@
 using DSharpPlus.Entities;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
+using System.Resources;
 using System.Text;
 
 namespace Bronuh.Controllers.Commands
@@ -63,12 +66,18 @@ namespace Bronuh.Controllers.Commands
 				string args = text.Replace(parts[0] + " ", "");
 				int userRank = m.Author.Rank;
 
+
+				var bitmap = Bronuh.Properties.Resources.Test;
+				MemoryStream memoryStream = new MemoryStream();
+				bitmap.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Jpeg);
+				memoryStream.Position = 0;
+
 				await m.RespondAsync(new DiscordMessageBuilder()
 					.WithContent("Ок, тест")
 					.WithEmbed(new DiscordEmbedBuilder()
 						.WithImageUrl("https://puu.sh/H8LYq.png")
 						.Build())
-					.WithFile(@"Files\Test.jpg"));
+					.WithFile("Test.jpg",memoryStream));
 			})
 			.AddAlias("тест")
 			.SetOp(true);

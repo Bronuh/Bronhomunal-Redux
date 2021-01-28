@@ -15,7 +15,6 @@ namespace Launcher
 			STOPPED,
 			UPDATING
 		}
-		// static string path = @"C:\Users\Bronuh\YandexDisk\Sync\Dev\C#\Console\Bronhomunal-Redux\Bronhomunal Redux\bin\Debug\netcoreapp3.1\Bronhomunal Redux.exe";
 		static Process bot = null;
 
 		static DirectoryInfo Current = new DirectoryInfo(Directory.GetCurrentDirectory());
@@ -56,7 +55,6 @@ namespace Launcher
 					targetDll = new FileInfo(Root+@"\Bronhomunal Redux\"+BuildPath+TargetDll),
 					targetExe = new FileInfo(Root + @"\Bronhomunal Redux\" + BuildPath + TargetExe);
 
-				//Console.WriteLine("");
 
 				if (File.GetLastWriteTime(targetDll.FullName) != File.GetLastWriteTime(CurrentDll.FullName)
 				|| File.GetLastWriteTime(targetExe.FullName) != File.GetLastWriteTime(CurrentExe.FullName))
@@ -66,7 +64,7 @@ namespace Launcher
 						CurrentStatus = Status.UPDATING;
 						Server.PushMessage("SaveAndExit");
 						Thread.Sleep(3000);
-						//UpdateFile(Root.FullName + @"Bronhomunal Redux\" + BuildPath + TargetExe);
+
 						Console.WriteLine("UPDATING!!!\n\n\n\n\n\n");
 						try
 						{
@@ -77,8 +75,6 @@ namespace Launcher
 							Console.WriteLine(e.Message);
 						}
 
-
-						//UpdateFile(Root.FullName + @"Bronhomunal Redux\" + BuildPath + TargetDll);
 
 						CurrentStatus = Status.WORKING;
 					}
@@ -139,7 +135,7 @@ namespace Launcher
 			Console.WriteLine("Подготовка Pipe сервера...");
 			
 
-			var outer = Task.Factory.StartNew(() =>      // внешняя задача
+			var outer = Task.Factory.StartNew(() =>     
 			{
 				Client.ServerMessage += (connection, message) =>
 				{
@@ -147,7 +143,7 @@ namespace Launcher
 					if (message == "Shutdown")
 					{
 						CurrentStatus = Status.STOPPED;
-						//Environment.Exit(0);
+						Environment.Exit(0);
 					}
 				};
 
