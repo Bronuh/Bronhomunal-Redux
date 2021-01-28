@@ -144,6 +144,8 @@ namespace Bronuh
 			}
 
 			Console.WriteLine(fullText);
+			Console.ForegroundColor = ConsoleColor.White;
+			Console.Write("");
 		}
 	}
 }

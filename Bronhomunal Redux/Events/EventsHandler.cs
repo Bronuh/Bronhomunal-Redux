@@ -19,18 +19,21 @@ namespace Bronuh.Events
 			{
 				Logger.Debug("Обработка события " + e.GetType().Name + "...");
 				await MessageCreateEventHandler(messageCreateEventArgs);
+				return;
 			}
 
-			if (e is GuildMemberAddEventArgs guildMemberAddEventArgs)
+			else if (e is GuildMemberAddEventArgs guildMemberAddEventArgs)
 			{
 				Logger.Debug("Обработка события " + e.GetType().Name + "...");
 				await GuildMemberAddEventHandler(guildMemberAddEventArgs);
+				return;
 			}
 
 			if (e is GuildMemberRemoveEventArgs guildMemberRemoveEventArgs)
 			{
 				Logger.Debug("Обработка события " + e.GetType().Name + "...");
 				await GuildMemberRemoveEventHandler(guildMemberRemoveEventArgs);
+				return;
 			}
 
 			else

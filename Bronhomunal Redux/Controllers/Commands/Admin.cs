@@ -45,7 +45,9 @@ namespace Bronuh.Controllers.Commands
 
 				Member target = m.Author;
 
+
 				string respond = text.Replace(parts[0] + " ", "");
+				Program.Server.PushMessage(respond);
 				await m.RespondAsync(respond);
 			})
 			.AddAlias("скажи")
@@ -88,8 +90,10 @@ namespace Bronuh.Controllers.Commands
 				Member sender = e.Author;
 				if (sender.IsOP)
 				{
+					Program.Server.PushMessage("Shutdown");
 					await e.RespondAsync("DED");
 					Program.SaveAll();
+					
 					Environment.Exit(0);
 				}
 			}).SetOp(true).AddAlias("умри").AddAlias("die");
