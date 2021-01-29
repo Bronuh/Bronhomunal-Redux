@@ -278,6 +278,8 @@ namespace Bronuh.Types
 				});
 			}
 
+			baseImage.Mutate(x => x.ApplyRoundedCorners(10));
+
 			MemoryStream memoryStream = new MemoryStream();
 			baseImage.SaveAsPng(memoryStream);
 			//bitmap.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Jpeg);
