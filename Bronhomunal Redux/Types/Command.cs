@@ -157,9 +157,9 @@ namespace Bronuh.Types
 			if (CheckCommand(text))
 			{
 				Logger.Debug("Обнаружена команда "+ Name);
-				if (author.IsOP||author.Rank>=Rank)
+				if (author.IsOp()||author.Rank>=Rank)
 				{
-					if (OpOnly && !author.IsOP)
+					if (OpOnly && !author.IsOp())
 					{
 						Logger.Warning("Команда только для операторов");
 						return true;

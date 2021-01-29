@@ -17,7 +17,6 @@ namespace Bronuh.Types
 
 		public string Username, DisplayName, Discriminator, Nickname;
 
-
 		public bool IsOP = false;
 
 		public int Character = 0;
@@ -49,7 +48,7 @@ namespace Bronuh.Types
 
 		public bool IsConsole()
 		{
-			return (Id==0&&IsOP&&Discriminator=="0000"&&Username=="CONSOLE");
+			return (Id==0&& IsOp()&& Discriminator=="0000"&&Username=="CONSOLE");
 		}
 
 
@@ -74,7 +73,7 @@ namespace Bronuh.Types
 				$"Также известен как: {aliases} \n" +
 				$"Ранг: {Rank}\n" +
 				$"Опыт: {XP}\n" +
-				$"Админ: {IsOP}\n" +
+				$"Админ: {IsOp()}\n" +
 				$"Консоль: {IsConsole()}\n";
 
 
@@ -93,6 +92,12 @@ namespace Bronuh.Types
 					await RankUpAsync();
 				}
 			}
+		}
+
+
+		public bool IsOp()
+		{
+			return IsOP || IsOwner() || IsBronomunal() || IsConsole();
 		}
 
 
@@ -131,7 +136,7 @@ namespace Bronuh.Types
 
 		public bool CanUse(Mention mention)
 		{
-			if (IsOP)
+			if (IsOp())
 			{
 				return true;
 			}

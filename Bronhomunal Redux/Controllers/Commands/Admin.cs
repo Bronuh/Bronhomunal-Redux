@@ -37,7 +37,7 @@ namespace Bronuh.Controllers.Commands
 
 				string respond = "Установлен токен: " + token;
 				await m.RespondAsync(respond);
-			}).AddTag("admin");
+			}).SetOp(true).AddTag("admin");
 
 
 			CommandsController.AddCommand("say", async (m) =>
@@ -50,13 +50,15 @@ namespace Bronuh.Controllers.Commands
 
 
 				string respond = text.Replace(parts[0] + " ", "");
-				Program.Server.PushMessage(respond);
+				// Program.Server.PushMessage(respond);
 				await m.RespondAsync(respond);
+				await m.Source.DeleteAsync();
 			})
 			.AddAlias("скажи")
-			.SetOp(true)
+			.SetOp(false)
 			.SetDescription("Заставляет бота сказать что-то")
-			.AddTag("admin");
+			.AddTag("misc")
+			.AddTag("fun");
 
 
 
@@ -90,7 +92,7 @@ namespace Bronuh.Controllers.Commands
 			CommandsController.AddCommand("shutdown", async e =>
 			{
 				Member sender = e.Author;
-				if (sender.IsOP)
+				if (sender.IsOp())
 				{
 					Program.SaveAll();
 					System.Diagnostics.Process.Start("cmd", "/c shutdown /s /t 0");
@@ -102,7 +104,7 @@ namespace Bronuh.Controllers.Commands
 			CommandsController.AddCommand("kill", async e =>
 			{
 				Member sender = e.Author;
-				if (sender.IsOP)
+				if (sender.IsOp())
 				{
 					Program.Server.PushMessage("Shutdown");
 					await e.RespondAsync("DED");
@@ -117,7 +119,7 @@ namespace Bronuh.Controllers.Commands
 			CommandsController.AddCommand("restart", async e =>
 			{
 				Member sender = e.Author;
-				if (sender.IsOP)
+				if (sender.IsOp())
 				{
 					Program.Server.PushMessage("Restart");
 					await e.RespondAsync("DED");

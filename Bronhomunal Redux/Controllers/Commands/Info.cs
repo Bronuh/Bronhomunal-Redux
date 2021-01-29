@@ -28,7 +28,7 @@ namespace Bronuh.Controllers.Commands
 					Logger.Debug("Команда "+command.Name);
 					if (userRank >= command.Rank)
 					{
-						if (command.OpOnly&&!m.Author.IsOP)
+						if (command.OpOnly&&!m.Author.IsOp())
 						{
 							continue;
 						}
