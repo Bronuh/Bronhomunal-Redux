@@ -7,6 +7,14 @@ using System.IO;
 using System.Resources;
 using System.Text;
 
+using SixLabors.Fonts;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.Drawing.Processing;
+using SixLabors.ImageSharp.Processing;
+using Image = SixLabors.ImageSharp.Image;
+using SixLabors.ImageSharp.Drawing;
+using SixLabors.ImageSharp.PixelFormats;
+
 namespace Bronuh.Controllers.Commands
 {
 	class Admin : ICommands
@@ -69,22 +77,58 @@ namespace Bronuh.Controllers.Commands
 				string args = text.Replace(parts[0] + " ", "");
 				int userRank = m.Author.Rank;
 
+				Bitmap baseBitmap = Bronuh.Properties.Resources.Level;
+				Bitmap avatarBitmap = m.Author.GetAvatar();
 
-				var bitmap = Bronuh.Properties.Resources.Test;
+				var baseImage = Image.Load(baseBitmap.ToArray());
+				var avatarImage = Image.Load(avatarBitmap.ToArray());
+
+				avatarImage.Mutate(x => x.Resize(new ResizeOptions { 
+					Size = new SixLabors.ImageSharp.Size(110,110),
+					Mode = ResizeMode.Crop
+				}).ApplyRoundedCorners(10));
+
+				baseImage.Mutate(ctx => {
+					int step = (128 - 110) / 2;
+					ctx.DrawImage(avatarImage, new SixLabors.ImageSharp.Point(720-110-step,step), 1);
+					ctx.DrawText(new TextGraphicsOptions { 
+						TextOptions = { 
+							HorizontalAlignment = HorizontalAlignment.Center,
+						}
+					},
+					m.Author.Rank+"",
+					SixLabors.Fonts.SystemFonts.CreateFont("Arial", 60),
+					new SixLabors.ImageSharp.Color(new Rgba32(255, 255, 255)),
+					new SixLabors.ImageSharp.PointF(68, 30));
+
+					var col = m.Author.Source.Color;
+
+					ctx.DrawText(new TextGraphicsOptions
+					{
+						TextOptions = {
+							HorizontalAlignment = HorizontalAlignment.Left,
+						}
+					},
+					m.Author.Username,
+					SixLabors.Fonts.SystemFonts.CreateFont("Arial", 50),
+					new SixLabors.ImageSharp.Color(new Rgba32(col.R, col.G, col.B)),
+					new SixLabors.ImageSharp.PointF(150, 33));
+
+				});
+
+				var bitmap = m.Author.GetAvatar();
 				MemoryStream memoryStream = new MemoryStream();
-				bitmap.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Jpeg);
+				baseImage.SaveAsPng(memoryStream);
+				//bitmap.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Jpeg);
 				memoryStream.Position = 0;
 
 				await m.RespondAsync(new DiscordMessageBuilder()
 					.WithContent("Ок, тест")
-					.WithEmbed(new DiscordEmbedBuilder()
-						.WithImageUrl("https://puu.sh/H8LYq.png")
-						.Build())
-					.WithFile("Test.jpg", memoryStream));
+					.WithFile("Test.png", memoryStream));
 			})
 			.AddAlias("тест")
 			.SetDescription("Делает какую-то произвольную хардкодную дичь")
-			.SetOp(true)
+			.SetOp(false)
 			.AddTag("admin")
 			.AddTag("test");
 
@@ -188,5 +232,8 @@ namespace Bronuh.Controllers.Commands
 			}).SetOp(true)
 			.AddTag("admin");
 		}
+
+
+		
 	}
 }

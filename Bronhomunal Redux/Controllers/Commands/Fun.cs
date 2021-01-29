@@ -62,8 +62,6 @@ namespace Bronuh.Controllers.Commands
 				memoryStream.Position = 0;
 
 				await m.RespondAsync(new DiscordMessageBuilder()
-					.WithEmbed(new DiscordEmbedBuilder()
-						.Build())
 					.WithFile("Popcat.gif", memoryStream));
 			})
 			.AddAlias("попкот")

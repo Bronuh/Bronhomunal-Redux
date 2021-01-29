@@ -1,4 +1,5 @@
 ﻿using Bronuh.Types;
+using DSharpPlus.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -90,6 +91,56 @@ namespace Bronuh.Controllers.Commands
 			.AddAlias("who").AddAlias("кто")
 			.SetUsage("<command> [username]")
 			.SetDescription("Выводит информацию о пользователе")
+			.AddTag("misc")
+			.AddTag("info");
+
+
+
+			CommandsController.AddCommand("profile", async (m) =>
+			{
+				string text = m.Text;
+				string[] parts = text.Split(' ');
+				int userRank = m.Author.Rank;
+
+				Member target = null;
+
+				if (parts.Length > 1)
+				{
+					target = MembersController.FindMember(parts[1]);
+				}
+				else if (parts.Length == 1)
+				{
+					target = m.Author;
+				}
+
+				//string respond = target?.GetInfo() ?? "";
+
+				await m.RespondAsync(new DiscordMessageBuilder()
+					.WithContent(":pencil: Профиль пользователя " + target.DisplayName)
+					.WithFile(target.DisplayName+".png", target.GetBasicProfileImageStream()));
+			})
+			.AddAlias("профиль")
+			.SetUsage("<command> [username]")
+			.SetDescription("Выводит информацию о пользователе")
+			.AddTag("misc")
+			.AddTag("info")
+			.AddTag("test");
+
+
+			CommandsController.AddCommand("about", async (m) =>
+			{
+				string text = m.Text;
+				string[] parts = text.Split(' ');
+				int userRank = m.Author.Rank;
+
+				string args = text.Substring(parts[0].Length);
+
+				m.Author.About = args;
+				await m.RespondAsync("Информация изменена");
+			})
+			.AddAlias("осебе")
+			.SetUsage("<command> текст описания")
+			.SetDescription("Изменяет информацию о себе")
 			.AddTag("misc")
 			.AddTag("info");
 

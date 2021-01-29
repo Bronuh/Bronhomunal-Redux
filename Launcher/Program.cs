@@ -19,8 +19,11 @@ namespace Launcher
 
 		static DirectoryInfo Current = new DirectoryInfo(Directory.GetCurrentDirectory());
 		static DirectoryInfo Root = Current.Parent.Parent.Parent.Parent;
-		static string BuildPath = @"bin\debug\netcoreapp3.1\";
-
+		#if DEBUG
+			static string BuildPath = @"bin\debug\netcoreapp3.1\";
+		#else
+			static string BuildPath = @"bin\release\netcoreapp3.1\";
+		#endif
 		static string TargetApp = "Bronhomunal Redux";
 		static string TargetExe = TargetApp + ".exe";
 		static string TargetDll = TargetApp + ".dll";
@@ -170,7 +173,7 @@ namespace Launcher
 		{
 			foreach (FileInfo file in new DirectoryInfo(Root.FullName + "\\Bronhomunal Redux\\" + BuildPath).GetFiles())
 			{
-				if (file.Name.EndsWith(".exe") || file.Name.EndsWith(".dll") || file.Name.EndsWith(".json"))
+				if (file.Name.EndsWith(".exe") || file.Name.EndsWith(".dll") || file.Name.EndsWith(".json") || file.Name.EndsWith(".pdb"))
 				{
 					UpdateFile(file.FullName);
 				}

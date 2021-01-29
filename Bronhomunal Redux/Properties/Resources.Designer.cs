@@ -63,6 +63,26 @@ namespace Bronuh.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap Crown {
+            get {
+                object obj = ResourceManager.GetObject("Crown", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Level {
+            get {
+                object obj = ResourceManager.GetObject("Level", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Popcat {
             get {
                 object obj = ResourceManager.GetObject("Popcat", resourceCulture);
@@ -76,16 +96,6 @@ namespace Bronuh.Properties {
         public static System.Drawing.Bitmap Test {
             get {
                 object obj = ResourceManager.GetObject("Test", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
-        /// </summary>
-        public static System.Drawing.Bitmap Test2 {
-            get {
-                object obj = ResourceManager.GetObject("Test2", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
