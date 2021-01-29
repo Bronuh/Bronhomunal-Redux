@@ -120,6 +120,12 @@ namespace Bronuh.Types
 		}
 
 
+		private int XpForRank(int rank)
+		{
+			return (rank-1) * XpPerRank;
+		}
+
+
 		private async Task RankUpAsync()
 		{
 			Rank++;
@@ -254,7 +260,7 @@ namespace Bronuh.Types
 						}
 				},
 				about,
-				SixLabors.Fonts.SystemFonts.CreateFont("Arial", 16),
+				SixLabors.Fonts.SystemFonts.CreateFont("Arial", 14),
 				new SixLabors.ImageSharp.Color(new Rgba32(255, 255, 255)),
 				new SixLabors.ImageSharp.PointF(160, 68));
 				//new SixLabors.ImageSharp.PointF(150, 33));
@@ -275,6 +281,42 @@ namespace Bronuh.Types
 				{
 					int step = (128 - 110) / 2;
 					ctx.DrawImage(crownImage, new SixLabors.ImageSharp.Point(720 - 150, -10), 1);
+
+					/// XP Bar
+
+					int curXp = XP - XpForRank(Rank);
+					int xPos = 250;
+					int length = 340;
+					int yPos = 120;
+
+					ctx.DrawLines(new SixLabors.ImageSharp.Drawing.Processing.Pen(
+					new SixLabors.ImageSharp.Color(
+						new Rgba32(100, 100, 100)), 7),
+					new SixLabors.ImageSharp.PointF[] {
+						new SixLabors.ImageSharp.PointF(xPos, yPos),
+						new SixLabors.ImageSharp.PointF(xPos+length, yPos)
+					});
+
+					ctx.DrawLines(new SixLabors.ImageSharp.Drawing.Processing.Pen(
+					new SixLabors.ImageSharp.Color(
+						new Rgba32(255, 255, 255)), 3f),
+					new SixLabors.ImageSharp.PointF[] {
+						new SixLabors.ImageSharp.PointF(xPos, yPos),
+						new SixLabors.ImageSharp.PointF(xPos+length*((float)curXp/XpPerRank), yPos)
+					});
+
+					ctx.DrawText(new TextGraphicsOptions
+					{
+						TextOptions = {
+							HorizontalAlignment = HorizontalAlignment.Left,
+							WrapTextWidth = 430
+						}
+					},
+					"XP: "+XP+" / "+XpForRank(Rank+1),
+					SixLabors.Fonts.SystemFonts.CreateFont("Arial", 14),
+					new SixLabors.ImageSharp.Color(new Rgba32(255, 255, 255)),
+					new SixLabors.ImageSharp.PointF(xPos - 100, yPos-8));
+
 				});
 			}
 
