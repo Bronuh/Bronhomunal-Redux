@@ -27,8 +27,8 @@ namespace Bronuh.Controllers.Commands
 				await m.RespondAsync(respond);
 			})
 			.AddAlias("потратить").AddAlias("потрачено")
-			.SetOp(true)
 			.SetDescription("Заставляет бота потратить что-то")
+			.SetUsage("<command> текст который должен быть портачен")
 			.AddTag("fun");
 
 
@@ -44,6 +44,7 @@ namespace Bronuh.Controllers.Commands
 			})
 			.AddAlias("info").AddAlias("инфа")
 			.SetDescription("Измеряет запрошенную инфу")
+			.SetUsage("<command> какая-то инфа")
 			.AddTag("fun");
 
 
@@ -67,6 +68,7 @@ namespace Bronuh.Controllers.Commands
 			})
 			.AddAlias("попкот")
 			.SetDescription("Покажет тебе поп-кета")
+			.SetUsage("<command>")
 			.AddTag("fun");
 		}
 	}

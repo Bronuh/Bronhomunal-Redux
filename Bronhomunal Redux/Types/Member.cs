@@ -20,7 +20,7 @@ namespace Bronuh.Types
 
 		public bool IsOP = false;
 
-		public Hero Character;
+		public int Character = 0;
 		
 		[System.Xml.Serialization.XmlIgnore]
 		public DiscordMember Source;
@@ -42,10 +42,6 @@ namespace Bronuh.Types
 		public Member(DiscordMember member) 
 		{
 			Source = member;
-			Character = new Hero
-			{
-				Name = "Гирой"
-			};
 
 			Update();
 		}
@@ -128,7 +124,6 @@ namespace Bronuh.Types
 				Nickname = Source.Nickname ?? Username;
 				DisplayName = Source.DisplayName ?? Nickname;
 				
-				Character.CharacterName = Username;
 			}
 		}
 

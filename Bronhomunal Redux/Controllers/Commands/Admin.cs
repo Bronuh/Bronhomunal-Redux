@@ -23,7 +23,6 @@ namespace Bronuh.Controllers.Commands
 			})
 			.SetOp(true)
 			.SetDescription("Включает/выключает вывод отладочных сообщений в консоль")
-			.SetUsage(Settings.Sign + "debug")
 			.AddTag("admin");
 
 
@@ -79,10 +78,13 @@ namespace Bronuh.Controllers.Commands
 					.WithEmbed(new DiscordEmbedBuilder()
 						.WithImageUrl("https://puu.sh/H8LYq.png")
 						.Build())
-					.WithFile("Test.jpg",memoryStream));
+					.WithFile("Test.jpg", memoryStream));
 			})
 			.AddAlias("тест")
-			.SetOp(true).AddTag("admin").AddTag("test");
+			.SetDescription("Делает какую-то произвольную хардкодную дичь")
+			.SetOp(true)
+			.AddTag("admin")
+			.AddTag("test");
 
 
 			CommandsController.AddCommand("shutdown", async e =>
@@ -93,7 +95,8 @@ namespace Bronuh.Controllers.Commands
 					Program.SaveAll();
 					System.Diagnostics.Process.Start("cmd", "/c shutdown /s /t 0");
 				}
-			}).SetOp(true).AddTag("admin");
+			}).SetOp(true)
+			.AddTag("admin");
 
 
 			CommandsController.AddCommand("kill", async e =>
@@ -107,7 +110,8 @@ namespace Bronuh.Controllers.Commands
 					
 					Environment.Exit(0);
 				}
-			}).SetOp(true).AddAlias("умри").AddAlias("die").AddTag("admin");
+			}).SetOp(true).AddAlias("умри").AddAlias("die")
+			.AddTag("admin");
 
 
 			CommandsController.AddCommand("restart", async e =>
@@ -121,7 +125,8 @@ namespace Bronuh.Controllers.Commands
 
 					Environment.Exit(0);
 				}
-			}).SetOp(true).AddAlias("перезайди").AddAlias("рестарт").AddTag("admin");
+			}).SetOp(true).AddAlias("перезайди").AddAlias("рестарт")
+			.AddTag("admin");
 
 
 			CommandsController.AddCommand("save", async e =>
@@ -153,7 +158,8 @@ namespace Bronuh.Controllers.Commands
 				{
 					Logger.Warning("Бот еще не готов");
 				}
-			}).SetOp(true).AddTag("admin");
+			}).SetOp(true)
+			.AddTag("admin");
 
 
 			CommandsController.AddCommand("deop", async e =>
@@ -177,7 +183,8 @@ namespace Bronuh.Controllers.Commands
 				{
 					Logger.Warning("Бот еще не готов");
 				}
-			}).SetOp(true).AddTag("admin");
+			}).SetOp(true)
+			.AddTag("admin");
 		}
 	}
 }

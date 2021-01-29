@@ -97,7 +97,7 @@ namespace Bronuh.Controllers.Commands
 
 			})
 			.SetDescription("Выдает пользователю роль")
-			.SetUsage(Settings.Sign+"giverole название_роли")
+			.SetUsage("<command> название_роли")
 			.AddTag("misc");
 
 
@@ -147,7 +147,7 @@ namespace Bronuh.Controllers.Commands
 
 			})
 			.SetDescription("Отменяет роль пользователя")
-			.SetUsage(Settings.Sign + "takerole название_роли")
+			.SetUsage("<command> название_роли")
 			.AddTag("misc");
 
 
@@ -176,7 +176,8 @@ namespace Bronuh.Controllers.Commands
 
 			})
 			.SetDescription("Создает новую роль")
-			.SetUsage(Settings.Sign + "giverole название_роли")
+			.SetUsage("<command> название_роли")
+			.SetRank(2)
 			.AddTag("misc");
 		}
 

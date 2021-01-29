@@ -26,15 +26,18 @@ namespace Bronuh.Controllers.Commands
 				foreach (Command command in CommandsController.Commands)
 				{
 					Logger.Debug("Команда "+command.Name);
-					if (m.Author.IsOP || userRank >= command.Rank)
+					if (userRank >= command.Rank)
 					{
-						
+						if (command.OpOnly&&!m.Author.IsOP)
+						{
+							continue;
+						}
 						if (cmdInMessage >= maxCommandsPerMessage)
 						{
 							Logger.Debug("Слишком много команд. Новое сообщение...");
 							await m.RespondPersonalAsync(respond);
 							cmdInMessage = 0;
-							respond = "\n";
+							respond = " \n\n";
 						}
 						if (parts.Length > 1)
 						{
@@ -51,8 +54,6 @@ namespace Bronuh.Controllers.Commands
 							respond += command.GetInfo() + "\n\n";
 							cmdInMessage++;
 						}
-						
-						
 					}
 				}
 
@@ -60,7 +61,7 @@ namespace Bronuh.Controllers.Commands
 			})
 			.AddAlias("команды").AddAlias("help").AddAlias("хелп").AddAlias("помощь")
 			.SetDescription("Выводит список доступных команд")
-			.SetUsage(Settings.Sign + "commands [tag]")
+			.SetUsage("<command> [tag]")
 			.AddTag("help")
 			.AddTag("info");
 
@@ -87,7 +88,7 @@ namespace Bronuh.Controllers.Commands
 				await m.RespondAsync(respond);
 			})
 			.AddAlias("who").AddAlias("кто")
-			.SetUsage(Settings.Sign + "whois [username]")
+			.SetUsage("<command> [username]")
 			.SetDescription("Выводит информацию о пользователе")
 			.AddTag("misc")
 			.AddTag("info");
@@ -116,7 +117,7 @@ namespace Bronuh.Controllers.Commands
 				await m.RespondAsync(respond);
 			})
 			.AddAlias("tags").AddAlias("тэги")
-			.SetUsage(Settings.Sign + "commandtags")
+			.SetUsage("<command>")
 			.SetDescription("Выводит известные теги для команд, для использования с !commands [tag]")
 			.AddTag("help")
 			.AddTag("info");

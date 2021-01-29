@@ -15,7 +15,7 @@ namespace Bronuh.Types
 	{
 		public string Name { get; private set; }
 		public string Description { get; private set; } = "нет описания";
-		public string Usage { get; private set; } = "нет примера использования";
+		public string Usage { get; private set; } = "<command>";
 		public List<string> Aliases { get; private set; } = new List<string>();
 		public List<string> Tags { get; private set; } = new List<string>();
 
@@ -55,6 +55,8 @@ namespace Bronuh.Types
 			info += "Требуемый ранг: "+Rank+"\n";
 			info += "Только для админов: "+OpOnly+"\n";
 			info += "Тэги: " + tags;
+
+			info = info.Replace("<sign>", Settings.Sign).Replace("<name>", Name).Replace("<command>",Settings.Sign+Name);
 
 			return info;
 		}
