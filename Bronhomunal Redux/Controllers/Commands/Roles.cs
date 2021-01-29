@@ -51,7 +51,6 @@ namespace Bronuh.Controllers.Commands
 			.AddTag("info");
 
 
-			//TODO: разобраться почему нельзя выдать роли, написанные латиницей
 			CommandsController.AddCommand("giverole", async (m) =>
 			{
 				string text = m.Text;

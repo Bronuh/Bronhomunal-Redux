@@ -74,7 +74,7 @@ namespace RPGCore.Entities
 
 		public virtual void Think() { }
 
-		// TODO: Доделать расчет урона
+
 		public virtual void InflictDamage(Unit target)
 		{
 			Damage damage = BaseDamage.Copy();

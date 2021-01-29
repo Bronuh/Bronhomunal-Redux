@@ -21,16 +21,16 @@ namespace Bronuh.Types
 	[Serializable]
 	public class Member
 	{
+		public string Username, DisplayName, Discriminator, Nickname, About;
+
 		public ulong Id;
 		public int Rank = 1;
 		public int XP = 0;
-		private static readonly int XpPerRank = 100;
-
-		public string Username, DisplayName, Discriminator, Nickname, About;
+		public static readonly int XpPerRank = 100;
 
 		public bool IsOP = false;
 
-		public int Character = 0;
+		public int CharacterId = 0;
 		
 		[System.Xml.Serialization.XmlIgnore]
 		public DiscordMember Source;
@@ -38,7 +38,7 @@ namespace Bronuh.Types
 		[System.Xml.Serialization.XmlIgnore]
 		public ChatMessage LastMessage = null;
 
-
+		public List<string> Achievements = new List<string>();
 
 		public Member() { }
 
@@ -114,13 +114,13 @@ namespace Bronuh.Types
 		}
 
 
-		private int RankForXp(int xp)
+		public static int RankForXp(int xp)
 		{
 			return (int)Math.Floor((double)xp / XpPerRank) + 1;
 		}
 
 
-		private int XpForRank(int rank)
+		public static int XpForRank(int rank)
 		{
 			return (rank-1) * XpPerRank;
 		}
@@ -188,146 +188,7 @@ namespace Bronuh.Types
 
 		public Stream GetBasicProfileImageStream()
 		{
-			Bitmap baseBitmap = Bronuh.Properties.Resources.Level;
-			Bitmap avatarBitmap = GetAvatar();
-
-			
-			var avatarImage = Image.Load(avatarBitmap.ToArray());
-			var baseImage = Image.Load(baseBitmap.ToArray());
-			
-
-
-			avatarImage.Mutate(x => x.Resize(new ResizeOptions
-			{
-				Size = new SixLabors.ImageSharp.Size(110, 110),
-				Mode = ResizeMode.Crop
-			}).ApplyRoundedCorners(10));
-
-
-
-			baseImage.Mutate(ctx => {
-				int step = (128 - 110) / 2;
-				ctx.DrawImage(avatarImage, new SixLabors.ImageSharp.Point(720 - 110 - step, step), 1);
-				ctx.DrawText(new TextGraphicsOptions
-				{
-					TextOptions = {
-							HorizontalAlignment = HorizontalAlignment.Center,
-						}
-				},
-				Rank + "",
-				SixLabors.Fonts.SystemFonts.CreateFont("Arial", 60),
-				new SixLabors.ImageSharp.Color(new Rgba32(255, 255, 255)),
-				new SixLabors.ImageSharp.PointF(68, 30));
-
-				var col = Source.Color;
-
-				ctx.DrawText(new TextGraphicsOptions
-				{
-					TextOptions = {
-							HorizontalAlignment = HorizontalAlignment.Left,
-						}
-				},
-				Username,
-				SixLabors.Fonts.SystemFonts.CreateFont("Arial", 50),
-				new SixLabors.ImageSharp.Color(new Rgba32(col.R, col.G, col.B)),
-				new SixLabors.ImageSharp.PointF(150, 5));
-
-				//ctx.DrawLines(new SixLabors.ImageSharp.Drawing.Processing.Pen(
-				//	new SixLabors.ImageSharp.Color(
-				//		new Rgba32(100, 100, 100)),3),
-				//	new SixLabors.ImageSharp.PointF[] {
-				//		new SixLabors.ImageSharp.PointF(155,64),
-				//		new SixLabors.ImageSharp.PointF(155,120)
-				//	});
-
-				ctx.DrawLines(new SixLabors.ImageSharp.Drawing.Processing.Pen(
-					new SixLabors.ImageSharp.Color(
-						new Rgba32(100, 100, 100)), 3),
-					new SixLabors.ImageSharp.PointF[] {
-						new SixLabors.ImageSharp.PointF(155,64),
-						new SixLabors.ImageSharp.PointF(590,64)
-					});
-
-				int maxLength = 100;
-				string about = About;
-				about = about.Length > maxLength ? about.Substring(0, maxLength-1)+"..." : about;
-
-				ctx.DrawText(new TextGraphicsOptions
-				{
-					TextOptions = {
-							HorizontalAlignment = HorizontalAlignment.Left,
-							WrapTextWidth = 430
-						}
-				},
-				about,
-				SixLabors.Fonts.SystemFonts.CreateFont("Arial", 14),
-				new SixLabors.ImageSharp.Color(new Rgba32(255, 255, 255)),
-				new SixLabors.ImageSharp.PointF(160, 68));
-				//new SixLabors.ImageSharp.PointF(150, 33));
-
-
-			});
-			if (IsOp())
-			{
-				Bitmap crownBitmap = Bronuh.Properties.Resources.Crown;
-				var crownImage = Image.Load(crownBitmap.ToArray());
-
-				crownImage.Mutate(ctx =>
-				{
-					ctx.Resize(new SixLabors.ImageSharp.Size(65, 65));
-				});
-
-				baseImage.Mutate(ctx =>
-				{
-					int step = (128 - 110) / 2;
-					ctx.DrawImage(crownImage, new SixLabors.ImageSharp.Point(720 - 150, -10), 1);
-
-					/// XP Bar
-
-					int curXp = XP - XpForRank(Rank);
-					int xPos = 250;
-					int length = 340;
-					int yPos = 120;
-
-					ctx.DrawLines(new SixLabors.ImageSharp.Drawing.Processing.Pen(
-					new SixLabors.ImageSharp.Color(
-						new Rgba32(100, 100, 100)), 7),
-					new SixLabors.ImageSharp.PointF[] {
-						new SixLabors.ImageSharp.PointF(xPos, yPos),
-						new SixLabors.ImageSharp.PointF(xPos+length, yPos)
-					});
-
-					ctx.DrawLines(new SixLabors.ImageSharp.Drawing.Processing.Pen(
-					new SixLabors.ImageSharp.Color(
-						new Rgba32(255, 255, 255)), 3f),
-					new SixLabors.ImageSharp.PointF[] {
-						new SixLabors.ImageSharp.PointF(xPos, yPos),
-						new SixLabors.ImageSharp.PointF(xPos+length*((float)curXp/XpPerRank), yPos)
-					});
-
-					ctx.DrawText(new TextGraphicsOptions
-					{
-						TextOptions = {
-							HorizontalAlignment = HorizontalAlignment.Left,
-							WrapTextWidth = 430
-						}
-					},
-					"XP: "+XP+" / "+XpForRank(Rank+1),
-					SixLabors.Fonts.SystemFonts.CreateFont("Arial", 14),
-					new SixLabors.ImageSharp.Color(new Rgba32(255, 255, 255)),
-					new SixLabors.ImageSharp.PointF(xPos - 100, yPos-8));
-
-				});
-			}
-
-			baseImage.Mutate(x => x.ApplyRoundedCorners(10));
-
-			MemoryStream memoryStream = new MemoryStream();
-			baseImage.SaveAsPng(memoryStream);
-			//bitmap.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Jpeg);
-			memoryStream.Position = 0;
-
-			return memoryStream;
+			return Graphics.SmallProfileBuilder.Build(this);
 		}
 	}
 }
