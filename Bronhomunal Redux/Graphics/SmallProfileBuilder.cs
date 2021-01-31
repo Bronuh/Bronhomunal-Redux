@@ -24,7 +24,7 @@ namespace Bronuh.Graphics
 			/// Prepare avatar
 			avatarImage.Mutate(x => x.Resize(new ResizeOptions
 			{
-				Size = new SixLabors.ImageSharp.Size(110, 110),
+				Size = new Size(110, 110),
 				Mode = ResizeMode.Crop
 			}).ApplyRoundedCorners(10));
 
@@ -33,7 +33,7 @@ namespace Bronuh.Graphics
 			///Base info
 			baseImage.Mutate(ctx => {
 				int step = (128 - 110) / 2;
-				ctx.DrawImage(avatarImage, new SixLabors.ImageSharp.Point(720 - 110 - step, step), 1);
+				ctx.DrawImage(avatarImage, new Point(720 - 110 - step, step), 1);
 				ctx.DrawText(new TextGraphicsOptions
 				{
 					TextOptions = {
@@ -41,9 +41,9 @@ namespace Bronuh.Graphics
 						}
 				},
 				member.Rank + "",
-				SixLabors.Fonts.SystemFonts.CreateFont("Arial", 60),
-				new SixLabors.ImageSharp.Color(new Rgba32(255, 255, 255)),
-				new SixLabors.ImageSharp.PointF(68, 30));
+				SystemFonts.CreateFont("Arial", 60),
+				new Color(new Rgba32(255, 255, 255)),
+				new PointF(68, 30));
 
 				var col = member.Source.Color;
 
@@ -55,18 +55,18 @@ namespace Bronuh.Graphics
 						}
 				},
 				member.Username,
-				SixLabors.Fonts.SystemFonts.CreateFont("Arial", 50),
-				new SixLabors.ImageSharp.Color(new Rgba32(col.R, col.G, col.B)),
-				new SixLabors.ImageSharp.PointF(150, 5));
+				SystemFonts.CreateFont("Arial", 50),
+				new Color(new Rgba32(col.R, col.G, col.B)),
+				new PointF(150, 5));
 
 				
 
-				ctx.DrawLines(new SixLabors.ImageSharp.Drawing.Processing.Pen(
-					new SixLabors.ImageSharp.Color(
+				ctx.DrawLines(new Pen(
+					new Color(
 						new Rgba32(100, 100, 100)), 3),
-					new SixLabors.ImageSharp.PointF[] {
-						new SixLabors.ImageSharp.PointF(155,64),
-						new SixLabors.ImageSharp.PointF(590,64)
+					new PointF[] {
+						new PointF(155,64),
+						new PointF(590,64)
 					});
 
 				int maxLength = 100;
@@ -81,9 +81,9 @@ namespace Bronuh.Graphics
 						}
 				},
 				about,
-				SixLabors.Fonts.SystemFonts.CreateFont("Arial", 14),
-				new SixLabors.ImageSharp.Color(new Rgba32(255, 255, 255)),
-				new SixLabors.ImageSharp.PointF(160, 68));
+				SystemFonts.CreateFont("Arial", 14),
+				new Color(new Rgba32(255, 255, 255)),
+				new PointF(160, 68));
 				//new SixLabors.ImageSharp.PointF(150, 33));
 
 
@@ -94,13 +94,13 @@ namespace Bronuh.Graphics
 
 				crownImage.Mutate(ctx =>
 				{
-					ctx.Resize(new SixLabors.ImageSharp.Size(65, 65));
+					ctx.Resize(new Size(65, 65));
 				});
 
 				baseImage.Mutate(ctx =>
 				{
 					int step = (128 - 110) / 2;
-					ctx.DrawImage(crownImage, new SixLabors.ImageSharp.Point(720 - 150, -10), 1);
+					ctx.DrawImage(crownImage, new Point(720 - 150, -10), 1);
 
 					/// XP Bar
 
@@ -109,20 +109,20 @@ namespace Bronuh.Graphics
 					int length = 340;
 					int yPos = 120;
 
-					ctx.DrawLines(new SixLabors.ImageSharp.Drawing.Processing.Pen(
-					new SixLabors.ImageSharp.Color(
+					ctx.DrawLines(new Pen(
+					new Color(
 						new Rgba32(100, 100, 100)), 7),
-					new SixLabors.ImageSharp.PointF[] {
-						new SixLabors.ImageSharp.PointF(xPos, yPos),
-						new SixLabors.ImageSharp.PointF(xPos+length, yPos)
+					new PointF[] {
+						new PointF(xPos, yPos),
+						new PointF(xPos+length, yPos)
 					});
 
-					ctx.DrawLines(new SixLabors.ImageSharp.Drawing.Processing.Pen(
-					new SixLabors.ImageSharp.Color(
+					ctx.DrawLines(new Pen(
+					new Color(
 						new Rgba32(255, 255, 255)), 3f),
-					new SixLabors.ImageSharp.PointF[] {
-						new SixLabors.ImageSharp.PointF(xPos, yPos),
-						new SixLabors.ImageSharp.PointF(xPos+length*((float)curXp/Member.XpPerRank), yPos)
+					new PointF[] {
+						new PointF(xPos, yPos),
+						new PointF(xPos+length*((float)curXp/Member.XpPerRank), yPos)
 					});
 
 					ctx.DrawText(new TextGraphicsOptions
@@ -133,11 +133,13 @@ namespace Bronuh.Graphics
 						}
 					},
 					"XP: " + member.XP + " / " + Member.XpForRank(member.Rank + 1),
-					SixLabors.Fonts.SystemFonts.CreateFont("Arial", 14),
-					new SixLabors.ImageSharp.Color(new Rgba32(255, 255, 255)),
-					new SixLabors.ImageSharp.PointF(xPos - 100, yPos - 8));
+					SystemFonts.CreateFont("Arial", 14),
+					new Color(new Rgba32(255, 255, 255)),
+					new PointF(xPos - 100, yPos - 8));
 
 				});
+
+				crownImage.Dispose();
 			}
 
 			baseImage.Mutate(x => x.ApplyRoundedCorners(10));
@@ -145,6 +147,10 @@ namespace Bronuh.Graphics
 			MemoryStream memoryStream = new MemoryStream();
 			baseImage.SaveAsPng(memoryStream);
 			memoryStream.Position = 0;
+
+			baseImage.Dispose();
+			avatarImage.Dispose();
+		
 
 			return memoryStream;
 		}

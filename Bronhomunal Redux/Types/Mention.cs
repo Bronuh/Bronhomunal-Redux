@@ -8,7 +8,8 @@ namespace Bronuh.Types
     public class Mention
     {
         public String Prefix, Suffix, Message;
-        public int XP;
+        public int Rank;
+        public Action<Member, Member> CustomAction = (s,t)=> { };
 
         public Mention()
         {

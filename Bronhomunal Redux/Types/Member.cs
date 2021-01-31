@@ -14,7 +14,7 @@ using SixLabors.ImageSharp.Processing;
 using Image = SixLabors.ImageSharp.Image;
 using SixLabors.ImageSharp.Drawing;
 using SixLabors.ImageSharp.PixelFormats;
-
+using Bronuh.Controllers;
 
 namespace Bronuh.Types
 {
@@ -39,6 +39,8 @@ namespace Bronuh.Types
 		public ChatMessage LastMessage = null;
 
 		public List<string> Achievements = new List<string>();
+
+		public MemberStatistics Statistics = new MemberStatistics();
 
 		public Member() { }
 
@@ -165,7 +167,7 @@ namespace Bronuh.Types
 			}
 			else
 			{
-				return XP >= mention.XP;
+				return Rank >= mention.Rank;
 			}
 		}
 
@@ -189,6 +191,41 @@ namespace Bronuh.Types
 		public Stream GetBasicProfileImageStream()
 		{
 			return Graphics.SmallProfileBuilder.Build(this);
+		}
+
+		public bool HasAchievement(string id)
+		{
+			return Achievements.Contains(id.ToLower());
+		}
+
+		public bool HasAchievement(Achievement achievement)
+		{
+			return HasAchievement(achievement.Id);
+		}
+
+		public async Task GetAchievement(string id)
+		{
+			
+
+			Achievement achievement = AchievementsController.Find(id);
+
+			if (achievement!=null)
+			{
+				if (!HasAchievement(achievement)) {
+					Achievements.Add(id.ToLower());
+					await LastMessage?.RespondAsync(new DiscordMessageBuilder()
+						.WithContent(":pencil: " + Source.Mention + " получил достижение!")
+						.WithFile(achievement.Name + ".png", achievement.GetImage()));
+
+					if (HasAchievement("stickpoke10times")
+						&& HasAchievement("stickhit20times")
+						&& HasAchievement("loghit20times")
+						&& HasAchievement("treehit30times"))
+					{
+						await GetAchievement("woodenwarrior");
+					}
+				}
+			}
 		}
 	}
 }

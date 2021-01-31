@@ -105,7 +105,7 @@ namespace Bronuh
 			*/
 			// 
 
-			InterfaceExecutor.Execute("ICommands", "InitializeCommands");
+			InterfaceExecutor.Execute(typeof(ICommands), "InitializeCommands");
 
 			_initialized = true;
 

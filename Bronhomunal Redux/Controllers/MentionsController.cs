@@ -47,10 +47,11 @@ namespace Bronuh.Controllers
                                 Member member = MembersController.FindMember(mention.GetClearText(word));
                                 Logger.Debug("Найденный пользователь: " + member.Username);
                                 msg += mention.Message.Replace("%MENTION%", "<@!" + member.Id + ">") + "\n";
+                                mention.CustomAction(author, member);
                             }
                             else
                             {
-                                msg += "Недостаточно опыта для этого действия (" + author.XP + "/" + mention.XP + ")\n";
+                                msg += "Слишком низкий ранг для этого действия (" + author.Rank + "/" + mention.Rank + ")\n";
                             }
 
 
@@ -85,7 +86,15 @@ namespace Bronuh.Controllers
                 Prefix = "",
                 Suffix = ".",
                 Message = "%MENTION%, веточкой тык.",
-                XP = 0
+                Rank = 1,
+                CustomAction = (sender, target) => {
+                    sender.Statistics.StickPokes++;
+                    target.Statistics.PokedByStick++;
+					if (sender.Statistics.StickPokes == 10)
+					{
+                        sender.GetAchievement("stickpoke10times");
+					}
+                }
             };
 
 
@@ -94,7 +103,15 @@ namespace Bronuh.Controllers
                 Prefix = "",
                 Suffix = "!!!",
                 Message = "%MENTION%, бревном хуяк!!!",
-                XP = 60
+                Rank = 3,
+                CustomAction = (sender, target) => {
+                    sender.Statistics.LogHits++;
+                    target.Statistics.HitByLog++;
+                    if (sender.Statistics.LogHits == 20)
+                    {
+                        sender.GetAchievement("loghit20times");
+                    }
+                }
             };
 
 
@@ -103,7 +120,15 @@ namespace Bronuh.Controllers
                 Prefix = "",
                 Suffix = "!",
                 Message = "%MENTION%, палкой пиздык!",
-                XP = 20
+                Rank = 2,
+                CustomAction = (sender, target) => {
+                    sender.Statistics.StickHits++;
+                    target.Statistics.HitByStick++;
+                    if (sender.Statistics.StickHits == 20)
+                    {
+                        sender.GetAchievement("stickhit20times");
+                    }
+                }
             };
 
 
@@ -112,7 +137,15 @@ namespace Bronuh.Controllers
                 Prefix = "-",
                 Suffix = "",
                 Message = "%MENTION%, деревом еблысь!!11!1!1111",
-                XP = 120
+                Rank = 4,
+                CustomAction = (sender, target) => {
+                    sender.Statistics.TreeHits++;
+                    target.Statistics.HitByTree++;
+                    if (sender.Statistics.TreeHits == 30)
+                    {
+                        sender.GetAchievement("treehit30times");
+                    }
+                }
             };
         }
     }

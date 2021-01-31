@@ -20,7 +20,8 @@ namespace Bronuh
 			Logger.Log("Загрузка...");
 
 
-			InterfaceExecutor.Execute("ILoadable", "Load");
+			InterfaceExecutor.Execute(typeof(ILoadable), "Load");
+			InterfaceExecutor.Execute(typeof(IInitializable), "Initialize");
 
 
 			Logger.Log("Инициализация бота...");
@@ -64,7 +65,7 @@ namespace Bronuh
 
 		public static void SaveAll()
 		{
-			InterfaceExecutor.Execute("ISaveable", "Save");
+			InterfaceExecutor.Execute(typeof(ISaveable), "Save");
 		}
 
 

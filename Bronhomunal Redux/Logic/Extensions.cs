@@ -166,5 +166,6 @@ namespace Bronuh
 
 			return new PathCollection(cornerTopLeft, cornerBottomLeft, cornerTopRight, cornerBottomRight);
 		}
+
 	}
 }
