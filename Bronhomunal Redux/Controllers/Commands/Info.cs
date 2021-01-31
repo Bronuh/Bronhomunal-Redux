@@ -145,6 +145,54 @@ namespace Bronuh.Controllers.Commands
 			.AddTag("info");
 
 
+			CommandsController.AddCommand("achievements", async (m) =>
+			{
+				string text = m.Text;
+				string[] parts = text.Split(' ');
+				int userRank = m.Author.Rank;
+
+				string args = text.Substring(parts[0].Length);
+
+				Member target = null;
+
+				if (parts.Length > 1)
+				{
+					target = MembersController.FindMember(parts[1]);
+				}
+				else if (parts.Length == 1)
+				{
+					target = m.Author;
+				}
+
+				int images = 0;
+				var messageBuilder = new DiscordMessageBuilder()
+				.WithContent(":pencil: Достижения пользователя " + target.DisplayName);
+
+				foreach (string achivementId in target.Achievements)
+				{
+
+					var achievement = AchievementsController.Find(achivementId);
+
+					messageBuilder.WithFile(achievement.Name+".png", achievement.GetImage());
+					images++;
+
+					if(images>=10)
+					{
+						await m.RespondAsync(messageBuilder);
+						messageBuilder = new DiscordMessageBuilder();
+						images = 0;
+					}
+				}
+				await m.RespondAsync(messageBuilder);
+
+			})
+			.AddAlias("ачивки").AddAlias("достижения")
+			.SetUsage("<command> [username]")
+			.SetDescription("Показывает достижения указанного пользователя")
+			.AddTag("misc")
+			.AddTag("info")
+			.AddTag("fun");
+
 
 			CommandsController.AddCommand("commandtags", async (m) =>
 			{

@@ -84,7 +84,7 @@ namespace Bronuh.Controllers.Commands
 			})
 			.AddAlias("тест")
 			.SetDescription("Делает какую-то произвольную хардкодную дичь")
-			.SetOp(false)
+			.SetOp(true)
 			.AddTag("admin")
 			.AddTag("test");
 

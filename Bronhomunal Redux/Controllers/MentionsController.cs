@@ -103,7 +103,7 @@ namespace Bronuh.Controllers
                 Prefix = "",
                 Suffix = "!!!",
                 Message = "%MENTION%, бревном хуяк!!!",
-                Rank = 3,
+                Rank = 2,
                 CustomAction = (sender, target) => {
                     sender.Statistics.LogHits++;
                     target.Statistics.HitByLog++;
@@ -120,7 +120,7 @@ namespace Bronuh.Controllers
                 Prefix = "",
                 Suffix = "!",
                 Message = "%MENTION%, палкой пиздык!",
-                Rank = 2,
+                Rank = 1,
                 CustomAction = (sender, target) => {
                     sender.Statistics.StickHits++;
                     target.Statistics.HitByStick++;
@@ -137,7 +137,7 @@ namespace Bronuh.Controllers
                 Prefix = "-",
                 Suffix = "",
                 Message = "%MENTION%, деревом еблысь!!11!1!1111",
-                Rank = 4,
+                Rank = 3,
                 CustomAction = (sender, target) => {
                     sender.Statistics.TreeHits++;
                     target.Statistics.HitByTree++;
