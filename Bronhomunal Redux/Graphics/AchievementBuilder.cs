@@ -11,13 +11,16 @@ using System.Text;
 
 namespace Bronuh.Graphics
 {
-	// TODO: Добавить генерацию изображений для ачивок
 	class AchievementBuilder
 	{
+		/// <summary>
+		/// Создает изображение достижения
+		/// </summary>
+		/// <param name="achievement"></param>
+		/// <returns></returns>
 		public static Stream Build(Achievement achievement)
 		{
-			// var baseImage = Image.Load(Properties.Achievements.Background.ToArray());
-			// var iconImage = achievement.Icon;
+			
 			MemoryStream memoryStream = new MemoryStream();
 
 			int iconSize = 200;
@@ -31,7 +34,7 @@ namespace Bronuh.Graphics
 			{
 				using (var iconImage = Image.Load(Properties.Achievements.Empty.ToArray()))
 				{
-					using (var iconBGImage = Image.Load(Properties.Achievements.ImageBackground.ToArray()))
+					using (var iconBGImage = Image.Load(Properties.Achievements.IconBackground.ToArray()))
 					{
 						iconBGImage.Mutate(ctx => {
 							ctx.Resize(new Size(iconSize+borderSize,iconSize+borderSize))

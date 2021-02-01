@@ -25,6 +25,7 @@ namespace Bronuh.Controllers.Commands
 
 				string respond = Wastificator.Wastificate(text.Replace(parts[0] + " ", ""));
 				await m.RespondAsync(respond);
+				await m.Author.GiveAchievement("wasted");
 			})
 			.AddAlias("потратить").AddAlias("потрачено")
 			.SetDescription("Заставляет бота потратить что-то")
@@ -41,6 +42,7 @@ namespace Bronuh.Controllers.Commands
 
 				string respond = args + "\nИнфа: " + Math.Round(Infa.CheckInfo(args).Value, 0) + "%";
 				await m.RespondAsync(respond);
+				await m.Author.GiveAchievement("infameter");
 			})
 			.AddAlias("info").AddAlias("инфа")
 			.SetDescription("Измеряет запрошенную инфу")

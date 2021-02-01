@@ -35,6 +35,11 @@ namespace Bronuh.Types
 			_action = action;
 		}
 
+
+		/// <summary>
+		/// Возвращает всю основную информацию о команде, в одной строке
+		/// </summary>
+		/// <returns></returns>
 		public string GetInfo()
 		{
 			string info = "";
@@ -47,66 +52,102 @@ namespace Bronuh.Types
 			foreach (string tag in Tags)
 				tags += tag + (tag == Tags[^1] ? "" : ", ");
 
-			info += "Команда ["+(CommandsController.Commands.IndexOf(this)+1)+"/"+ CommandsController.Commands .Count+ "]: " +
-				Settings.Sign+Name+"\n";
+			info += "Команда ["+(CommandsController.Commands.IndexOf(this)+1)+"/"+ CommandsController.Commands.Count+ "]: " +
+				"**"+Settings.Sign+Name+"**\n";
 			info += "Аналоги: "+aliases+"\n";
 			info += "Использование: "+Usage+"\n";
 			info += "Описание: "+Description+"\n";
 			info += "Требуемый ранг: "+Rank+"\n";
 			info += "Только для админов: "+OpOnly+"\n";
-			info += "Тэги: " + tags;
+			info += "Тэги: *" + tags+"*";
 
-			info = info.Replace("<sign>", Settings.Sign).Replace("<name>", Name).Replace("<command>",Settings.Sign+Name);
+			info = info.Replace("<sign>", Program.Prefix + Settings.Sign).Replace("<name>", Name).Replace("<command>", Program.Prefix + Settings.Sign+Name);
 
 			return info;
 		}
 
+		/// <summary>
+		/// Задает описание команде
+		/// </summary>
+		/// <param name="description">Текст описания</param>
+		/// <returns>Текущая команда</returns>
 		public Command SetDescription(string description)
 		{
 			Description = description;
 			return this;
 		}
 
+		/// <summary>
+		/// Добавляет тег команде
+		/// </summary>
+		/// <param name="tag">название тега</param>
+		/// <returns>Текущая команда</returns>
 		public Command AddTag(string tag)
 		{
 			Tags.Add(tag.ToLower());
 			return this;
 		}
 
+		/// <summary>
+		/// Добавляет описание использования команды. Доступны теги форматирования
+		/// </summary>
+		/// <param name="usage">Текст описания</param>
+		/// <returns>Текущая команда</returns>
 		public Command SetUsage(string usage)
 		{
 			Usage = usage;
 			return this;
 		}
 
+		/// <summary>
+		/// Устанавливает минимальный ранг для использования команды
+		/// </summary>
+		/// <param name="rank">Минимальный ранг</param>
+		/// <returns>Текущая команда</returns>
 		public Command SetRank(int rank)
 		{
 			Rank = rank;
 			return this;
 		}
 
-
+		/// <summary>
+		/// Устанавливает необходимость иметь права оператора для этой команджы
+		/// </summary>
+		/// <param name="op">Только для админов?</param>
+		/// <returns>Текущая команда</returns>
 		public Command SetOp(bool op)
 		{
 			OpOnly = op;
 			return this;
 		}
 
-
+		/// <summary>
+		/// Ограничивает возможность использования только консолью
+		/// </summary>
+		/// <param name="console">Только для консоли?</param>
+		/// <returns>Текущая команда</returns>
 		public Command SetConsole(bool console)
 		{
 			ConsoleOnly = console;
 			return this;
 		}
 
-
+		/// <summary>
+		/// Добавляет альтернативное название команды
+		/// </summary>
+		/// <param name="alias">Альтернативное название</param>
+		/// <returns>Текущая команда</returns>
 		public Command AddAlias(string alias)
 		{
 			Aliases.Add(alias);
 			return this;
 		}
 
-
+		/// <summary>
+		/// Проверяет имеет ли команда указанный тег
+		/// </summary>
+		/// <param name="searchingTag">Искомый тег</param>
+		/// <returns></returns>
 		public bool HasTag(string searchingTag)
 		{
 			foreach (string tag in Tags)
@@ -120,7 +161,11 @@ namespace Bronuh.Types
 			//return Tags.Contains(tag.ToLower());
 		}
 
-
+		/// <summary>
+		/// Проверяет, соответствует ли команда искомой строке (проверка по названию и псевдонимам).
+		/// </summary>
+		/// <param name="text">Искомая команда</param>
+		/// <returns></returns>
 		private bool CheckCommand(string text)
 		{
 			string command = text.Split(' ')[0];
@@ -146,14 +191,19 @@ namespace Bronuh.Types
 		}
 
 
+		/// <summary>
+		/// Пытается выполнить команду.
+		/// </summary>
+		/// <param name="message">Сообщение, содержащее команду</param>
+		/// <returns>Найдена ли команда</returns>
 		public async Task<bool> TryExecute(ChatMessage message)
 		{
 			string text = message.Text;
 			Member author = message.Author;
 
-			text = text.Substring(Settings.Sign.Length, text.Length-1);
+			text = text.Substring(Program.Prefix.Length + Settings.Sign.Length, text.Length-(Program.Prefix.Length + Settings.Sign.Length));
 
-			Logger.Debug("Попытка выполнения "+ Settings.Sign + Name +" ("+text+")");
+			Logger.Debug("Попытка выполнения "+ Program.Prefix + Settings.Sign + Name +" ("+text+")");
 			if (CheckCommand(text))
 			{
 				Logger.Debug("Обнаружена команда "+ Name);

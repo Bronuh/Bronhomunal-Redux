@@ -21,7 +21,8 @@ namespace Bronuh.Types
 			HitByTree = 0,
 			InfosMeasured = 0,
 			WhoisSelf = 0,
-			WhoisOther = 0;
+			WhoisOther = 0,
+			WhoisTotal = 0;
 
 
 		public MemberStatistics() { }

@@ -15,7 +15,6 @@ public enum Rarity
 }
 namespace Bronuh.Types
 {
-	// TODO: Добавить достижения
 	public class Achievement
 	{
 		public string Id;
@@ -26,6 +25,9 @@ namespace Bronuh.Types
 		public int Lightness = 0;
 		public Color BorderColor = Color.FromArgb(150,150,150);
 		public Rarity Rarity = Rarity.COMMON;
+
+		private bool _cached = false;
+		private Stream _cache;
 
 		public Achievement() { }
 		public Achievement(string id)
@@ -102,7 +104,14 @@ namespace Bronuh.Types
 
 		public Stream GetImage()
 		{
-			return Graphics.AchievementBuilderTest.Build(this);
+			if (!_cached)
+			{
+				_cache = Graphics.AchievementBuilderTest.Build(this);
+				_cached = true;
+			}
+
+			_cache.Position = 0;
+			return _cache;
 		}
 
 	}

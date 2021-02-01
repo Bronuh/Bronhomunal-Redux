@@ -12,7 +12,6 @@ namespace Bronuh.Events
 	public static class EventsHandler
 	{
 		
-
 		public static async Task HandleEvent(EventArgs e)
 		{
 			if (e is MessageCreateEventArgs messageCreateEventArgs)
@@ -53,12 +52,30 @@ namespace Bronuh.Events
 			{
 				sender.LastMessage = new ChatMessage(e.Message);
 				await sender.AddXPAsync(1);
+				if (!e.Channel.IsPrivate)
+				{
+					if (e.Channel.Name.StartsWith("bot"))
+					{
+						await sender.GiveAchievement("ai");
+					}
+
+					if (e.Channel.Name.StartsWith("asociality"))
+					{
+						await sender.GiveAchievement("btard");
+					}
+
+					if (e.Channel.Name.StartsWith("dev"))
+					{
+						await sender.GiveAchievement("coolhacker");
+					}
+				}
+				
 
 				Logger.Log($"{e.Author.ToMember().DisplayName}: {e.Message.Content}");
 
 				if (!e.Channel.IsPrivate||sender.IsOwner())
 				{
-					if (e.Message.Content.StartsWith(Settings.Sign))
+					if (e.Message.Content.StartsWith(Program.Prefix + Settings.Sign))
 					{
 						await CommandsController.TryExecuteCommand(e);
 					}

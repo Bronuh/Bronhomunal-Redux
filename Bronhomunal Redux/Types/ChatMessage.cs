@@ -24,7 +24,7 @@ namespace Bronuh.Types
 		{
 			if (!Author.IsConsole())
 			{
-				return await Source?.RespondAsync(text);
+				return await Source?.RespondAsync(text + Program.Suffix);
 			}
 			else
 			{
@@ -37,7 +37,7 @@ namespace Bronuh.Types
 		{
 			if (!Author.IsConsole())
 			{
-				return await Source?.RespondAsync(text,embed);
+				return await Source?.RespondAsync(text + Program.Suffix, embed);
 			}
 			else
 			{
@@ -50,6 +50,10 @@ namespace Bronuh.Types
 		{
 			if (!Author.IsConsole())
 			{
+				if (Program.Suffix!="")
+				{
+					builder.WithContent(builder.Content+Program.Suffix);
+				}
 				return await Source?.RespondAsync(builder);
 			}
 			else
@@ -63,7 +67,7 @@ namespace Bronuh.Types
 		{
 			if (!Author.IsConsole())
 			{
-				return await Source?.Author.ToDiscordMember().SendMessageAsync(text);
+				return await Source?.Author.ToDiscordMember().SendMessageAsync(text + Program.Suffix);
 			}
 			else
 			{

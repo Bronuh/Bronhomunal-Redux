@@ -12,6 +12,9 @@ namespace Bronuh
 {
 	class Program
 	{
+		public static string Suffix = "";
+		public static string Prefix = "";
+
 		public static NamedPipeClient<string> Client = new NamedPipeClient<string>("BronhomunalPipe");
 		public static NamedPipeServer<string> Server = new NamedPipeServer<string>("LauncherPipe");
 		static void Main()
@@ -19,6 +22,10 @@ namespace Bronuh
 
 			Logger.Log("Загрузка...");
 
+			#if DEBUG
+				Suffix = " [DEBUG]";
+				Prefix = "!";
+			#endif
 
 			InterfaceExecutor.Execute(typeof(ILoadable), "Load");
 			InterfaceExecutor.Execute(typeof(IInitializable), "Initialize");

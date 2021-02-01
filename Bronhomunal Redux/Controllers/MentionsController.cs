@@ -44,10 +44,25 @@ namespace Bronuh.Controllers
                             if (author.CanUse(mention))
                             {
                                 Logger.Debug("Найдено соответствие (" + mention.GetClearText(word) + ")");
-                                Member member = MembersController.FindMember(mention.GetClearText(word));
-                                Logger.Debug("Найденный пользователь: " + member.Username);
-                                msg += mention.Message.Replace("%MENTION%", "<@!" + member.Id + ">") + "\n";
-                                mention.CustomAction(author, member);
+								if (mention.GetClearText(word).Length>3)
+								{
+                                    Member member = MembersController.FindMember(mention.GetClearText(word));
+                                    if (member != null)
+									{
+                                        Logger.Debug("Найденный пользователь: " + member.Username);
+                                        msg += mention.Message.Replace("%MENTION%", "<@!" + member.Id + ">") + "\n";
+                                        mention.CustomAction(author, member);
+                                        if (author.Statistics.StickPokes > 0
+                                            && author.Statistics.StickHits > 0
+                                            && author.Statistics.LogHits > 0
+                                            && author.Statistics.TreeHits > 0)
+                                        {
+                                            await author.GiveAchievement("overwhelming");
+                                        }
+                                    }
+                                    
+                                }
+                                
                             }
                             else
                             {
@@ -92,7 +107,7 @@ namespace Bronuh.Controllers
                     target.Statistics.PokedByStick++;
 					if (sender.Statistics.StickPokes == 10)
 					{
-                        sender.GetAchievement("stickpoke10times");
+                        sender.GiveAchievement("stickpoke");
 					}
                 }
             };
@@ -109,7 +124,7 @@ namespace Bronuh.Controllers
                     target.Statistics.HitByLog++;
                     if (sender.Statistics.LogHits == 20)
                     {
-                        sender.GetAchievement("loghit20times");
+                        sender.GiveAchievement("loghit");
                     }
                 }
             };
@@ -126,7 +141,7 @@ namespace Bronuh.Controllers
                     target.Statistics.HitByStick++;
                     if (sender.Statistics.StickHits == 20)
                     {
-                        sender.GetAchievement("stickhit20times");
+                        sender.GiveAchievement("stickhit");
                     }
                 }
             };
@@ -143,7 +158,12 @@ namespace Bronuh.Controllers
                     target.Statistics.HitByTree++;
                     if (sender.Statistics.TreeHits == 30)
                     {
-                        sender.GetAchievement("treehit30times");
+                        sender.GiveAchievement("treehit");
+                    }
+
+					if (target.IsOp())
+					{
+                        sender.GiveAchievement("riot");
                     }
                 }
             };

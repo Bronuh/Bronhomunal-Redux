@@ -2,6 +2,7 @@
 using DSharpPlus.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Bronuh.Controllers.Commands
@@ -79,12 +80,18 @@ namespace Bronuh.Controllers.Commands
 				if (parts.Length > 1)
 				{
 					target = MembersController.FindMember(parts[1]);
+					m.Author.Statistics.WhoisOther++;
 				}
 				else if (parts.Length == 1)
 				{
 					target = m.Author;
+					m.Author.Statistics.WhoisSelf++;
 				}
-
+				m.Author.Statistics.WhoisTotal++;
+				if (m.Author.Statistics.WhoisTotal == 10)
+				{
+					await m.Author.GiveAchievement("major");
+				}
 				string respond = target?.GetInfo() ?? "";
 				await m.RespondAsync(respond);
 			})
@@ -165,23 +172,36 @@ namespace Bronuh.Controllers.Commands
 				}
 
 				int images = 0;
-				var messageBuilder = new DiscordMessageBuilder()
-				.WithContent(":pencil: Достижения пользователя " + target.DisplayName);
+				
+
+				List<Achievement> achs = new List<Achievement>();
 
 				foreach (string achivementId in target.Achievements)
 				{
-
 					var achievement = AchievementsController.Find(achivementId);
+					if (achievement!=null)
+					{
+						achs.Add(achievement);
+					}
+				}
 
-					messageBuilder.WithFile(achievement.Name+".png", achievement.GetImage());
+				List<Achievement> sorted = new List<Achievement>(achs.OrderByDescending(a=>a.Rarity).ThenBy(a=>a.Name));
+
+				var messageBuilder = new DiscordMessageBuilder()
+				.WithContent(":pencil: Достижения пользователя " + target.DisplayName +$"[{sorted.Count}/{AchievementsController.Achievements.Count}]");
+
+				foreach (Achievement achievement in sorted)
+				{
+					messageBuilder.WithFile(achievement.Name + ".png", achievement.GetImage());
 					images++;
 
-					if(images>=10)
+					if (images >= 10)
 					{
 						await m.RespondAsync(messageBuilder);
 						messageBuilder = new DiscordMessageBuilder();
 						images = 0;
 					}
+					
 				}
 				await m.RespondAsync(messageBuilder);
 
@@ -189,6 +209,60 @@ namespace Bronuh.Controllers.Commands
 			.AddAlias("ачивки").AddAlias("достижения")
 			.SetUsage("<command> [username]")
 			.SetDescription("Показывает достижения указанного пользователя")
+			.AddTag("misc")
+			.AddTag("info")
+			.AddTag("fun");
+
+
+			CommandsController.AddCommand("allachievements", async (m) =>
+			{
+				string text = m.Text;
+				string[] parts = text.Split(' ');
+				int userRank = m.Author.Rank;
+
+				string args = text.Substring(parts[0].Length);
+
+
+				List<Achievement> achs = new List<Achievement>();
+
+
+				List<Achievement> sorted = new List<Achievement>(AchievementsController.Achievements
+					.OrderBy(a => a.Name));
+
+
+				string respond = ":pencil: Список достижений: \n\n";
+				
+
+				int achievs = 0;
+
+				foreach(Achievement achievement in sorted)
+				{
+					string has = ":red_circle:";
+					if (m.Author.HasAchievement(achievement))
+					{
+						has = ":green_circle:";
+					}
+					respond += $"**{has}{achievement.Name}**\n" +
+					$"{achievement.Description}\n\n";
+					achievs++;
+					
+
+					if (achievs>=10)
+					{
+						await m.RespondAsync(respond);
+						achievs = 0;
+						respond = "\n\n";
+					}
+				}
+
+
+				
+				await m.RespondAsync(respond);
+
+			})
+			.AddAlias("всеачивки").AddAlias("вседостижения")
+			.SetUsage("<command>")
+			.SetDescription("Показывает все существующие достижения")
 			.AddTag("misc")
 			.AddTag("info")
 			.AddTag("fun");

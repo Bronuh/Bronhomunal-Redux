@@ -15,6 +15,7 @@ using Image = SixLabors.ImageSharp.Image;
 using SixLabors.ImageSharp.Drawing;
 using SixLabors.ImageSharp.PixelFormats;
 using Bronuh.Controllers;
+using Bronuh.Graphics;
 
 namespace Bronuh.Types
 {
@@ -26,7 +27,7 @@ namespace Bronuh.Types
 		public ulong Id;
 		public int Rank = 1;
 		public int XP = 0;
-		public static readonly int XpPerRank = 100;
+		public static readonly int XpPerRank = 50;
 
 		public bool IsOP = false;
 
@@ -73,6 +74,10 @@ namespace Bronuh.Types
 		}
 
 
+		/// <summary>
+		/// Собирает основную инфу в одну строку
+		/// </summary>
+		/// <returns></returns>
 		public string GetInfo()
 		{
 
@@ -96,6 +101,11 @@ namespace Bronuh.Types
 		}
 
 
+		/// <summary>
+		/// Выдает опыт и повышает ранг при необходимости
+		/// </summary>
+		/// <param name="xp"></param>
+		/// <returns></returns>
 		public async Task AddXPAsync(int xp)
 		{
 			XP += xp;
@@ -109,36 +119,64 @@ namespace Bronuh.Types
 			}
 		}
 
-
+		/// <summary>
+		/// метод проверки на админовость
+		/// </summary>
+		/// <returns></returns>
 		public bool IsOp()
 		{
 			return IsOP || IsOwner() || IsBronomunal() || IsConsole();
 		}
 
 
+		/// <summary>
+		/// Определяет сколько какому рангу будет соответствовать указанно количество опыта
+		/// </summary>
+		/// <param name="xp"></param>
+		/// <returns>Доступный ранг</returns>
 		public static int RankForXp(int xp)
 		{
 			return (int)Math.Floor((double)xp / XpPerRank) + 1;
 		}
 
 
+		/// <summary>
+		/// Возвращает опыт, необходимый для получения указанного ранга
+		/// </summary>
+		/// <param name="rank"></param>
+		/// <returns>опыт</returns>
 		public static int XpForRank(int rank)
 		{
 			return (rank-1) * XpPerRank;
 		}
 
 
+		/// <summary>
+		/// Повышает ранг на 1, с уведомлением в чат
+		/// </summary>
+		/// <returns></returns>
 		private async Task RankUpAsync()
 		{
 			Rank++;
-			await LastMessage?.RespondAsync($">>> :up: {DisplayName} получил ранг {Rank}!11!!");
+			var msgBuilder = new DiscordMessageBuilder()
+						.WithContent(":up: " + DisplayName + " повысил свой ранг!" + Program.Suffix)
+						.WithFile("RankUp.png", RankUpBuilder.Build(this));
+			await LastMessage?.RespondAsync(msgBuilder);
 		}
 
+
+		/// <summary>
+		/// Проверяет является ли пользователь бронухом
+		/// </summary>
+		/// <returns></returns>
 		public bool IsOwner()
 		{
 			return Id == 263705631549161472;
 		}
 
+		/// <summary>
+		/// Обновляет информацию о пользователе
+		/// </summary>
 		public void Update()
 		{
 			if (Source!=null)
@@ -158,7 +196,11 @@ namespace Bronuh.Types
 		}
 
 
-
+		/// <summary>
+		/// Проверяет может ли указанный пользователь использовать это упоминание
+		/// </summary>
+		/// <param name="mention"></param>
+		/// <returns></returns>
 		public bool CanUse(Mention mention)
 		{
 			if (IsOp())
@@ -172,6 +214,10 @@ namespace Bronuh.Types
 		}
 
 
+		/// <summary>
+		/// скачивает аватарку пользователя из сети
+		/// </summary>
+		/// <returns>Аватарка</returns>
 		public Bitmap GetAvatar()
 		{
 			WebClient client = new WebClient();
@@ -187,42 +233,70 @@ namespace Bronuh.Types
 
 		}
 
-
+		/// <summary>
+		/// Возвращает шапку профиля
+		/// </summary>
+		/// <returns></returns>
 		public Stream GetBasicProfileImageStream()
 		{
 			return Graphics.SmallProfileBuilder.Build(this);
 		}
 
+		/// <summary>
+		/// Проверяет имеет ли пользователь достижение с указанным ID
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
 		public bool HasAchievement(string id)
 		{
 			return Achievements.Contains(id.ToLower());
 		}
 
+
+		/// <summary>
+		/// Проверяет имеет ли пользователдь данное достижение
+		/// </summary>
+		/// <param name="achievement"></param>
+		/// <returns></returns>
 		public bool HasAchievement(Achievement achievement)
 		{
 			return HasAchievement(achievement.Id);
 		}
 
-		public async Task GetAchievement(string id)
+		/// <summary>
+		/// Выдает пользователю достижение, если он его еще не имеет. Также может выдать дополнительные достижения самостоятельно.
+		/// </summary>
+		/// <param name="id"></param>
+		/// <returns></returns>
+		public async Task GiveAchievement(string id)
 		{
-			
-
 			Achievement achievement = AchievementsController.Find(id);
 
 			if (achievement!=null)
 			{
 				if (!HasAchievement(achievement)) {
 					Achievements.Add(id.ToLower());
-					await LastMessage?.RespondAsync(new DiscordMessageBuilder()
-						.WithContent(":pencil: " + Source.Mention + " получил достижение!")
-						.WithFile(achievement.Name + ".png", achievement.GetImage()));
+					var msgBuilder = new DiscordMessageBuilder()
+						.WithContent(":trophy: " + Source.Mention + " получил достижение!" + Program.Suffix)
+						.WithFile(achievement.Name + ".png", achievement.GetImage());
 
-					if (HasAchievement("stickpoke10times")
-						&& HasAchievement("stickhit20times")
-						&& HasAchievement("loghit20times")
-						&& HasAchievement("treehit30times"))
+					
+					if (LastMessage != null)
 					{
-						await GetAchievement("woodenwarrior");
+						await LastMessage?.RespondAsync(msgBuilder);
+					}
+					else
+					{
+						await Bot.BotChannel.SendMessageAsync(msgBuilder);
+					}
+					
+
+					if (HasAchievement("stickpoke")
+						&& HasAchievement("stickhit")
+						&& HasAchievement("loghit")
+						&& HasAchievement("treehit"))
+					{
+						await GiveAchievement("woodenwarrior");
 					}
 				}
 			}

@@ -15,6 +15,12 @@ namespace Bronuh.Graphics
 {
 	class AchievementBuilderTest
 	{
+		/// <summary>
+		/// Создает изображение достижения. 
+		/// TODO: Добавить генерацию черно-белых изображений.
+		/// </summary>
+		/// <param name="achievement">Целевое достижение</param>
+		/// <returns></returns>
 		public static Stream Build(Achievement achievement)
 		{
 			MemoryStream memoryStream = new MemoryStream();
@@ -28,7 +34,7 @@ namespace Bronuh.Graphics
 
 			ImageFactory baseBuilder = new ImageFactory().Load(Properties.Achievements.Background.ToArray());
 			ImageFactory imageBuilder = new ImageFactory().Load(achievement.Icon);
-			ImageFactory imageBgBuilder = new ImageFactory().Load(Properties.Achievements.ImageBackground.ToArray());
+			ImageFactory imageBgBuilder = new ImageFactory().Load(Properties.Achievements.IconBackground.ToArray());
 
 
 			imageBuilder
@@ -64,6 +70,15 @@ namespace Bronuh.Graphics
 					FontColor = achievement.BorderColor,
 					FontSize = 70,
 					Position = new Point(300,30)
+				})
+				.Watermark(new TextLayer()
+				{
+					Text = achievement.Rarity+"",
+					FontFamily = new System.Drawing.FontFamily("Arial"),
+					FontColor = achievement.BorderColor,
+					FontSize = 30,
+					Style = System.Drawing.FontStyle.Bold,
+					Position = new Point(1000, 10)
 				});
 
 			baseBuilder.Save(memoryStream);
@@ -83,6 +98,7 @@ namespace Bronuh.Graphics
 					SixLabors.Fonts.SystemFonts.CreateFont("Arial", 37),
 					new SixLabors.ImageSharp.Color(new Rgba32(255, 255, 255)),
 					new SixLabors.ImageSharp.PointF(300, 135));
+
 				});
 
 				var outStream = new MemoryStream();

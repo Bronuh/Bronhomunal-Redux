@@ -13,11 +13,7 @@ using System.Linq;
 
 namespace Bronuh
 {
-
 	
-
-
-
 	public static partial class CommandsController
 	{
 		public static List<Command> Commands { get; private set; } = new List<Command>();
@@ -75,7 +71,7 @@ namespace Bronuh
 			bool executed;
 			foreach (Command command in Commands)
 			{
-				executed = await command.TryExecute(new ChatMessage(Settings.Sign+cmd));
+				executed = await command.TryExecute(new ChatMessage(Program.Prefix+Settings.Sign+cmd));
 				if (executed)
 				{
 					return true;
@@ -86,7 +82,9 @@ namespace Bronuh
 		}
 
 
-		
+		/// <summary>
+		/// Запускает поиск и инициализацию всех команд. Содержит шаблон объявления команды в комментарии
+		/// </summary>
 		private static void InitializeCommands()
 		{
 
@@ -103,7 +101,6 @@ namespace Bronuh
 				await m.RespondAsync(respond);
 			});
 			*/
-			// 
 
 			InterfaceExecutor.Execute(typeof(ICommands), "InitializeCommands");
 

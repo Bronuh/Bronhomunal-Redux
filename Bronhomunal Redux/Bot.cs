@@ -129,7 +129,7 @@ namespace Bronuh
 				Logger.Log("Получен список участников");
 				Logger.Success("Бот запущен");
 
-				await SendMessageAsync("Запуск № "+Settings.LaunchCount);
+				await SendMessageAsync("("+DateTime.Now.ToLongTimeString()+") Запуск № "+Settings.LaunchCount);
 			};
 
 
@@ -140,6 +140,75 @@ namespace Bronuh
 				} 
 			};
 
+			Discord.VoiceStateUpdated += async (Discord, e) =>
+			{
+				if (e.Channel!=null)
+				{
+					var list = new List<DiscordMember>(e.Channel.Users);
+
+					if (e.Channel.Name == "Хотсазаляция")
+					{
+						foreach (DiscordMember member in list)
+						{
+							if (member.Id == 312231263471796234)
+							{
+								foreach (DiscordMember member2 in list)
+								{
+									await member2.ToMember().GiveAchievement("zoologist");
+								}
+								break;
+							}
+						}
+					}
+
+					foreach (DiscordMember member in list)
+					{
+						if (member.Id == 263705631549161472)
+						{
+							foreach (DiscordMember member2 in list)
+							{
+								await member2.ToMember().GiveAchievement("bronuh");
+							}
+							break;
+						}
+					}
+					if (list.Count == 1)
+					{
+						foreach (DiscordMember member in list)
+						{
+							await member.ToMember().GiveAchievement("alone");
+						}
+					}
+
+					if (list.Count >= 6)
+					{
+						foreach (DiscordMember member in list)
+						{
+							await member.ToMember().GiveAchievement("party");
+						}
+					}
+
+					if (list.Count >= 8)
+					{
+						foreach (DiscordMember member in list)
+						{
+							await member.ToMember().GiveAchievement("crowd");
+						}
+					}
+
+					if (list.Count >= 10)
+					{
+						foreach (DiscordMember member in list)
+						{
+							await member.ToMember().GiveAchievement("zerg");
+						}
+					}
+				}
+				
+			};
+
+
+
 			Discord.GuildMemberAdded += async (Discord, e) => { await EventsHandler.HandleEvent(e); };
 
 			await Discord.ConnectAsync();
@@ -148,7 +217,7 @@ namespace Bronuh
 
 		public static void SendMessage(String msg)
 		{
-			SendMessageAsync(msg).GetAwaiter().GetResult();
+			SendMessageAsync(msg + Program.Suffix).GetAwaiter().GetResult();
 		}
 
 
@@ -163,14 +232,14 @@ namespace Bronuh
 			{
 				if (LastChannel != null)
 				{
-					await LastChannel.SendMessageAsync(msg);
+					await LastChannel.SendMessageAsync(msg + Program.Suffix);
 				}
 				else
 				{
 					Logger.Warning("Нет последнего канала!1!");
 					if (BotChannel != null)
 					{
-						await BotChannel.SendMessageAsync(msg);
+						await BotChannel.SendMessageAsync(msg + Program.Suffix);
 					}
 					else
 					{

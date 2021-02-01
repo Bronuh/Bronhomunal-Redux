@@ -14,6 +14,7 @@ using SixLabors.ImageSharp.Processing;
 using Image = SixLabors.ImageSharp.Image;
 using SixLabors.ImageSharp.Drawing;
 using SixLabors.ImageSharp.PixelFormats;
+using Bronuh.Graphics;
 
 namespace Bronuh.Controllers.Commands
 {
@@ -21,6 +22,7 @@ namespace Bronuh.Controllers.Commands
 	{
 		public void InitializeCommands()
 		{
+
 			CommandsController.AddCommand("debug", async (m) =>
 			{
 				Settings.DEBUG = !Settings.DEBUG;
@@ -61,6 +63,7 @@ namespace Bronuh.Controllers.Commands
 				// Program.Server.PushMessage(respond);
 				await m.RespondAsync(respond);
 				await m.Source.DeleteAsync();
+				await m.Author.GiveAchievement("itsnotme");
 			})
 			.AddAlias("скажи")
 			.SetOp(false)
@@ -77,10 +80,11 @@ namespace Bronuh.Controllers.Commands
 				string args = text.Replace(parts[0] + " ", "");
 				int userRank = m.Author.Rank;
 
-				await m.Author.GetAchievement("stickpoke10times");
-				await m.Author.GetAchievement("stickhit20times");
-				await m.Author.GetAchievement("loghit20times");
-				await m.Author.GetAchievement("treehit30times");
+				var msgBuilder = new DiscordMessageBuilder()
+						.WithContent(":trophy: " + m.Author.DisplayName + " повысил ранг!")
+						.WithFile("Rankup.png", RankUpBuilder.Build(m.Author));
+
+				await m.RespondAsync(msgBuilder);
 			})
 			.AddAlias("тест")
 			.SetDescription("Делает какую-то произвольную хардкодную дичь")
@@ -139,6 +143,7 @@ namespace Bronuh.Controllers.Commands
 
 			}).SetOp(true).AddAlias("сохранить").AddTag("admin");
 
+
 			CommandsController.AddCommand("op", async e =>
 			{
 				string[] parts = e.Text.Split(' ');
@@ -188,8 +193,5 @@ namespace Bronuh.Controllers.Commands
 			}).SetOp(true)
 			.AddTag("admin");
 		}
-
-
-		
 	}
 }
