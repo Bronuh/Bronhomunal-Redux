@@ -2,6 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Bronuh.Events;
+using Bronuh.Logic;
 using Bronuh.Modules;
 using Bronuh.Types;
 using DSharpPlus;
@@ -12,6 +13,8 @@ namespace Bronuh
 {
 	class Program
 	{
+		private static TimerCallback _workerCallback;
+		private static Timer _workingChecker;
 		public static string Suffix = "";
 		public static string Prefix = "";
 
@@ -61,6 +64,9 @@ namespace Bronuh
 				Server.PushMessage("Connected");
 			});
 
+			_workerCallback = new TimerCallback(Worker.Work);
+			_workingChecker = new Timer(_workerCallback, null, 0, 1000);
+
 			while (true)
 			{
 				string cmd = Console.ReadLine();
@@ -74,6 +80,8 @@ namespace Bronuh
 		{
 			InterfaceExecutor.Execute(typeof(ISaveable), "Save");
 		}
+
+
 
 
 	}

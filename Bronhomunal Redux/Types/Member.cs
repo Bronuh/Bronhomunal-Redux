@@ -39,6 +39,12 @@ namespace Bronuh.Types
 		[System.Xml.Serialization.XmlIgnore]
 		public ChatMessage LastMessage = null;
 
+		[System.Xml.Serialization.XmlIgnore]
+		public bool IsInVoice = false;
+
+		[System.Xml.Serialization.XmlIgnore]
+		public DateTime LastVoiceIn;
+
 		public List<string> Achievements = new List<string>();
 
 		public MemberStatistics Statistics = new MemberStatistics();
@@ -161,7 +167,7 @@ namespace Bronuh.Types
 			var msgBuilder = new DiscordMessageBuilder()
 						.WithContent(":up: " + DisplayName + " повысил свой ранг!" + Program.Suffix)
 						.WithFile("RankUp.png", RankUpBuilder.Build(this));
-			await LastMessage?.RespondAsync(msgBuilder);
+			await Bot.SendMessageAsync(msgBuilder);
 		}
 
 
@@ -253,6 +259,35 @@ namespace Bronuh.Types
 		}
 
 
+		public void JoinedVoice()
+		{
+			Logger.Log(DisplayName+" подключен к войсу");
+			LeavedVoice();
+			IsInVoice = true;
+			LastVoiceIn = DateTime.Now;
+		}
+
+		public void LeavedVoice()
+		{
+			if (IsInVoice)
+			{
+				int delay = (int)(DateTime.Now - LastVoiceIn).TotalMilliseconds;
+				Logger.Log(DisplayName + " отключен от войса "+delay);
+				IsInVoice = false;
+				Statistics.VoiceTime += delay;
+			}
+		}
+
+		public long GetVoiceTime()
+		{
+			int current = 0;
+			if (IsInVoice)
+			{
+				current = (int)(LastVoiceIn - DateTime.Now).TotalMilliseconds;
+			}
+			return Statistics.VoiceTime+current;
+		}
+
 		/// <summary>
 		/// Проверяет имеет ли пользователдь данное достижение
 		/// </summary>
@@ -276,19 +311,13 @@ namespace Bronuh.Types
 			{
 				if (!HasAchievement(achievement)) {
 					Achievements.Add(id.ToLower());
+					await AddXPAsync((int)achievement.Rarity * Achievement.BaseXP);
+
 					var msgBuilder = new DiscordMessageBuilder()
 						.WithContent(":trophy: " + Source.Mention + " получил достижение!" + Program.Suffix)
 						.WithFile(achievement.Name + ".png", achievement.GetImage());
 
-					
-					if (LastMessage != null)
-					{
-						await LastMessage?.RespondAsync(msgBuilder);
-					}
-					else
-					{
-						await Bot.BotChannel.SendMessageAsync(msgBuilder);
-					}
+					await Bot.BotChannel.SendMessageAsync(msgBuilder);
 					
 
 					if (HasAchievement("stickpoke")

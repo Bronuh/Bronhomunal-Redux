@@ -25,9 +25,12 @@ namespace Bronuh
 
 		public void Save()
 		{
+			var voice = Members.FindAll(m=>m.IsInVoice);
+			voice.Each(m=>m.LeavedVoice());
 			Logger.Log("Сохранение списка пользователей...");
 			SaveLoad.SaveObject<Sequence<Member>>(Members, "Members.xml");
 			Logger.Success("Сохранение завершено");
+			voice.Each(m => m.JoinedVoice());
 		}
 
 		

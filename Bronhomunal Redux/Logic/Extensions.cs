@@ -167,5 +167,18 @@ namespace Bronuh
 			return new PathCollection(cornerTopLeft, cornerBottomLeft, cornerTopRight, cornerBottomRight);
 		}
 
+
+		public static bool HasMember(this IEnumerable<DiscordMember> list, DiscordMember find)
+		{
+			foreach (DiscordMember member in list)
+			{
+				if (member.Id==find.Id)
+				{
+					return true;
+				}
+			}
+			return false;
+		} 
+
 	}
 }

@@ -170,6 +170,56 @@ namespace Bronuh.Controllers
 				.SetDescription("Зайти в пустой голосовой канал")
 				.SetIcon(Properties.Achievements.Alone)
 				.SetRarity(Rarity.COMMON);
+
+			AddAchievement("ascension")
+				.SetName("Теперь я видел все")
+				.SetDescription("Застать в войсе говорящего Бронуха")
+				.SetIcon(Properties.Achievements.Ascension)
+				.SetRarity(Rarity.EXOTIC);
+
+			AddAchievement("stone")
+				.SetName("Я — камень")
+				.SetDescription("Зайти в войс и выключить звук")
+				.SetIcon(Properties.Achievements.Stone)
+				.SetRarity(Rarity.UNCOMMON);
+
+			AddAchievement("voice1")
+				.SetName("Алло")
+				.SetDescription("Просидеть в войсе минуту")
+				.SetIcon(Properties.Achievements.Voice_1)
+				.SetRarity(Rarity.COMMON);
+
+			AddAchievement("voice2")
+				.SetName("АЛЛО Я СКАЗАЛ!")
+				.SetDescription("Просидеть в войсе 10 минут")
+				.SetIcon(Properties.Achievements.Voice_2)
+				.SetRarity(Rarity.UNCOMMON);
+
+			AddAchievement("voice3")
+				.SetName("Попиздим?")
+				.SetDescription("Просидеть в войсе час")
+				.SetIcon(Properties.Achievements.Voice_3)
+				.SetRarity(Rarity.RARE);
+
+			AddAchievement("voice4")
+				.SetName("Общительный")
+				.SetDescription("Просидеть в войсе 6 часов")
+				.SetIcon(Properties.Achievements.Voice_4)
+				.SetRarity(Rarity.LEGENDARY);
+
+			AddAchievement("voice5")
+				.SetName("Неумолкаемый")
+				.SetDescription("Просидеть в войсе 12 часов")
+				.SetIcon(Properties.Achievements.Voice_5)
+				.SetRarity(Rarity.EXOTIC);
+
+			AddAchievement("why")
+				.SetName("1001100 1001111 1001100")
+				.SetDescription("Доебаться до бота")
+				.SetIcon(Properties.Achievements.Why)
+				.SetRarity(Rarity.RARE);
+
+
 		}
 	}
 }

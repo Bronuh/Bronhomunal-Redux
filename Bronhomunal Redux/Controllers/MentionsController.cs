@@ -52,6 +52,10 @@ namespace Bronuh.Controllers
                                         Logger.Debug("Найденный пользователь: " + member.Username);
                                         msg += mention.Message.Replace("%MENTION%", "<@!" + member.Id + ">") + "\n";
                                         mention.CustomAction(author, member);
+										if (member.Source.IsBot)
+										{
+                                            await author.GiveAchievement("why");
+										}
                                         if (author.Statistics.StickPokes > 0
                                             && author.Statistics.StickHits > 0
                                             && author.Statistics.LogHits > 0

@@ -24,6 +24,8 @@ namespace Bronuh.Types
 			WhoisOther = 0,
 			WhoisTotal = 0;
 
+			public long VoiceTime = 0;
+
 
 		public MemberStatistics() { }
 	}

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Bronuh.Events;
+using Bronuh.Logic;
+using System.Threading;
 
 namespace Bronuh
 {
@@ -45,7 +47,9 @@ namespace Bronuh
 			{
 				Token = Token,
 				TokenType = TokenType.Bot,
-			});
+				Intents = DiscordIntents.All
+			}) ;
+
 
 
 
@@ -74,6 +78,8 @@ namespace Bronuh
 						}
 					}
 				}
+
+				//Guild = await Discord.GetGuildAsync(Guild.Id, true);
 
 				if (Guild != null)
 				{
@@ -124,26 +130,52 @@ namespace Bronuh
 				}
 				MembersController.LinkDiscordMembers(DiscordMembers);
 
+				var _chans = Guild.Channels;
+
+				foreach (DiscordChannel chan in _chans.Values)
+				{
+					var users = new List<DiscordMember>(chan.Users);
+					if (chan.Type==ChannelType.Voice)
+					{
+						Logger.Log(chan.Name+": "+users.Count);
+					}
+				}
+
 				Ready = true;
 
 				Logger.Log("Получен список участников");
 				Logger.Success("Бот запущен");
+
+				
 
 				await SendMessageAsync("("+DateTime.Now.ToLongTimeString()+") Запуск № "+Settings.LaunchCount);
 			};
 
 
 			Discord.MessageCreated += async (Discord, e) => { 
-				if (e.Author.Id != BotID) { 
-					LastChannel = e.Channel; 
+				if (e.Author.Id != BotID) {
+					if (!e.Channel.IsPrivate)
+					{
+						LastChannel = e.Channel;
+					}
 					await EventsHandler.HandleEvent(e); 
 				} 
 			};
 
-			Discord.VoiceStateUpdated += async (Discord, e) =>
+			Discord.VoiceStateUpdated += async (discord, e) =>
 			{
+				
 				if (e.Channel!=null)
 				{
+					foreach(DiscordMember member in e.Channel.Users)
+					{
+						if (!member.ToMember().IsInVoice)
+						{
+							member.ToMember().JoinedVoice();
+						}
+					}
+					// e.User.ToMember().JoinedVoice();
+
 					var list = new List<DiscordMember>(e.Channel.Users);
 
 					if (e.Channel.Name == "Хотсазаляция")
@@ -157,6 +189,22 @@ namespace Bronuh
 									await member2.ToMember().GiveAchievement("zoologist");
 								}
 								break;
+							}
+						}
+					}
+
+					if (e.After.IsSelfDeafened)
+					{
+						await e.User.ToMember().GiveAchievement("stone");
+					}
+
+					if (e.User.Id == 263705631549161472)
+					{
+						if (!e.After.IsSelfMuted)
+						{
+							foreach (DiscordMember member2 in list)
+							{
+								await member2.ToMember().GiveAchievement("ascension");
 							}
 						}
 					}
@@ -201,13 +249,44 @@ namespace Bronuh
 						foreach (DiscordMember member in list)
 						{
 							await member.ToMember().GiveAchievement("zerg");
+
 						}
 					}
 				}
-				
+				else
+				{
+					if (e.Before.Channel != null)
+					{
+						foreach (DiscordMember member in e.Before.Channel.Users)
+						{
+							if (!member.ToMember().IsInVoice)
+							{
+								member.ToMember().JoinedVoice();
+							}
+						}
+					}
+					e.User.ToMember().LeavedVoice();
+				}
+				var _chans = e.Guild.Channels;
+
+				foreach (DiscordChannel chan in _chans.Values)
+				{
+					if (chan.Type==ChannelType.Voice) {
+						var users = new List<DiscordMember>(chan.Users);
+						foreach (DiscordMember member in users)
+						{
+							if (!member.ToMember().IsInVoice)
+							{
+								member.ToMember().JoinedVoice();
+							}
+						}
+					}
+					
+				}
 			};
 
 
+			
 
 			Discord.GuildMemberAdded += async (Discord, e) => { await EventsHandler.HandleEvent(e); };
 
@@ -226,20 +305,34 @@ namespace Bronuh
 		/// </summary>
 		/// <param name="msg"></param>
 		/// <returns></returns>
-		public static async Task SendMessageAsync(String msg)
+		public static async Task SendMessageAsync(string msg)
+		{
+			await SendMessageAsync(new DiscordMessageBuilder().WithContent(msg));
+		}
+
+
+		/// <summary>
+		/// Асинхронный метод отправки сложного сообщения
+		/// </summary>
+		/// <param name="builder"></param>
+		/// <returns></returns>
+		public static async Task SendMessageAsync(DiscordMessageBuilder builder)
 		{
 			if (Ready)
 			{
+				builder.Content += Program.Suffix;
 				if (LastChannel != null)
 				{
-					await LastChannel.SendMessageAsync(msg + Program.Suffix);
+					await LastChannel.SendMessageAsync(builder);
 				}
 				else
 				{
+					
 					Logger.Warning("Нет последнего канала!1!");
 					if (BotChannel != null)
 					{
-						await BotChannel.SendMessageAsync(msg + Program.Suffix);
+						LastChannel = BotChannel;
+						await BotChannel.SendMessageAsync(builder);
 					}
 					else
 					{

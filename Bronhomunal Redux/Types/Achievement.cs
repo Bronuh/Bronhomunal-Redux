@@ -7,7 +7,7 @@ using System.Text;
 
 public enum Rarity
 {
-	COMMON,
+	COMMON = 1,
 	UNCOMMON,
 	RARE,
 	LEGENDARY,
@@ -24,6 +24,7 @@ namespace Bronuh.Types
 		public int ColorShift = 0;
 		public int Lightness = 0;
 		public Color BorderColor = Color.FromArgb(150,150,150);
+		public static int BaseXP = 5;
 		public Rarity Rarity = Rarity.COMMON;
 
 		private bool _cached = false;

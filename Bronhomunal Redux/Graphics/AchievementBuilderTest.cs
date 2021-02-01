@@ -68,17 +68,17 @@ namespace Bronuh.Graphics
 					Text = achievement.Name,
 					FontFamily = new System.Drawing.FontFamily("Arial"),
 					FontColor = achievement.BorderColor,
-					FontSize = 70,
+					FontSize = 60,
 					Position = new Point(300,30)
 				})
 				.Watermark(new TextLayer()
 				{
-					Text = achievement.Rarity+"",
+					Text = achievement.Rarity+" ("+(Achievement.BaseXP*(int)achievement.Rarity)+" XP)",
 					FontFamily = new System.Drawing.FontFamily("Arial"),
 					FontColor = achievement.BorderColor,
 					FontSize = 30,
 					Style = System.Drawing.FontStyle.Bold,
-					Position = new Point(1000, 10)
+					Position = new Point(950, 10)
 				});
 
 			baseBuilder.Save(memoryStream);
@@ -97,7 +97,7 @@ namespace Bronuh.Graphics
 					achievement.Description + "",
 					SixLabors.Fonts.SystemFonts.CreateFont("Arial", 37),
 					new SixLabors.ImageSharp.Color(new Rgba32(255, 255, 255)),
-					new SixLabors.ImageSharp.PointF(300, 135));
+					new SixLabors.ImageSharp.PointF(300, 125));
 
 				});
 
