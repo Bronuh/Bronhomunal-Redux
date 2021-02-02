@@ -1,15 +1,12 @@
 ﻿using Bronuh.Types;
 using DSharpPlus.Entities;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 
 namespace Bronuh.Controllers.Commands
 {
 	class Roles : ICommands
 	{
-		private static readonly string[] _restricted = new [] { 
+		private static readonly string[] _restricted = new[] {
 			"@everyone",
 			"Vaster Lord",
 			"OverLord",
@@ -77,7 +74,7 @@ namespace Bronuh.Controllers.Commands
 					{
 						if (role.Name.ToLower().Contains(other.ToLower()))
 						{
-							Logger.Success("Найдена роль: "+role.Name);
+							Logger.Success("Найдена роль: " + role.Name);
 							foundRole = role;
 							break;
 						}
@@ -87,7 +84,7 @@ namespace Bronuh.Controllers.Commands
 				if (CheckRole(foundRole, user.Source))
 				{
 					Logger.Debug("Проверки пройдены, выдача роли...");
-					await user.Source.GrantRoleAsync(foundRole,"По запросу");
+					await user.Source.GrantRoleAsync(foundRole, "По запросу");
 					Logger.Debug("роль выдана");
 					string respond = "Выдана роль: " + foundRole.Name;
 					await m.RespondAsync(respond);
@@ -109,10 +106,10 @@ namespace Bronuh.Controllers.Commands
 				int userRank = user.Rank;
 				string other = "";
 
-				for (int i = 1; i<parts.Length;i++)
+				for (int i = 1; i < parts.Length; i++)
 				{
 					other += parts[i];
-					if (i!=parts.Length-1)
+					if (i != parts.Length - 1)
 					{
 						other += " ";
 					}
@@ -137,7 +134,7 @@ namespace Bronuh.Controllers.Commands
 				if (user.HasRole(foundRole))
 				{
 					Logger.Debug("Проверки пройдены, отмена роли...");
-					await user.Source.RevokeRoleAsync(foundRole,"По запросу");
+					await user.Source.RevokeRoleAsync(foundRole, "По запросу");
 					Logger.Debug("роль отменена");
 					string respond = "Отменена роль: " + foundRole.Name;
 					await m.RespondAsync(respond);
@@ -170,7 +167,7 @@ namespace Bronuh.Controllers.Commands
 
 				if (!Exists(other))
 				{
-					await Bot.Guild.CreateRoleAsync(other,mentionable:true);
+					await Bot.Guild.CreateRoleAsync(other, mentionable: true);
 				}
 
 			})
@@ -185,16 +182,16 @@ namespace Bronuh.Controllers.Commands
 
 		private static bool CheckRole(DiscordRole role, DiscordMember? member)
 		{
-			Logger.Debug("CheckRole started with '"+role.Name+"'");
+			Logger.Debug("CheckRole started with '" + role.Name + "'");
 			if (role.Permissions != DSharpPlus.Permissions.All)
 			{
 
 				foreach (string name in _restricted)
 				{
-					if (name.ToLower() == role.Name.ToLower()) 
+					if (name.ToLower() == role.Name.ToLower())
 					{
-						Logger.Warning("Запрещенная роль: "+name);
-						return false; 
+						Logger.Warning("Запрещенная роль: " + name);
+						return false;
 					}
 				}
 
@@ -206,7 +203,7 @@ namespace Bronuh.Controllers.Commands
 						return false;
 					}
 				}
-				Logger.Debug("Допустимая роль: "+role.Name);
+				Logger.Debug("Допустимая роль: " + role.Name);
 				return true;
 			}
 			return false;
@@ -214,7 +211,7 @@ namespace Bronuh.Controllers.Commands
 
 		private static bool Exists(string roleName)
 		{
-			foreach(DiscordRole role in Bot.Guild.Roles.Values)
+			foreach (DiscordRole role in Bot.Guild.Roles.Values)
 			{
 				if (role.Name.ToLower() == roleName.ToLower())
 				{

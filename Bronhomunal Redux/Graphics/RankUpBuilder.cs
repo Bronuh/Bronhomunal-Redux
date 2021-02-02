@@ -4,10 +4,7 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Bronuh.Graphics
 {
@@ -25,8 +22,8 @@ namespace Bronuh.Graphics
 			var avatarImage = Image.Load(member.GetAvatar().ToArray());
 			var baseImage = Image.Load(Bronuh.Properties.Resources.Level.ToArray());
 			var arrowImage = Image.Load(Bronuh.Properties.Resources.ArrowGlowing.ToArray());
-			
-			
+
+
 			if (rank == 0)
 			{
 				rank = member.Rank;
@@ -49,7 +46,8 @@ namespace Bronuh.Graphics
 
 
 			///Основное изображение
-			baseImage.Mutate(ctx => {
+			baseImage.Mutate(ctx =>
+			{
 				int step = (128 - 110) / 2;
 				ctx.DrawImage(avatarImage, new Point(720 - 110 - step, step), 1);
 				ctx.DrawText(new TextGraphicsOptions
@@ -83,9 +81,9 @@ namespace Bronuh.Graphics
 							HorizontalAlignment = HorizontalAlignment.Left,
 						}
 				},
-				"Повысил ранг до "+rank,
+				"Повысил ранг до " + rank,
 				SystemFonts.CreateFont("Arial", 30),
-				new Color(new Rgba32(255,255,255)),
+				new Color(new Rgba32(255, 255, 255)),
 				new PointF(150, 75));
 
 

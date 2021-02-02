@@ -1,19 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using DSharpPlus;
+﻿using Bronuh.Types;
 using DSharpPlus.EventArgs;
-using Bronuh.Types;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Bronuh.Libs;
-using Bronuh.Modules;
-using DSharpPlus.Entities;
-using System.Reflection;
-using System.Linq;
 
 namespace Bronuh
 {
-	
+
 	public static partial class CommandsController
 	{
 		public static List<Command> Commands { get; private set; } = new List<Command>();
@@ -74,7 +66,7 @@ namespace Bronuh
 			bool executed;
 			foreach (Command command in Commands)
 			{
-				executed = await command.TryExecute(new ChatMessage(Program.Prefix+Settings.Sign+cmd));
+				executed = await command.TryExecute(new ChatMessage(Program.Prefix + Settings.Sign + cmd));
 				if (executed)
 				{
 					return true;
@@ -109,7 +101,7 @@ namespace Bronuh
 
 			_initialized = true;
 
-			
+
 		}
 	}
 }

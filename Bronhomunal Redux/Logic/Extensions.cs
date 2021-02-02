@@ -1,30 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Text;
-using Bronuh.Types;
+﻿using Bronuh.Types;
 using DSharpPlus.Entities;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 
 namespace Bronuh
 {
-    public static class Extensions
-    {
-        public static bool IsOwner(this DiscordUser user)
-        {
-            return user.Id == 263705631549161472;
-        }
+	public static class Extensions
+	{
+		public static bool IsOwner(this DiscordUser user)
+		{
+			return user.Id == 263705631549161472;
+		}
 
 
-        public static bool IsOwner(this DiscordMember member)
-        {
-            return member.Id == 263705631549161472;
-        }
+		public static bool IsOwner(this DiscordMember member)
+		{
+			return member.Id == 263705631549161472;
+		}
 
 
 		public static DiscordMember ToDiscordMember(this DiscordUser user)
@@ -76,7 +75,7 @@ namespace Bronuh
 
 		public static T GetRandom<T>(this List<T> list)
 		{
-			return list[new Random().Next(0,list.Count-1)];
+			return list[new Random().Next(0, list.Count - 1)];
 		}
 
 
@@ -172,13 +171,13 @@ namespace Bronuh
 		{
 			foreach (DiscordMember member in list)
 			{
-				if (member.Id==find.Id)
+				if (member.Id == find.Id)
 				{
 					return true;
 				}
 			}
 			return false;
-		} 
+		}
 
 	}
 }

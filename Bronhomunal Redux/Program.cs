@@ -1,14 +1,8 @@
-﻿using System;
-using System.Diagnostics;
+﻿using Bronuh.Logic;
+using NamedPipeWrapper;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Bronuh.Events;
-using Bronuh.Logic;
-using Bronuh.Modules;
-using Bronuh.Types;
-using DSharpPlus;
-using DSharpPlus.Entities;
-using NamedPipeWrapper;
 
 namespace Bronuh
 {
@@ -28,10 +22,10 @@ namespace Bronuh
 
 			Logger.Log("Загрузка...");
 
-			#if DEBUG
-				Suffix = " [DEBUG]";
-				Prefix = "!";
-			#endif
+#if DEBUG
+			Suffix = " [DEBUG]";
+			Prefix = "!";
+#endif
 
 			InterfaceExecutor.Execute(typeof(ILoadable), "Load");
 			InterfaceExecutor.Execute(typeof(IInitializable), "Initialize");
@@ -47,9 +41,9 @@ namespace Bronuh
 
 			Logger.Log("Подключение к Pipe серверу...");
 
-			
-			
-			
+
+
+
 
 			var outer = Task.Factory.StartNew(() =>      // внешняя задача
 			{
@@ -82,7 +76,7 @@ namespace Bronuh
 				string cmd = Console.ReadLine();
 				CommandsController.TryExecuteConsoleCommand(cmd).ConfigureAwait(false).GetAwaiter().GetResult();
 			}
-			
+
 		}
 
 

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Bronuh.Types
+﻿namespace Bronuh.Types
 {
 	public class Alias
 	{

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Threading;
 
 namespace Bronuh
@@ -17,7 +16,7 @@ namespace Bronuh
 		public static List<LogMessage> MessagesLog = new List<LogMessage>();
 		public static List<LogMessage> DebugsLog = new List<LogMessage>();
 
-		
+
 
 		public void Save()
 		{
@@ -29,13 +28,13 @@ namespace Bronuh
 			string log = "\n";
 			foreach (LogMessage logMessage in GlobalLog)
 			{
-				log += logMessage.fullText+"\n";
+				log += logMessage.fullText + "\n";
 			}
 
 			Logger.Log("Сохранение Лога...");
 			SaveLoad.SaveObject<string>(log, $"logs\\Log " +
-				$"{DateTime.Now.ToShortDateString().Replace(".","-")} " +
-				$"{DateTime.Now.ToLongTimeString().Replace(":",".")}.txt");
+				$"{DateTime.Now.ToShortDateString().Replace(".", "-")} " +
+				$"{DateTime.Now.ToLongTimeString().Replace(":", ".")}.txt");
 			Logger.Success("Сохранение завершено");
 		}
 
@@ -132,7 +131,7 @@ namespace Bronuh
 
 			if (type == Type.Debug)
 			{
-				if(Settings.DEBUG)
+				if (Settings.DEBUG)
 					Console.ForegroundColor = ConsoleColor.DarkGray;
 
 				Logger.DebugsLog.Add(this);

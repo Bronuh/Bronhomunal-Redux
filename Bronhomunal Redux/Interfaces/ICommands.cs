@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Bronuh
+﻿namespace Bronuh
 {
 	public interface ICommands
 	{

@@ -1,20 +1,7 @@
-﻿using Bronuh.Types;
+﻿using Bronuh.Graphics;
+using Bronuh.Types;
 using DSharpPlus.Entities;
 using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Resources;
-using System.Text;
-
-using SixLabors.Fonts;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Drawing.Processing;
-using SixLabors.ImageSharp.Processing;
-using Image = SixLabors.ImageSharp.Image;
-using SixLabors.ImageSharp.Drawing;
-using SixLabors.ImageSharp.PixelFormats;
-using Bronuh.Graphics;
 
 namespace Bronuh.Controllers.Commands
 {
@@ -113,7 +100,7 @@ namespace Bronuh.Controllers.Commands
 					Program.Server.PushMessage("Shutdown");
 					await e.RespondAsync("DED");
 					Program.SaveAll();
-					
+
 					Environment.Exit(0);
 				}
 			}).SetOp(true).AddAlias("умри").AddAlias("die")

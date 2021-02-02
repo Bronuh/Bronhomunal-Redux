@@ -1,15 +1,10 @@
-﻿using DSharpPlus;
+﻿using Bronuh.Events;
+using Bronuh.Types;
+using DSharpPlus;
 using DSharpPlus.Entities;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using Bronuh.Events;
-using Bronuh.Logic;
-using System.Threading;
-using DSharpPlus.Net;
-using System.Linq;
-using Bronuh.Types;
 
 namespace Bronuh
 {
@@ -25,8 +20,6 @@ namespace Bronuh
 		private static readonly ulong BotID = 696952183572267028;
 		public static List<DiscordMember> DiscordMembers = new List<DiscordMember>();
 
-
-
 		public static void Initialize(string token)
 		{
 			Token = token;
@@ -35,11 +28,10 @@ namespace Bronuh
 			{
 				MainAsync().ConfigureAwait(false).GetAwaiter().GetResult();
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				Logger.Error(e.Message);
 			}
-			
 		}
 
 		public static async Task MainAsync()
@@ -51,10 +43,7 @@ namespace Bronuh
 				Token = Token,
 				TokenType = TokenType.Bot,
 				Intents = DiscordIntents.All
-			}) ;
-
-
-
+			});
 
 			Logger.Debug("Обработчик события Ready");
 			Discord.Ready += async (Discord, e) =>
@@ -63,7 +52,7 @@ namespace Bronuh
 				if (Discord.Guilds.Count == 1)
 				{
 					Guild = new List<DiscordGuild>(Discord.Guilds.Values)[0];
-					Logger.Debug("Сервер: "+Guild.Id);
+					Logger.Debug("Сервер: " + Guild.Id);
 				}
 				else
 				{
@@ -82,7 +71,6 @@ namespace Bronuh
 					}
 				}
 
-				//Guild = await Discord.GetGuildAsync(Guild.Id, false);
 				if (Guild != null)
 				{
 					Channels = await Guild.GetChannelsAsync();
@@ -126,12 +114,12 @@ namespace Bronuh
 				}
 				Logger.Log("Получение списка участников...");
 
-
 				IReadOnlyCollection<DiscordMember> members = new List<DiscordMember>();
 				try
 				{
 					members = await Guild.GetAllMembersAsync();
-				}catch(Exception ex)
+				}
+				catch (Exception ex)
 				{
 					Logger.Error("Дерьмо случается!");
 					Logger.Error(ex.Message);
@@ -143,34 +131,30 @@ namespace Bronuh
 				}
 				MembersController.LinkDiscordMembers(DiscordMembers);
 
-				
-
 				Ready = true;
 
 				Logger.Log("Получен список участников");
 				Logger.Success("Бот запущен");
-				await SendMessageAsync("("+DateTime.Now.ToLongTimeString()+") Запуск № "+Settings.LaunchCount);
-
-
+				await SendMessageAsync("(" + DateTime.Now.ToLongTimeString() + ") Запуск № " + Settings.LaunchCount);
 			};
 
-
-			Discord.MessageCreated += async (Discord, e) => { 
-				if (e.Author.Id != BotID) {
+			Discord.MessageCreated += async (Discord, e) =>
+			{
+				if (e.Author.Id != BotID)
+				{
 					if (!e.Channel.IsPrivate)
 					{
 						LastChannel = e.Channel;
 					}
-					await EventsHandler.HandleEvent(e); 
-				} 
+					await EventsHandler.HandleEvent(e);
+				}
 			};
 
 			Discord.VoiceStateUpdated += async (discord, e) =>
 			{
-				
-				if (e.Channel!=null)
+				if (e.Channel != null)
 				{
-					foreach(DiscordMember member in e.Channel.Users)
+					foreach (DiscordMember member in e.Channel.Users)
 					{
 						if (!member.ToMember().IsInVoice)
 						{
@@ -179,7 +163,6 @@ namespace Bronuh
 							Member.OnJoinedVoice(mamba, new MemberJoinedVoiceEventArgs());
 						}
 					}
-					// e.User.ToMember().JoinedVoice();
 
 					var list = new List<DiscordMember>(e.Channel.Users);
 
@@ -225,6 +208,7 @@ namespace Bronuh
 							break;
 						}
 					}
+
 					if (list.Count == 1)
 					{
 						foreach (DiscordMember member in list)
@@ -279,7 +263,8 @@ namespace Bronuh
 
 				foreach (DiscordChannel chan in _chans.Values)
 				{
-					if (chan.Type==ChannelType.Voice) {
+					if (chan.Type == ChannelType.Voice)
+					{
 						var users = new List<DiscordMember>(chan.Users);
 						foreach (DiscordMember member in users)
 						{
@@ -291,12 +276,8 @@ namespace Bronuh
 							}
 						}
 					}
-					
 				}
 			};
-
-
-			
 
 			Discord.GuildMemberAdded += async (Discord, e) => { await EventsHandler.HandleEvent(e); };
 
@@ -309,7 +290,6 @@ namespace Bronuh
 			SendMessageAsync(msg + Program.Suffix).GetAwaiter().GetResult();
 		}
 
-
 		/// <summary>
 		/// Асинхронный метод отправки сообщения
 		/// </summary>
@@ -319,7 +299,6 @@ namespace Bronuh
 		{
 			await SendMessageAsync(new DiscordMessageBuilder().WithContent(msg));
 		}
-
 
 		/// <summary>
 		/// Асинхронный метод отправки сложного сообщения
@@ -337,7 +316,6 @@ namespace Bronuh
 				}
 				else
 				{
-					
 					Logger.Warning("Нет последнего канала!1!");
 					if (BotChannel != null)
 					{
@@ -355,6 +333,5 @@ namespace Bronuh
 				Logger.Error("Инициализация не закончена!");
 			}
 		}
-
 	}
 }

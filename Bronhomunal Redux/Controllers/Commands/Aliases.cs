@@ -1,7 +1,4 @@
 ﻿using Bronuh.Types;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Bronuh.Controllers.Commands
 {
@@ -9,7 +6,8 @@ namespace Bronuh.Controllers.Commands
 	{
 		public void InitializeCommands()
 		{
-			CommandsController.AddCommand("alias", async (m) => {
+			CommandsController.AddCommand("alias", async (m) =>
+			{
 				string text = m.Text;
 				string[] parts = text.Split(' ');
 				Member target = MembersController.FindMember(parts[1]);
@@ -23,7 +21,8 @@ namespace Bronuh.Controllers.Commands
 			.AddTag("misc");
 
 
-			CommandsController.AddCommand("forget", async (m) => {
+			CommandsController.AddCommand("forget", async (m) =>
+			{
 				string text = m.Text;
 				string[] parts = text.Split(' ');
 

@@ -1,15 +1,12 @@
-﻿using Bronuh.Types;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Bronuh.Modules;
+﻿using Bronuh.Modules;
+using Bronuh.Types;
 using DSharpPlus.Entities;
 
 namespace Bronuh.Logic
 {
 	public class Worker
 	{
-		
+
 		public static void EverySecond(object state)
 		{
 			Logger.Debug("Checking voice time...");
@@ -17,9 +14,8 @@ namespace Bronuh.Logic
 			{
 				CheckVoiceTime();
 			}
-			
-		}
 
+		}
 
 		public static void Every30Sec(object state)
 		{
@@ -29,7 +25,7 @@ namespace Bronuh.Logic
 				string minecraft = "";
 				foreach (DiscordRole role in Bot.Guild.Roles.Values)
 				{
-					if (role.Name=="Minecraft")
+					if (role.Name == "Minecraft")
 					{
 						minecraft = role.Mention;
 					}
@@ -40,47 +36,48 @@ namespace Bronuh.Logic
 				{
 					if (!Settings.ServerStatus)
 					{
-						Bot.GamesChannel.SendMessageAsync(":white_check_mark: " + minecraft +" Сервер abro.tech **ВКЛЮЧЕН**").GetAwaiter().GetResult();
+						Bot.GamesChannel.SendMessageAsync(":white_check_mark: " + minecraft + " Сервер abro.tech **ВКЛЮЧЕН**").GetAwaiter().GetResult();
 					}
 				}
+
 				else
 				{
 					if (Settings.ServerStatus)
 					{
-						Bot.GamesChannel.SendMessageAsync(":no_entry: "+minecraft + " Сервер abro.tech **ВЫКЛЮЧЕН**").GetAwaiter().GetResult();
+						Bot.GamesChannel.SendMessageAsync(":no_entry: " + minecraft + " Сервер abro.tech **ВЫКЛЮЧЕН**").GetAwaiter().GetResult();
 					}
 				}
 				Settings.ServerStatus = ms.ServerUp;
-				Logger.Debug("Server status " +ms.ServerUp);
+				Logger.Debug("Server status " + ms.ServerUp);
 			}
-			
+
 		}
 
 		private static void CheckVoiceTime()
 		{
-			foreach(Member member in MembersController.Members)
+			foreach (Member member in MembersController.Members)
 			{
-				if (member.GetVoiceTime()>=60*1000)
+				if (member.GetVoiceTime() >= 60 * 1000)
 				{
 					member.GiveAchievement("voice1").GetAwaiter().GetResult();
 				}
 
-				if (member.GetVoiceTime() >= 600*1000)
+				if (member.GetVoiceTime() >= 600 * 1000)
 				{
 					member.GiveAchievement("voice2").GetAwaiter().GetResult();
 				}
 
-				if (member.GetVoiceTime() >= 3600*1000)
+				if (member.GetVoiceTime() >= 3600 * 1000)
 				{
 					member.GiveAchievement("voice3").GetAwaiter().GetResult();
 				}
 
-				if (member.GetVoiceTime() >= 3600*6*1000)
+				if (member.GetVoiceTime() >= 3600 * 6 * 1000)
 				{
 					member.GiveAchievement("voice4").GetAwaiter().GetResult();
 				}
 
-				if (member.GetVoiceTime() >= 3600 * 12* 1000)
+				if (member.GetVoiceTime() >= 3600 * 12 * 1000)
 				{
 					member.GiveAchievement("voice5").GetAwaiter().GetResult();
 				}

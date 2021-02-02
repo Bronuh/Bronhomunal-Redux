@@ -1,10 +1,8 @@
 ﻿using Bronuh.Modules;
 using Bronuh.Types;
 using DSharpPlus.Entities;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Bronuh.Controllers.Commands
 {
@@ -23,15 +21,15 @@ namespace Bronuh.Controllers.Commands
 				string respond = "Список команд: \n\n";
 				if (parts.Length > 1)
 				{
-					respond = "Список команд с тегом "+parts[1]+": \n\n";
+					respond = "Список команд с тегом " + parts[1] + ": \n\n";
 				}
 
 				foreach (Command command in CommandsController.Commands)
 				{
-					Logger.Debug("Команда "+command.Name);
+					Logger.Debug("Команда " + command.Name);
 					if (userRank >= command.Rank)
 					{
-						if (command.OpOnly&&!m.Author.IsOp())
+						if (command.OpOnly && !m.Author.IsOp())
 						{
 							continue;
 						}
@@ -44,10 +42,10 @@ namespace Bronuh.Controllers.Commands
 						}
 						if (parts.Length > 1)
 						{
-							Logger.Debug("Поиск по тегу "+parts[1] + " среди тегов "+command.Tags.ToLine());
+							Logger.Debug("Поиск по тегу " + parts[1] + " среди тегов " + command.Tags.ToLine());
 							if (command.HasTag(parts[1]))
 							{
-								Logger.Debug("Тег "+parts[1]+" имется");
+								Logger.Debug("Тег " + parts[1] + " имется");
 								respond += command.GetInfo() + "\n\n";
 								cmdInMessage++;
 							}
@@ -125,7 +123,7 @@ namespace Bronuh.Controllers.Commands
 
 				await m.RespondAsync(new DiscordMessageBuilder()
 					.WithContent(":pencil: Профиль пользователя " + target.DisplayName)
-					.WithFile(target.DisplayName+".png", target.GetBasicProfileImageStream()));
+					.WithFile(target.DisplayName + ".png", target.GetBasicProfileImageStream()));
 			})
 			.AddAlias("профиль")
 			.SetUsage("<command> [username]")
@@ -165,9 +163,9 @@ namespace Bronuh.Controllers.Commands
 				if (ms.ServerUp)
 				{
 					respond += ":white_check_mark: ВКЛЮЧЕН\n";
-					respond += "Версия: "+ms.Version+"\n";
-					respond += "Игроков: "+ms.CurrentPlayers+"/"+ms.MaximumPlayers+"\n";
-					respond += "MOTD: "+ms.Motd;
+					respond += "Версия: " + ms.Version + "\n";
+					respond += "Игроков: " + ms.CurrentPlayers + "/" + ms.MaximumPlayers + "\n";
+					respond += "MOTD: " + ms.Motd;
 				}
 				else
 				{
@@ -181,7 +179,7 @@ namespace Bronuh.Controllers.Commands
 			.AddTag("misc")
 			.AddTag("info");
 
-			
+
 
 
 			CommandsController.AddCommand("achievements", async (m) =>
@@ -204,23 +202,23 @@ namespace Bronuh.Controllers.Commands
 				}
 
 				int images = 0;
-				
+
 
 				List<Achievement> achs = new List<Achievement>();
 
 				foreach (string achivementId in target.Achievements)
 				{
 					var achievement = AchievementsController.Find(achivementId);
-					if (achievement!=null)
+					if (achievement != null)
 					{
 						achs.Add(achievement);
 					}
 				}
 
-				List<Achievement> sorted = new List<Achievement>(achs.OrderByDescending(a=>a.Rarity).ThenBy(a=>a.Name));
+				List<Achievement> sorted = new List<Achievement>(achs.OrderByDescending(a => a.Rarity).ThenBy(a => a.Name));
 
 				var messageBuilder = new DiscordMessageBuilder()
-				.WithContent(":pencil: Достижения пользователя " + target.DisplayName +$"[{sorted.Count}/{AchievementsController.Achievements.Count}]");
+				.WithContent(":pencil: Достижения пользователя " + target.DisplayName + $"[{sorted.Count}/{AchievementsController.Achievements.Count}]");
 
 				foreach (Achievement achievement in sorted)
 				{
@@ -233,7 +231,7 @@ namespace Bronuh.Controllers.Commands
 						messageBuilder = new DiscordMessageBuilder();
 						images = 0;
 					}
-					
+
 				}
 				await m.RespondAsync(messageBuilder);
 
@@ -263,11 +261,11 @@ namespace Bronuh.Controllers.Commands
 
 
 				string respond = ":pencil: Список достижений: \n\n";
-				
+
 
 				int achievs = 0;
 
-				foreach(Achievement achievement in sorted)
+				foreach (Achievement achievement in sorted)
 				{
 					string has = ":red_circle:";
 					if (m.Author.HasAchievement(achievement))
@@ -277,9 +275,9 @@ namespace Bronuh.Controllers.Commands
 					respond += $"**{has}{achievement.Name}**\n" +
 					$"{achievement.Description}\n\n";
 					achievs++;
-					
 
-					if (achievs>=10)
+
+					if (achievs >= 10)
 					{
 						await m.RespondAsync(respond);
 						achievs = 0;
@@ -288,7 +286,7 @@ namespace Bronuh.Controllers.Commands
 				}
 
 
-				
+
 				await m.RespondAsync(respond);
 
 			})
@@ -307,8 +305,10 @@ namespace Bronuh.Controllers.Commands
 				int userRank = m.Author.Rank;
 
 				List<string> tags = new List<string>();
-				CommandsController.Commands.ForEach(command=> {
-					command.Tags.ForEach(tag=> {
+				CommandsController.Commands.ForEach(command =>
+				{
+					command.Tags.ForEach(tag =>
+					{
 						if (!tags.Contains(tag))
 							tags.Add(tag);
 					});
@@ -318,7 +318,7 @@ namespace Bronuh.Controllers.Commands
 				foreach (string tag in tags)
 					respond += tag + (tag == tags[^1] ? "" : ", ");
 
-				
+
 				await m.RespondAsync(respond);
 			})
 			.AddAlias("tags").AddAlias("тэги")

@@ -1,8 +1,7 @@
 ﻿using System;
-using System.IO;
+using System.Diagnostics;
 using System.Net.Sockets;
 using System.Text;
-using System.Diagnostics;
 
 namespace Bronuh.Modules
 {

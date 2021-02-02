@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Bronuh.Libs
 {
@@ -196,7 +193,7 @@ namespace Bronuh.Libs
 			new RandomWord("(ФЫРКАЮТ)", 0.4);
 			// new RandomWord("",0.01);
 			// new Word("","",0.5);
-			
+
 		}
 
 
@@ -234,7 +231,7 @@ namespace Bronuh.Libs
 				return arg;
 			}
 
-			
+
 		}
 
 		/// <summary>
@@ -274,5 +271,5 @@ namespace Bronuh.Libs
 	}
 
 
-	
+
 }

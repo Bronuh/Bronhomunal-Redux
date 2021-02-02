@@ -1,9 +1,6 @@
 ﻿//using SixLabors.ImageSharp;
-using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
-using System.Text;
 
 public enum Rarity
 {
@@ -23,7 +20,7 @@ namespace Bronuh.Types
 		public Image Icon;
 		public int ColorShift = 0;
 		public int Lightness = 0;
-		public Color BorderColor = Color.FromArgb(150,150,150);
+		public Color BorderColor = Color.FromArgb(150, 150, 150);
 		public static int BaseXP = 5;
 		public Rarity Rarity = Rarity.COMMON;
 
@@ -44,7 +41,7 @@ namespace Bronuh.Types
 			switch (rarity)
 			{
 				case Rarity.COMMON:
-					BorderColor = Color.FromArgb(150,150,150);
+					BorderColor = Color.FromArgb(150, 150, 150);
 					break;
 				case Rarity.UNCOMMON:
 					BorderColor = Color.LimeGreen;
@@ -59,7 +56,7 @@ namespace Bronuh.Types
 					BorderColor = Color.Gold;
 					break;
 				default:
-					BorderColor = Color.FromArgb(150,150,150);
+					BorderColor = Color.FromArgb(150, 150, 150);
 					break;
 			}
 

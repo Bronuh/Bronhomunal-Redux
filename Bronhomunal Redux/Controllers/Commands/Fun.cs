@@ -3,9 +3,7 @@ using Bronuh.Modules;
 using Bronuh.Types;
 using DSharpPlus.Entities;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Bronuh.Controllers.Commands
 {

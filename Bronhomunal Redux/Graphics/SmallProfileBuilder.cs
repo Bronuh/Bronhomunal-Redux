@@ -4,16 +4,13 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Bronuh.Graphics
 {
 	public static class SmallProfileBuilder
 	{
-		
+
 		public static Stream Build(Member member)
 		{
 
@@ -21,7 +18,7 @@ namespace Bronuh.Graphics
 			var baseImage = Image.Load(Bronuh.Properties.Resources.Level.ToArray());
 			var crownImage = Image.Load(Bronuh.Properties.Resources.Crown.ToArray());
 
-			
+
 
 			/// Prepare avatar
 			avatarImage.Mutate(x => x.Resize(new ResizeOptions
@@ -33,7 +30,8 @@ namespace Bronuh.Graphics
 
 
 			///Base info
-			baseImage.Mutate(ctx => {
+			baseImage.Mutate(ctx =>
+			{
 				int step = (128 - 110) / 2;
 				ctx.DrawImage(avatarImage, new Point(720 - 110 - step, step), 1);
 				ctx.DrawText(new TextGraphicsOptions
@@ -61,7 +59,7 @@ namespace Bronuh.Graphics
 				new Color(new Rgba32(col.R, col.G, col.B)),
 				new PointF(150, 5));
 
-				
+
 
 				ctx.DrawLines(new Pen(
 					new Color(
@@ -128,7 +126,7 @@ namespace Bronuh.Graphics
 
 			if (member.IsOp())
 			{
-				
+
 
 				crownImage.Mutate(ctx =>
 				{
@@ -143,9 +141,9 @@ namespace Bronuh.Graphics
 				});
 			}
 
-			
 
-			
+
+
 
 			baseImage.Mutate(x => x.ApplyRoundedCorners(10));
 

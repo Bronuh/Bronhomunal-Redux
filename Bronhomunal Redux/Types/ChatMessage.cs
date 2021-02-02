@@ -1,7 +1,5 @@
 ﻿using DSharpPlus.Entities;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Bronuh.Types
@@ -50,9 +48,9 @@ namespace Bronuh.Types
 		{
 			if (!Author.IsConsole())
 			{
-				if (Program.Suffix!="")
+				if (Program.Suffix != "")
 				{
-					builder.WithContent(builder.Content+Program.Suffix);
+					builder.WithContent(builder.Content + Program.Suffix);
 				}
 				return await Source?.RespondAsync(builder);
 			}

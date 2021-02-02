@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Bronuh.Types
 {
@@ -24,7 +22,7 @@ namespace Bronuh.Types
 			WhoisOther = 0,
 			WhoisTotal = 0;
 
-			public long VoiceTime = 0;
+		public long VoiceTime = 0;
 
 
 		public MemberStatistics() { }

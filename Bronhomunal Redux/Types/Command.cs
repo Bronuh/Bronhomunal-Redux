@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using DSharpPlus.EventArgs;
 
 namespace Bronuh.Types
 {
@@ -30,7 +27,8 @@ namespace Bronuh.Types
 
 
 		public Command() { }
-		public Command(string name, CommandAction action) {
+		public Command(string name, CommandAction action)
+		{
 			Name = name;
 			_action = action;
 		}
@@ -46,22 +44,22 @@ namespace Bronuh.Types
 			string aliases = "";
 			foreach (string alias in Aliases)
 			{
-				aliases += alias+ (alias == Aliases[^1] ? "" : ", ");
+				aliases += alias + (alias == Aliases[^1] ? "" : ", ");
 			}
 			string tags = "";
 			foreach (string tag in Tags)
 				tags += tag + (tag == Tags[^1] ? "" : ", ");
 
-			info += "Команда ["+(CommandsController.Commands.IndexOf(this)+1)+"/"+ CommandsController.Commands.Count+ "]: " +
-				"**"+Settings.Sign+Name+"**\n";
-			info += "Аналоги: "+aliases+"\n";
-			info += "Использование: "+Usage+"\n";
-			info += "Описание: "+Description+"\n";
-			info += "Требуемый ранг: "+Rank+"\n";
-			info += "Только для админов: "+OpOnly+"\n";
-			info += "Тэги: *" + tags+"*";
+			info += "Команда [" + (CommandsController.Commands.IndexOf(this) + 1) + "/" + CommandsController.Commands.Count + "]: " +
+				"**" + Settings.Sign + Name + "**\n";
+			info += "Аналоги: " + aliases + "\n";
+			info += "Использование: " + Usage + "\n";
+			info += "Описание: " + Description + "\n";
+			info += "Требуемый ранг: " + Rank + "\n";
+			info += "Только для админов: " + OpOnly + "\n";
+			info += "Тэги: *" + tags + "*";
 
-			info = info.Replace("<sign>", Program.Prefix + Settings.Sign).Replace("<name>", Name).Replace("<command>", Program.Prefix + Settings.Sign+Name);
+			info = info.Replace("<sign>", Program.Prefix + Settings.Sign).Replace("<name>", Name).Replace("<command>", Program.Prefix + Settings.Sign + Name);
 
 			return info;
 		}
@@ -152,7 +150,7 @@ namespace Bronuh.Types
 		{
 			foreach (string tag in Tags)
 			{
-				if (tag.ToLower()==searchingTag.ToLower())
+				if (tag.ToLower() == searchingTag.ToLower())
 				{
 					return true;
 				}
@@ -169,8 +167,8 @@ namespace Bronuh.Types
 		private bool CheckCommand(string text)
 		{
 			string command = text.Split(' ')[0];
-			
-			if (command.ToLower()==Name.ToLower())
+
+			if (command.ToLower() == Name.ToLower())
 			{
 				return true;
 			}
@@ -201,13 +199,13 @@ namespace Bronuh.Types
 			string text = message.Text;
 			Member author = message.Author;
 
-			text = text.Substring(Program.Prefix.Length + Settings.Sign.Length, text.Length-(Program.Prefix.Length + Settings.Sign.Length));
+			text = text.Substring(Program.Prefix.Length + Settings.Sign.Length, text.Length - (Program.Prefix.Length + Settings.Sign.Length));
 
-			Logger.Debug("Попытка выполнения "+ Program.Prefix + Settings.Sign + Name +" ("+text+")");
+			Logger.Debug("Попытка выполнения " + Program.Prefix + Settings.Sign + Name + " (" + text + ")");
 			if (CheckCommand(text))
 			{
-				Logger.Debug("Обнаружена команда "+ Name);
-				if (author.IsOp()||author.Rank>=Rank)
+				Logger.Debug("Обнаружена команда " + Name);
+				if (author.IsOp() || author.Rank >= Rank)
 				{
 					if (OpOnly && !author.IsOp())
 					{
@@ -217,7 +215,7 @@ namespace Bronuh.Types
 
 					await _action(message);
 				}
-				
+
 				return true;
 			}
 			return false;

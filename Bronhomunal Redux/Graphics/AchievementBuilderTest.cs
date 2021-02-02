@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
-using System.Text;
-using Bronuh.Types;
+﻿using Bronuh.Types;
 using ImageProcessor;
 using ImageProcessor.Imaging;
 using SixLabors.Fonts;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
+using System.Drawing;
+using System.IO;
 
 namespace Bronuh.Graphics
 {
@@ -38,20 +35,20 @@ namespace Bronuh.Graphics
 
 
 			imageBuilder
-				.Resize(new Size(iconSize,iconSize))
+				.Resize(new Size(iconSize, iconSize))
 				.RoundedCorners(cornerRadius);
 
 			imageBgBuilder
 				.Resize(new Size(iconSize + borderSize, iconSize + borderSize))
-				.RoundedCorners((int)(cornerRadius*1.5))
-				.ReplaceColor(Color.FromArgb(255,0,0),achievement.BorderColor,5);
+				.RoundedCorners((int)(cornerRadius * 1.5))
+				.ReplaceColor(Color.FromArgb(255, 0, 0), achievement.BorderColor, 5);
 
 			Image iconBgImage = imageBgBuilder.Image;
 			Image iconImage = imageBuilder.Image;
 
 			baseBuilder.Load(Properties.Achievements.Background.ToStream())
-				.Overlay(new ImageLayer() 
-				{ 
+				.Overlay(new ImageLayer()
+				{
 					Image = iconBgImage,
 					Size = new Size(iconSize + borderSize, iconSize + borderSize),
 					Position = new Point(baseHeight / 2 - iconBgImage.Height / 2, baseHeight / 2 - iconBgImage.Height / 2)
@@ -69,11 +66,11 @@ namespace Bronuh.Graphics
 					FontFamily = new System.Drawing.FontFamily("Arial"),
 					FontColor = achievement.BorderColor,
 					FontSize = 60,
-					Position = new Point(300,30)
+					Position = new Point(300, 30)
 				})
 				.Watermark(new TextLayer()
 				{
-					Text = achievement.Rarity+" ("+(Achievement.BaseXP*(int)achievement.Rarity)+" XP)",
+					Text = achievement.Rarity + " (" + (Achievement.BaseXP * (int)achievement.Rarity) + " XP)",
 					FontFamily = new System.Drawing.FontFamily("Arial"),
 					FontColor = achievement.BorderColor,
 					FontSize = 30,
@@ -109,7 +106,7 @@ namespace Bronuh.Graphics
 				return outStream;
 			}
 
-				
+
 		}
 	}
 }

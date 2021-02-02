@@ -1,13 +1,13 @@
-﻿using System;
+﻿using Bronuh.Controllers;
+using Bronuh.Events;
+using Bronuh.Graphics;
+using DSharpPlus.Entities;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Net;
 using System.Threading.Tasks;
-using DSharpPlus.Entities;
-using Bronuh.Controllers;
-using Bronuh.Graphics;
-using Bronuh.Events;
 
 namespace Bronuh.Types
 {
@@ -34,7 +34,7 @@ namespace Bronuh.Types
 		public bool IsOP = false;
 
 		public int CharacterId = 0;
-		
+
 		[System.Xml.Serialization.XmlIgnore]
 		public DiscordMember Source;
 
@@ -53,15 +53,15 @@ namespace Bronuh.Types
 
 		public Member() { }
 
-		public Member(DiscordUser user) {
+		public Member(DiscordUser user)
+		{
 			Id = user.Id;
 			Username = user.Username;
 			Discriminator = user.Discriminator;
 			About = "";
 		}
 
-
-		public Member(DiscordMember member) 
+		public Member(DiscordMember member)
 		{
 			Source = member;
 			About = "";
@@ -69,18 +69,15 @@ namespace Bronuh.Types
 			Update();
 		}
 
-
 		public bool IsConsole()
 		{
-			return (Id==0&& IsOp()&& Discriminator=="0000"&&Username=="CONSOLE");
+			return (Id == 0 && IsOp() && Discriminator == "0000" && Username == "CONSOLE");
 		}
-
 
 		public bool IsBronomunal()
 		{
 			return Id == 696952183572267028;
 		}
-
 
 		/// <summary>
 		/// Собирает основную инфу в одну строку
@@ -88,14 +85,12 @@ namespace Bronuh.Types
 		/// <returns></returns>
 		public string GetInfo()
 		{
-
 			string aliases = "";
 			var aliasList = AliasesController.FindAliases(Id);
 			foreach (Alias alias in aliasList)
 			{
-				aliases += alias.Name + (alias==aliasList[^1] ? "" : ", ");
+				aliases += alias.Name + (alias == aliasList[^1] ? "" : ", ");
 			}
-
 
 			string info = $"Информация о пользователе {DisplayName} ({Username}, {Nickname}):\n" +
 				$"Также известен как: {aliases} \n" +
@@ -104,10 +99,8 @@ namespace Bronuh.Types
 				$"Админ: {IsOp()}\n" +
 				$"Консоль: {IsConsole()}\n";
 
-
 			return info;
 		}
-
 
 		/// <summary>
 		/// Выдает опыт и повышает ранг при необходимости
@@ -121,7 +114,7 @@ namespace Bronuh.Types
 			if (RankForXp(XP) > Rank)
 			{
 				int levels = RankForXp(XP) - Rank;
-				for (int i = 1; i <= levels;i++)
+				for (int i = 1; i <= levels; i++)
 				{
 					await RankUpAsync();
 				}
@@ -137,7 +130,6 @@ namespace Bronuh.Types
 			return IsOP || IsOwner() || IsBronomunal() || IsConsole();
 		}
 
-
 		/// <summary>
 		/// Определяет сколько какому рангу будет соответствовать указанно количество опыта
 		/// </summary>
@@ -146,9 +138,8 @@ namespace Bronuh.Types
 		public static int RankForXp(int xp)
 		{
 			return (int)Math.Floor((double)xp / XpPerRank) + 1;
-			
-		}
 
+		}
 
 		/// <summary>
 		/// Возвращает опыт, необходимый для получения указанного ранга
@@ -157,9 +148,8 @@ namespace Bronuh.Types
 		/// <returns>опыт</returns>
 		public static int XpForRank(int rank)
 		{
-			return (rank-1) * XpPerRank;
+			return (rank - 1) * XpPerRank;
 		}
-
 
 		/// <summary>
 		/// Повышает ранг на 1, с уведомлением в чат
@@ -175,7 +165,6 @@ namespace Bronuh.Types
 			await Bot.SendMessageAsync(msgBuilder);
 		}
 
-
 		/// <summary>
 		/// Проверяет является ли пользователь бронухом
 		/// </summary>
@@ -190,7 +179,7 @@ namespace Bronuh.Types
 		/// </summary>
 		public void Update()
 		{
-			if (Source!=null)
+			if (Source != null)
 			{
 				Id = Source.Id;
 				Discriminator = Source.Discriminator;
@@ -205,7 +194,6 @@ namespace Bronuh.Types
 				}
 			}
 		}
-
 
 		/// <summary>
 		/// Проверяет может ли указанный пользователь использовать это упоминание
@@ -224,7 +212,6 @@ namespace Bronuh.Types
 			}
 		}
 
-
 		/// <summary>
 		/// скачивает аватарку пользователя из сети
 		/// </summary>
@@ -241,7 +228,6 @@ namespace Bronuh.Types
 			client.Dispose();
 
 			return bitmap;
-
 		}
 
 		/// <summary>
@@ -263,10 +249,9 @@ namespace Bronuh.Types
 			return Achievements.Contains(id.ToLower());
 		}
 
-
 		public void JoinVoice()
 		{
-			Logger.Log(DisplayName+" подключен к войсу");
+			Logger.Log(DisplayName + " подключен к войсу");
 			LeaveVoice();
 			IsInVoice = true;
 			LastVoiceIn = DateTime.Now;
@@ -277,7 +262,7 @@ namespace Bronuh.Types
 			if (IsInVoice)
 			{
 				int delay = (int)(DateTime.Now - LastVoiceIn).TotalMilliseconds;
-				Logger.Log(DisplayName + " отключен от войса "+delay);
+				Logger.Log(DisplayName + " отключен от войса " + delay);
 				IsInVoice = false;
 				Statistics.VoiceTime += delay;
 			}
@@ -290,7 +275,7 @@ namespace Bronuh.Types
 			{
 				current = (int)(DateTime.Now - LastVoiceIn).TotalMilliseconds;
 			}
-			return Statistics.VoiceTime+current;
+			return Statistics.VoiceTime + current;
 		}
 
 		/// <summary>
@@ -312,9 +297,10 @@ namespace Bronuh.Types
 		{
 			Achievement achievement = AchievementsController.Find(id);
 
-			if (achievement!=null)
+			if (achievement != null)
 			{
-				if (!HasAchievement(achievement)) {
+				if (!HasAchievement(achievement))
+				{
 					Achievements.Add(id.ToLower());
 					await AddXPAsync((int)achievement.Rarity * Achievement.BaseXP);
 
@@ -325,7 +311,7 @@ namespace Bronuh.Types
 					GotAchievement?.Invoke(this, new MemberGotAchievementEventArgs(achievement));
 
 					await Bot.BotChannel.SendMessageAsync(msgBuilder);
-					
+
 
 					if (HasAchievement("stickpoke")
 						&& HasAchievement("stickhit")
@@ -337,11 +323,6 @@ namespace Bronuh.Types
 				}
 			}
 		}
-
-
-
-
-
 
 		public static void OnJoinedVoice(Member sender, MemberJoinedVoiceEventArgs eventArgs)
 		{

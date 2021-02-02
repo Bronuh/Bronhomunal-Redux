@@ -4,10 +4,7 @@ using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.Drawing.Processing;
 using SixLabors.ImageSharp.PixelFormats;
 using SixLabors.ImageSharp.Processing;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 namespace Bronuh.Graphics
 {
@@ -20,7 +17,7 @@ namespace Bronuh.Graphics
 		/// <returns></returns>
 		public static Stream Build(Achievement achievement)
 		{
-			
+
 			MemoryStream memoryStream = new MemoryStream();
 
 			int iconSize = 200;
@@ -36,8 +33,9 @@ namespace Bronuh.Graphics
 				{
 					using (var iconBGImage = Image.Load(Properties.Achievements.IconBackground.ToArray()))
 					{
-						iconBGImage.Mutate(ctx => {
-							ctx.Resize(new Size(iconSize+borderSize,iconSize+borderSize))
+						iconBGImage.Mutate(ctx =>
+						{
+							ctx.Resize(new Size(iconSize + borderSize, iconSize + borderSize))
 							.ApplyRoundedCorners(cornerRadius)
 							.Hue(65)
 							.Brightness(3)
@@ -45,14 +43,16 @@ namespace Bronuh.Graphics
 							.Lightness(1);
 						});
 
-						iconImage.Mutate(ctx => {
+						iconImage.Mutate(ctx =>
+						{
 							ctx.Resize(new Size(iconSize, iconSize))
 							.ApplyRoundedCorners(cornerRadius);
 						});
 
-						baseImage.Mutate(ctx => {
-							ctx.DrawImage(iconBGImage, 
-								new Point(baseHeight/2-iconBGImage.Height/2,baseHeight/2-iconBGImage.Height/2),
+						baseImage.Mutate(ctx =>
+						{
+							ctx.DrawImage(iconBGImage,
+								new Point(baseHeight / 2 - iconBGImage.Height / 2, baseHeight / 2 - iconBGImage.Height / 2),
 								1);
 							ctx.DrawImage(iconImage,
 								new Point(baseHeight / 2 - iconImage.Height / 2, baseHeight / 2 - iconImage.Height / 2),
@@ -76,15 +76,15 @@ namespace Bronuh.Graphics
 
 						return memoryStream;
 					}
-						
+
 				}
 
 			}
 
-				
 
-			
-			
+
+
+
 		}
 	}
 }

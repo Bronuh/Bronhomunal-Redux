@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using DSharpPlus;
-using DSharpPlus.EventArgs;
+﻿using Bronuh.Controllers;
 using Bronuh.Types;
-using Bronuh.Controllers;
+using DSharpPlus.EventArgs;
+using System;
+using System.Threading.Tasks;
 
 namespace Bronuh.Events
 {
 	public static class EventsHandler
 	{
-		
+
 		public static async Task HandleEvent(EventArgs e)
 		{
 			if (e is MessageCreateEventArgs messageCreateEventArgs)
@@ -37,7 +34,7 @@ namespace Bronuh.Events
 
 			else
 			{
-				Logger.Warning("Нет обработчика для события "+e.GetType().Name);
+				Logger.Warning("Нет обработчика для события " + e.GetType().Name);
 			}
 		}
 
@@ -45,9 +42,9 @@ namespace Bronuh.Events
 
 		private static async Task MessageCreateEventHandler(MessageCreateEventArgs e)
 		{
-			
+
 			Member sender = e.Message.Author.ToMember();
-			
+
 			if (!sender.IsBronomunal())
 			{
 
@@ -72,11 +69,11 @@ namespace Bronuh.Events
 						await sender.GiveAchievement("coolhacker");
 					}
 				}
-				
+
 
 				Logger.Log($"{e.Author.ToMember().DisplayName}: {e.Message.Content}");
 
-				if (!e.Channel.IsPrivate||sender.IsOp())
+				if (!e.Channel.IsPrivate || sender.IsOp())
 				{
 					if (e.Message.Content.StartsWith(Program.Prefix + Settings.Sign))
 					{
@@ -95,10 +92,10 @@ namespace Bronuh.Events
 		}
 
 
-		
+
 		private static async Task GuildMemberAddEventHandler(GuildMemberAddEventArgs e)
 		{
-			await Bot.OutpostChannel.SendMessageAsync(e.Member.Username+"#"+e.Member.Discriminator+" зашел на сервер");
+			await Bot.OutpostChannel.SendMessageAsync(e.Member.Username + "#" + e.Member.Discriminator + " зашел на сервер");
 			await MembersController.HardUpdate();
 		}
 

@@ -1,19 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Bronuh.File;
 using Bronuh.Logic;
 using Bronuh.Types;
 using DSharpPlus.Entities;
-using Bronuh.File;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Bronuh
 {
-	
+
 	public class MembersController : ISaveable, ILoadable
 	{
 		public static Sequence<Member> Members { get; private set; } = new Sequence<Member>();
-		
+
 
 
 		public void Load()
@@ -25,17 +24,17 @@ namespace Bronuh
 
 		public void Save()
 		{
-			var voice = Members.FindAll(m=>m.IsInVoice);
-			voice.Each(m=>m.LeaveVoice());
+			var voice = Members.FindAll(m => m.IsInVoice);
+			voice.Each(m => m.LeaveVoice());
 			Logger.Log("Сохранение списка пользователей...");
 			SaveLoad.SaveObject<Sequence<Member>>(Members, "Members.xml");
 			Logger.Success("Сохранение завершено");
 			voice.Each(m => m.JoinVoice());
 		}
 
-		
 
-		
+
+
 
 		/// <summary>
 		/// Связывает каждого участника типа DiscordMember с соответствующим участником Member
@@ -46,14 +45,14 @@ namespace Bronuh
 			foreach (DiscordMember discordMember in discordMembers)
 			{
 				bool found = false;
-				foreach(Member member in Members)
+				foreach (Member member in Members)
 				{
 					if (member.Id == discordMember.Id)
 					{
 						member.Source = discordMember;
 						found = true;
 						member.Update();
-						Logger.Success("Сваязаны: "+member.DisplayName+" -> "+discordMember.DisplayName);
+						Logger.Success("Сваязаны: " + member.DisplayName + " -> " + discordMember.DisplayName);
 						break;
 					}
 				}
@@ -61,7 +60,7 @@ namespace Bronuh
 				if (!found)
 				{
 					Members.Add(new Member(discordMember));
-					Logger.Warning("Не найден: "+discordMember.DisplayName+". Создан новый участник");
+					Logger.Warning("Не найден: " + discordMember.DisplayName + ". Создан новый участник");
 				}
 			}
 		}
@@ -72,7 +71,7 @@ namespace Bronuh
 		/// </summary>
 		public static void Update()
 		{
-			Members.Each((m)=> { m.Update(); });
+			Members.Each((m) => { m.Update(); });
 		}
 
 		/// <summary>
@@ -100,7 +99,7 @@ namespace Bronuh
 			LinkDiscordMembers(Bot.DiscordMembers);
 		}
 
-		
+
 		/// <summary>
 		/// Эквивалентно FindMemberByID()
 		/// </summary>
@@ -406,6 +405,6 @@ namespace Bronuh
 
 
 
-		
+
 	}
 }

@@ -1,7 +1,5 @@
-﻿using System;
+﻿using Bronuh.Types;
 using System.Collections.Generic;
-using System.Text;
-using Bronuh.Types;
 
 namespace Bronuh.Controllers
 {
@@ -40,7 +38,7 @@ namespace Bronuh.Controllers
 		/// <returns>Найденное достижение, либо null</returns>
 		public static Achievement Find(string id)
 		{
-			return Achievements.Find(a=>a.Id==id.ToLower());
+			return Achievements.Find(a => a.Id == id.ToLower());
 		}
 
 
@@ -68,7 +66,7 @@ namespace Bronuh.Controllers
 				.SetDescription("Нанесите удар бревном 20 раз")
 				.SetIcon(Properties.Achievements.Loghit)
 				.SetRarity(Rarity.RARE);
-			
+
 			AddAchievement("treehit")
 				.SetName("Чтоб наверняка")
 				.SetDescription("Нанесите удар деревом 30 раз")
