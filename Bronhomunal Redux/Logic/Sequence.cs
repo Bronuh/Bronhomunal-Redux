@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace Bronuh.Logic
 {
-
 	/// <summary>
 	/// Последовательность объектов. В отличие от списка List имеет методы обработки элементов массива, в т.ч. с прерыванием цикла
 	/// </summary>
@@ -19,8 +18,6 @@ namespace Bronuh.Logic
 
 		public Sequence(IEnumerable<T> collection) : base(collection) { }
 
-
-
 		/// <summary>
 		/// Проделывает действие (делегат/лямбда) для каждого свойства в списке
 		/// </summary>
@@ -32,8 +29,6 @@ namespace Bronuh.Logic
 				action(property);
 			}
 		}
-
-
 
 		/// <summary>
 		/// (Для больших списков параметров) Проделывает действие над каждым свойством, возвращая bool.
@@ -51,16 +46,10 @@ namespace Bronuh.Logic
 			}
 		}
 
-
-
-
 		public new T Find(Predicate<T> match)
 		{
 			return base.Find(match);
 		}
-
-
-
 
 		public new Sequence<T> FindAll(Predicate<T> match)
 		{

@@ -19,12 +19,10 @@ namespace Bronuh
 			return user.Id == 263705631549161472;
 		}
 
-
 		public static bool IsOwner(this DiscordMember member)
 		{
 			return member.Id == 263705631549161472;
 		}
-
 
 		public static DiscordMember ToDiscordMember(this DiscordUser user)
 		{
@@ -42,7 +40,6 @@ namespace Bronuh
 			return null;
 		}
 
-
 		public static Member ToMember(this DiscordMember user)
 		{
 			if (Bot.Ready)
@@ -52,7 +49,6 @@ namespace Bronuh
 
 			return null;
 		}
-
 
 		public static Member ToMember(this DiscordUser user)
 		{
@@ -78,7 +74,6 @@ namespace Bronuh
 			return list[new Random().Next(0, list.Count - 1)];
 		}
 
-
 		public static bool HasRole(this Member member, DiscordRole role)
 		{
 			if (member.Source != null)
@@ -90,7 +85,6 @@ namespace Bronuh
 			}
 			return false;
 		}
-
 
 		public static bool HasRole(this DiscordMember member, DiscordRole role)
 		{
@@ -104,14 +98,12 @@ namespace Bronuh
 			return false;
 		}
 
-
 		public static byte[] ToArray(this Bitmap bitmap)
 		{
 			MemoryStream memoryStream = new MemoryStream();
 			bitmap.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Png);
 			return memoryStream.ToArray();
 		}
-
 
 		public static Stream ToStream(this Bitmap bitmap)
 		{
@@ -120,7 +112,6 @@ namespace Bronuh
 			memoryStream.Position = 0;
 			return memoryStream;
 		}
-
 
 		// This method can be seen as an inline implementation of an `IImageProcessor`:
 		// (The combination of `IImageOperations.Apply()` + this could be replaced with an `IImageProcessor`)
@@ -165,7 +156,6 @@ namespace Bronuh
 
 			return new PathCollection(cornerTopLeft, cornerBottomLeft, cornerTopRight, cornerBottomRight);
 		}
-
 
 		public static bool HasMember(this IEnumerable<DiscordMember> list, DiscordMember find)
 		{

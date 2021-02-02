@@ -6,7 +6,6 @@ namespace Bronuh.Logic
 {
 	public class Worker
 	{
-
 		public static void EverySecond(object state)
 		{
 			Logger.Debug("Checking voice time...");
@@ -14,7 +13,6 @@ namespace Bronuh.Logic
 			{
 				CheckVoiceTime();
 			}
-
 		}
 
 		public static void Every30Sec(object state)
@@ -49,7 +47,6 @@ namespace Bronuh.Logic
 				Settings.ServerStatus = ms.ServerUp;
 				Logger.Debug("Server status " + ms.ServerUp);
 			}
-
 		}
 
 		private static void CheckVoiceTime()
