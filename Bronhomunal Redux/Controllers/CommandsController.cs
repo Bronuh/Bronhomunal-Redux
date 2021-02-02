@@ -50,6 +50,9 @@ namespace Bronuh
 				executed = await command.TryExecute(new ChatMessage(e.Message));
 				if (executed)
 				{
+					Member.OnExecutedCommand(e.Author.ToMember(), new Events.MemberExecutedCommandEventArgs(
+						new ChatMessage(e.Message),
+						command));
 					return true;
 				}
 			}

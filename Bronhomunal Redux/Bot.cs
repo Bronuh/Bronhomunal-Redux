@@ -9,6 +9,7 @@ using Bronuh.Logic;
 using System.Threading;
 using DSharpPlus.Net;
 using System.Linq;
+using Bronuh.Types;
 
 namespace Bronuh
 {
@@ -18,7 +19,7 @@ namespace Bronuh
 		public static DiscordClient Discord { get; private set; }
 		public static bool Ready = false;
 		public static IReadOnlyList<DiscordChannel> Channels = new List<DiscordChannel>();
-		public static DiscordChannel BotChannel, LastChannel, OutpostChannel;
+		public static DiscordChannel BotChannel, LastChannel, OutpostChannel, GamesChannel;
 		public static DiscordGuild Guild;
 		private static readonly ulong RequiredGuildId = 308653152054280195;
 		private static readonly ulong BotID = 696952183572267028;
@@ -110,6 +111,18 @@ namespace Bronuh
 							break;
 						}
 					}
+
+					Logger.Log("Поиск канала для игор...");
+					foreach (DiscordChannel currentChannel in Channels)
+					{
+						Logger.Debug("Канал: " + currentChannel.Name);
+						if (currentChannel.Name.ToLower() == "gaems")
+						{
+							Logger.Success("Найден канал для игор!");
+							GamesChannel = currentChannel;
+							break;
+						}
+					}
 				}
 				Logger.Log("Получение списка участников...");
 
@@ -161,7 +174,9 @@ namespace Bronuh
 					{
 						if (!member.ToMember().IsInVoice)
 						{
-							member.ToMember().JoinedVoice();
+							var mamba = member.ToMember();
+							mamba.JoinVoice();
+							Member.OnJoinedVoice(mamba, new MemberJoinedVoiceEventArgs());
 						}
 					}
 					// e.User.ToMember().JoinedVoice();
@@ -251,11 +266,14 @@ namespace Bronuh
 						{
 							if (!member.ToMember().IsInVoice)
 							{
-								member.ToMember().JoinedVoice();
+								var mamba = member.ToMember();
+								mamba.JoinVoice();
+								Member.OnJoinedVoice(mamba, new MemberJoinedVoiceEventArgs());
 							}
 						}
 					}
-					e.User.ToMember().LeavedVoice();
+					e.User.ToMember().LeaveVoice();
+					Member.OnLeavedVoice(e.User.ToMember(), new MemberLeavedVoiceEventArgs());
 				}
 				var _chans = e.Guild.Channels;
 
@@ -267,7 +285,9 @@ namespace Bronuh
 						{
 							if (!member.ToMember().IsInVoice)
 							{
-								member.ToMember().JoinedVoice();
+								var mamba = member.ToMember();
+								mamba.JoinVoice();
+								Member.OnJoinedVoice(mamba, new MemberJoinedVoiceEventArgs());
 							}
 						}
 					}

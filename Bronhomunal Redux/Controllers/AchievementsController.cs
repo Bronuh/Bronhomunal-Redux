@@ -85,7 +85,7 @@ namespace Bronuh.Controllers
 				.SetName("Бунт")
 				.SetDescription("Приложить админа к дереву")
 				.SetIcon(Properties.Achievements.Riot)
-				.SetRarity(Rarity.RARE);
+				.SetRarity(Rarity.UNCOMMON);
 
 			AddAchievement("major")
 				.SetName("Я все о тебе знаю")
@@ -127,7 +127,7 @@ namespace Bronuh.Controllers
 				.SetName("Это не я")
 				.SetDescription("Заставить бота что-нибудь сказать")
 				.SetIcon(Properties.Achievements.Another)
-				.SetRarity(Rarity.RARE);
+				.SetRarity(Rarity.UNCOMMON);
 
 			AddAchievement("zoologist")
 				.SetName("Зоолог")
@@ -163,7 +163,7 @@ namespace Bronuh.Controllers
 				.SetName("Мощь переполняет")
 				.SetDescription("Попробовать все способы доебаться до кого-то")
 				.SetIcon(Properties.Achievements.Overwhelming)
-				.SetRarity(Rarity.RARE);
+				.SetRarity(Rarity.UNCOMMON);
 
 			AddAchievement("alone")
 				.SetName("А где все?")
@@ -217,7 +217,7 @@ namespace Bronuh.Controllers
 				.SetName("1001100 1001111 1001100")
 				.SetDescription("Доебаться до бота")
 				.SetIcon(Properties.Achievements.Why)
-				.SetRarity(Rarity.RARE);
+				.SetRarity(Rarity.UNCOMMON);
 
 
 		}

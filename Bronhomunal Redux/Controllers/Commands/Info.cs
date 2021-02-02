@@ -1,4 +1,5 @@
-﻿using Bronuh.Types;
+﻿using Bronuh.Modules;
+using Bronuh.Types;
 using DSharpPlus.Entities;
 using System;
 using System.Collections.Generic;
@@ -150,6 +151,37 @@ namespace Bronuh.Controllers.Commands
 			.SetDescription("Изменяет информацию о себе")
 			.AddTag("misc")
 			.AddTag("info");
+
+
+			CommandsController.AddCommand("server", async (m) =>
+			{
+				string text = m.Text;
+				string[] parts = text.Split(' ');
+				int userRank = m.Author.Rank;
+				MineStat ms = new MineStat("abro.tech", 25565);
+
+				string args = text.Substring(parts[0].Length);
+				string respond = "**Статус сервера: **\n";
+				if (ms.ServerUp)
+				{
+					respond += ":white_check_mark: ВКЛЮЧЕН\n";
+					respond += "Версия: "+ms.Version+"\n";
+					respond += "Игроков: "+ms.CurrentPlayers+"/"+ms.MaximumPlayers+"\n";
+					respond += "MOTD: "+ms.Motd;
+				}
+				else
+				{
+					respond += ":no_entry: ВЫКЛЮЧЕН\n";
+				}
+
+				await m.RespondAsync(respond);
+			})
+			.AddAlias("сервер")
+			.SetDescription("Проверяет статус Minecraft сервера")
+			.AddTag("misc")
+			.AddTag("info");
+
+			
 
 
 			CommandsController.AddCommand("achievements", async (m) =>

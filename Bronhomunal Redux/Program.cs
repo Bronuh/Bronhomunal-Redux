@@ -14,8 +14,10 @@ namespace Bronuh
 {
 	class Program
 	{
-		private static TimerCallback _workerCallback;
-		private static Timer _workingChecker;
+		private static TimerCallback _workerSecondCallback,
+			_worker30SecCallback;
+		private static Timer _workingSecondChecker,
+			_working30SecChecker;
 		public static string Suffix = "";
 		public static string Prefix = "";
 
@@ -65,13 +67,14 @@ namespace Bronuh
 				Server.PushMessage("Connected");
 			});
 
-			_workerCallback = new TimerCallback(Worker.Work);
-			_workingChecker = new Timer(_workerCallback, null, 0, 1000);
+			_workerSecondCallback = new TimerCallback(Worker.EverySecond);
+			_workingSecondChecker = new Timer(_workerSecondCallback, null, 0, 1000);
 
-			
+			_worker30SecCallback = new TimerCallback(Worker.Every30Sec);
+			_working30SecChecker = new Timer(_worker30SecCallback, null, 0, 30000);
 
 
-			
+
 
 
 			while (true)

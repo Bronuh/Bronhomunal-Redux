@@ -2,18 +2,56 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Bronuh.Modules;
+using DSharpPlus.Entities;
 
 namespace Bronuh.Logic
 {
 	public class Worker
 	{
-		public static void Work(object state)
+		
+		public static void EverySecond(object state)
 		{
-			//Logger.Log("Checking voice time...");
+			Logger.Debug("Checking voice time...");
 			if (Bot.Ready)
 			{
-				
 				CheckVoiceTime();
+			}
+			
+		}
+
+
+		public static void Every30Sec(object state)
+		{
+			Logger.Debug("Checking server status...");
+			if (Bot.Ready)
+			{
+				string minecraft = "";
+				foreach (DiscordRole role in Bot.Guild.Roles.Values)
+				{
+					if (role.Name=="Minecraft")
+					{
+						minecraft = role.Mention;
+					}
+				}
+
+				MineStat ms = new MineStat("abro.tech", 25565);
+				if (ms.ServerUp)
+				{
+					if (!Settings.ServerStatus)
+					{
+						Bot.GamesChannel.SendMessageAsync(":white_check_mark: " + minecraft +" Сервер abro.tech **ВКЛЮЧЕН**").GetAwaiter().GetResult();
+					}
+				}
+				else
+				{
+					if (Settings.ServerStatus)
+					{
+						Bot.GamesChannel.SendMessageAsync(":no_entry: "+minecraft + " Сервер abro.tech **ВЫКЛЮЧЕН**").GetAwaiter().GetResult();
+					}
+				}
+				Settings.ServerStatus = ms.ServerUp;
+				Logger.Debug("Server status " +ms.ServerUp);
 			}
 			
 		}

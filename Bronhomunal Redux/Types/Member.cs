@@ -3,25 +3,27 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 using DSharpPlus.Entities;
-using RPGCore.Entities;
-using SixLabors.Fonts;
-using SixLabors.ImageSharp;
-using SixLabors.ImageSharp.Drawing.Processing;
-using SixLabors.ImageSharp.Processing;
-using Image = SixLabors.ImageSharp.Image;
-using SixLabors.ImageSharp.Drawing;
-using SixLabors.ImageSharp.PixelFormats;
 using Bronuh.Controllers;
 using Bronuh.Graphics;
+using Bronuh.Events;
 
 namespace Bronuh.Types
 {
 	[Serializable]
 	public class Member
 	{
+		public static event MemberGotAchievement GotAchievement;
+		public static event MemberGotXp GotXp;
+		public static event MemberJoinedVoice JoinedVoice;
+		public static event MemberLeavedVoice LeavedVoice;
+		public static event MemberExecutedCommand ExecutedCommand;
+		public static event MemberRankedUp RankedUp;
+		public static event MemberSentMessage SentMessage;
+		public static event MemberUpdated Updated;
+		public static event MemberUsedMention UsedMention;
+
 		public string Username, DisplayName, Discriminator, Nickname, About;
 
 		public ulong Id;
@@ -115,6 +117,7 @@ namespace Bronuh.Types
 		public async Task AddXPAsync(int xp)
 		{
 			XP += xp;
+			GotXp?.Invoke(this, new MemberGotXpEventArgs(xp));
 			if (RankForXp(XP) > Rank)
 			{
 				int levels = RankForXp(XP) - Rank;
@@ -143,6 +146,7 @@ namespace Bronuh.Types
 		public static int RankForXp(int xp)
 		{
 			return (int)Math.Floor((double)xp / XpPerRank) + 1;
+			
 		}
 
 
@@ -164,6 +168,7 @@ namespace Bronuh.Types
 		private async Task RankUpAsync()
 		{
 			Rank++;
+			RankedUp?.Invoke(this, new MemberRankedUpEventArgs());
 			var msgBuilder = new DiscordMessageBuilder()
 						.WithContent(":up: " + DisplayName + " повысил свой ранг!" + Program.Suffix)
 						.WithFile("RankUp.png", RankUpBuilder.Build(this));
@@ -259,15 +264,15 @@ namespace Bronuh.Types
 		}
 
 
-		public void JoinedVoice()
+		public void JoinVoice()
 		{
 			Logger.Log(DisplayName+" подключен к войсу");
-			LeavedVoice();
+			LeaveVoice();
 			IsInVoice = true;
 			LastVoiceIn = DateTime.Now;
 		}
 
-		public void LeavedVoice()
+		public void LeaveVoice()
 		{
 			if (IsInVoice)
 			{
@@ -283,7 +288,7 @@ namespace Bronuh.Types
 			int current = 0;
 			if (IsInVoice)
 			{
-				current = (int)(LastVoiceIn - DateTime.Now).TotalMilliseconds;
+				current = (int)(DateTime.Now - LastVoiceIn).TotalMilliseconds;
 			}
 			return Statistics.VoiceTime+current;
 		}
@@ -317,6 +322,8 @@ namespace Bronuh.Types
 						.WithContent(":trophy: " + Source.Mention + " получил достижение!" + Program.Suffix)
 						.WithFile(achievement.Name + ".png", achievement.GetImage());
 
+					GotAchievement?.Invoke(this, new MemberGotAchievementEventArgs(achievement));
+
 					await Bot.BotChannel.SendMessageAsync(msgBuilder);
 					
 
@@ -329,6 +336,36 @@ namespace Bronuh.Types
 					}
 				}
 			}
+		}
+
+
+
+
+
+
+		public static void OnJoinedVoice(Member sender, MemberJoinedVoiceEventArgs eventArgs)
+		{
+			JoinedVoice?.Invoke(sender, eventArgs);
+		}
+
+		public static void OnLeavedVoice(Member sender, MemberLeavedVoiceEventArgs eventArgs)
+		{
+			LeavedVoice?.Invoke(sender, eventArgs);
+		}
+
+		public static void OnSentMessage(Member sender, MemberSentMessageEventArgs eventArgs)
+		{
+			SentMessage?.Invoke(sender, eventArgs);
+		}
+
+		public static void OnExecutedCommand(Member sender, MemberExecutedCommandEventArgs eventArgs)
+		{
+			ExecutedCommand?.Invoke(sender, eventArgs);
+		}
+
+		public static void OnUsedMention(Member sender, MemberUsedMentionEventArgs eventArgs)
+		{
+			UsedMention?.Invoke(sender, eventArgs);
 		}
 	}
 }

@@ -50,7 +50,10 @@ namespace Bronuh.Events
 			
 			if (!sender.IsBronomunal())
 			{
+
 				sender.LastMessage = new ChatMessage(e.Message);
+				Member.OnSentMessage(sender, new MemberSentMessageEventArgs(sender.LastMessage));
+
 				await sender.AddXPAsync(1);
 				if (!e.Channel.IsPrivate)
 				{
@@ -73,7 +76,7 @@ namespace Bronuh.Events
 
 				Logger.Log($"{e.Author.ToMember().DisplayName}: {e.Message.Content}");
 
-				if (!e.Channel.IsPrivate||sender.IsOwner())
+				if (!e.Channel.IsPrivate||sender.IsOp())
 				{
 					if (e.Message.Content.StartsWith(Program.Prefix + Settings.Sign))
 					{

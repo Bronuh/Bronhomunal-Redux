@@ -44,7 +44,7 @@ namespace Bronuh.Controllers
                             if (author.CanUse(mention))
                             {
                                 Logger.Debug("Найдено соответствие (" + mention.GetClearText(word) + ")");
-								if (mention.GetClearText(word).Length>3)
+								if (mention.GetClearText(word).Length>=3)
 								{
                                     Member member = MembersController.FindMember(mention.GetClearText(word));
                                     if (member != null)
@@ -52,6 +52,13 @@ namespace Bronuh.Controllers
                                         Logger.Debug("Найденный пользователь: " + member.Username);
                                         msg += mention.Message.Replace("%MENTION%", "<@!" + member.Id + ">") + "\n";
                                         mention.CustomAction(author, member);
+                                        Member.OnUsedMention(author,new Events.MemberUsedMentionEventArgs()
+                                        {
+                                            Author = author,
+                                            Target = member,
+                                            Mention = mention
+                                        });
+
 										if (member.Source.IsBot)
 										{
                                             await author.GiveAchievement("why");
