@@ -30,7 +30,6 @@ namespace Bronuh.Controllers
 			return achievement;
 		}
 
-
 		/// <summary>
 		/// Находит достижение по его Id
 		/// </summary>
@@ -40,7 +39,6 @@ namespace Bronuh.Controllers
 		{
 			return Achievements.Find(a => a.Id == id.ToLower());
 		}
-
 
 		/// <summary>
 		/// Создает список достижений. Реализация выдачи достижений разбросана по всем остальным классам. 
@@ -216,8 +214,6 @@ namespace Bronuh.Controllers
 				.SetDescription("Доебаться до бота")
 				.SetIcon(Properties.Achievements.Why)
 				.SetRarity(Rarity.UNCOMMON);
-
-
 		}
 	}
 }

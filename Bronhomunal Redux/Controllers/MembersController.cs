@@ -8,12 +8,9 @@ using System.Threading.Tasks;
 
 namespace Bronuh
 {
-
 	public class MembersController : ISaveable, ILoadable
 	{
 		public static Sequence<Member> Members { get; private set; } = new Sequence<Member>();
-
-
 
 		public void Load()
 		{
@@ -32,10 +29,6 @@ namespace Bronuh
 			voice.Each(m => m.JoinVoice());
 		}
 
-
-
-
-
 		/// <summary>
 		/// Связывает каждого участника типа DiscordMember с соответствующим участником Member
 		/// </summary>
@@ -45,6 +38,7 @@ namespace Bronuh
 			foreach (DiscordMember discordMember in discordMembers)
 			{
 				bool found = false;
+
 				foreach (Member member in Members)
 				{
 					if (member.Id == discordMember.Id)
@@ -64,7 +58,6 @@ namespace Bronuh
 				}
 			}
 		}
-
 
 		/// <summary>
 		/// Обновляет базовую информацию о каждом пользователе
@@ -177,8 +170,6 @@ namespace Bronuh
 				{
 					Logger.Debug("DiscordMember не найден. Возврат null");
 				}
-
-
 			}
 			else
 			{
@@ -311,8 +302,6 @@ namespace Bronuh
 				{
 					Logger.Debug("DiscordMember не найден. Возврат null");
 				}
-
-
 			}
 			else
 			{
@@ -402,9 +391,5 @@ namespace Bronuh
 		{
 			return FindMemberByID(AliasesController.FindAlias(name).ID);
 		}
-
-
-
-
 	}
 }

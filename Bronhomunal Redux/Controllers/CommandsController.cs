@@ -11,7 +11,6 @@ namespace Bronuh
 		public static List<Command> Commands { get; private set; } = new List<Command>();
 		private static bool _initialized = false;
 
-
 		/// <summary>
 		/// Добавляет команду в общий список
 		/// </summary>
@@ -24,7 +23,6 @@ namespace Bronuh
 			Commands.Add(command);
 			return command;
 		}
-
 
 		/// <summary>
 		/// Пробует выполнить команду, отправленную из дискорда
@@ -76,32 +74,14 @@ namespace Bronuh
 			return false;
 		}
 
-
 		/// <summary>
 		/// Запускает поиск и инициализацию всех команд. Содержит шаблон объявления команды в комментарии
 		/// </summary>
 		private static void InitializeCommands()
 		{
-
-			/*
-			AddCommand("",async (m) => 
-			{
-				string text = m.Text;
-				string[] parts = text.Split(' ');
-				string args = text.Replace(parts[0] + " ", "");
-				Member user = m.Author;
-				int userRank = user.Rank;
-
-				string respond = "Ответ: ";
-				await m.RespondAsync(respond);
-			});
-			*/
-
 			InterfaceExecutor.Execute(typeof(ICommands), "InitializeCommands");
 
 			_initialized = true;
-
-
 		}
 	}
 }

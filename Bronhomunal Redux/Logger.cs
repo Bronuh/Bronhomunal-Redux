@@ -8,15 +8,12 @@ namespace Bronuh
 {
 	public class Logger : ISaveable
 	{
-
 		public static List<LogMessage> GlobalLog = new List<LogMessage>();
 		public static List<LogMessage> ErrorsLog = new List<LogMessage>();
 		public static List<LogMessage> WarningsLog = new List<LogMessage>();
 		public static List<LogMessage> SuccessesLog = new List<LogMessage>();
 		public static List<LogMessage> MessagesLog = new List<LogMessage>();
 		public static List<LogMessage> DebugsLog = new List<LogMessage>();
-
-
 
 		public void Save()
 		{

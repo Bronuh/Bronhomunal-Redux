@@ -8,7 +8,6 @@ using System.IO;
 
 namespace Bronuh.Graphics
 {
-
 	class RankUpBuilder
 	{
 		/// <summary>
@@ -23,7 +22,6 @@ namespace Bronuh.Graphics
 			var baseImage = Image.Load(Bronuh.Properties.Resources.Level.ToArray());
 			var arrowImage = Image.Load(Bronuh.Properties.Resources.ArrowGlowing.ToArray());
 
-
 			if (rank == 0)
 			{
 				rank = member.Rank;
@@ -36,14 +34,12 @@ namespace Bronuh.Graphics
 				Mode = ResizeMode.Stretch
 			}).ApplyRoundedCorners(10));
 
-
 			/// Подготовка изображения стрелочки
 			arrowImage.Mutate(x => x.Resize(new ResizeOptions
 			{
 				Size = new Size(48, 64),
 				Mode = ResizeMode.Stretch
 			}));
-
 
 			///Основное изображение
 			baseImage.Mutate(ctx =>
@@ -62,7 +58,6 @@ namespace Bronuh.Graphics
 				new PointF(70, 30));
 
 				var col = member.Source.Color;
-
 
 				ctx.DrawText(new TextGraphicsOptions
 				{
@@ -86,7 +81,6 @@ namespace Bronuh.Graphics
 				new Color(new Rgba32(255, 255, 255)),
 				new PointF(150, 75));
 
-
 				/// Черта под ником
 				ctx.DrawLines(new Pen(
 					new Color(new Rgba32(100, 100, 100)), 3),
@@ -94,7 +88,6 @@ namespace Bronuh.Graphics
 						new PointF(155,64),
 						new PointF(590,64)
 					});
-
 			});
 
 			/// Отрисовка стрелочки у ника
@@ -102,7 +95,6 @@ namespace Bronuh.Graphics
 			{
 				ctx.DrawImage(arrowImage, new Point(110, 5), 1);
 			});
-
 
 			/// Добавление короны к аватарке для админов
 			if (member.IsOp())
@@ -123,9 +115,7 @@ namespace Bronuh.Graphics
 				crownImage.Dispose();
 			}
 
-
 			/// Завершение отрисовки и возврат изображения
-
 			baseImage.Mutate(x => x.ApplyRoundedCorners(10));
 
 			MemoryStream memoryStream = new MemoryStream();
@@ -135,7 +125,6 @@ namespace Bronuh.Graphics
 			baseImage.Dispose();
 			avatarImage.Dispose();
 			arrowImage.Dispose();
-
 
 			return memoryStream;
 		}

@@ -3,10 +3,7 @@ using System.Threading.Tasks;
 
 namespace Bronuh.Types
 {
-
 	public delegate Task CommandAction(ChatMessage msg);
-
-
 
 	public class Command
 	{
@@ -24,15 +21,12 @@ namespace Bronuh.Types
 
 		public bool ConsoleOnly { get; private set; } = false;
 
-
-
 		public Command() { }
 		public Command(string name, CommandAction action)
 		{
 			Name = name;
 			_action = action;
 		}
-
 
 		/// <summary>
 		/// Возвращает всю основную информацию о команде, в одной строке
@@ -156,7 +150,6 @@ namespace Bronuh.Types
 				}
 			}
 			return false;
-			//return Tags.Contains(tag.ToLower());
 		}
 
 		/// <summary>
@@ -184,10 +177,8 @@ namespace Bronuh.Types
 					}
 				}
 			}
-
 			return false;
 		}
-
 
 		/// <summary>
 		/// Пытается выполнить команду.
@@ -212,14 +203,11 @@ namespace Bronuh.Types
 						Logger.Warning("Команда только для операторов");
 						return true;
 					}
-
 					await _action(message);
 				}
-
 				return true;
 			}
 			return false;
 		}
-
 	}
 }

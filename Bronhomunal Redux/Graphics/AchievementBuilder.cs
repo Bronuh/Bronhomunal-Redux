@@ -17,7 +17,6 @@ namespace Bronuh.Graphics
 		/// <returns></returns>
 		public static Stream Build(Achievement achievement)
 		{
-
 			MemoryStream memoryStream = new MemoryStream();
 
 			int iconSize = 200;
@@ -72,19 +71,10 @@ namespace Bronuh.Graphics
 						baseImage.SaveAsPng(memoryStream);
 
 						memoryStream.Position = 0;
-
-
 						return memoryStream;
 					}
-
 				}
-
 			}
-
-
-
-
-
 		}
 	}
 }

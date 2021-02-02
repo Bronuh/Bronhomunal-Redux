@@ -14,7 +14,6 @@ namespace Bronuh
 		public static bool DEBUG = false;
 		public static int LaunchCount = 0;
 
-
 		public void Load()
 		{
 			Logger.Log("Загрузка настроек...");
@@ -44,15 +43,12 @@ namespace Bronuh
 			Logger.Success("Сохранение завершено");
 		}
 
-
 		public static void SetToken(string token)
 		{
 			BotToken = token;
 			new Settings().Save();
 		}
-
 	}
-
 
 	[Serializable]
 	public class SettingsContainer
@@ -65,5 +61,4 @@ namespace Bronuh
 		public bool DEBUG = false;
 		public bool ServerStatus = false;
 	}
-
 }

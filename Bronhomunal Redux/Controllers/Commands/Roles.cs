@@ -31,7 +31,6 @@ namespace Bronuh.Controllers.Commands
 
 				var roles = Bot.Guild.Roles.Values;
 
-
 				string respond = "Роли: \n";
 
 				foreach (DiscordRole role in roles)
@@ -46,7 +45,6 @@ namespace Bronuh.Controllers.Commands
 			.AddAlias("роли")
 			.SetDescription("Выводит список ролей, доступных для использования")
 			.AddTag("info");
-
 
 			CommandsController.AddCommand("giverole", async (m) =>
 			{
@@ -96,7 +94,6 @@ namespace Bronuh.Controllers.Commands
 			.SetUsage("<command> название_роли")
 			.AddTag("misc");
 
-
 			CommandsController.AddCommand("takerole", async (m) =>
 			{
 				string text = m.Text;
@@ -114,7 +111,6 @@ namespace Bronuh.Controllers.Commands
 						other += " ";
 					}
 				}
-
 
 				DiscordRole foundRole = null;
 
@@ -146,7 +142,6 @@ namespace Bronuh.Controllers.Commands
 			.SetUsage("<command> название_роли")
 			.AddTag("misc");
 
-
 			CommandsController.AddCommand("createrole", async (m) =>
 			{
 				string text = m.Text;
@@ -177,15 +172,11 @@ namespace Bronuh.Controllers.Commands
 			.AddTag("misc");
 		}
 
-
-
-
 		private static bool CheckRole(DiscordRole role, DiscordMember? member)
 		{
 			Logger.Debug("CheckRole started with '" + role.Name + "'");
 			if (role.Permissions != DSharpPlus.Permissions.All)
 			{
-
 				foreach (string name in _restricted)
 				{
 					if (name.ToLower() == role.Name.ToLower())

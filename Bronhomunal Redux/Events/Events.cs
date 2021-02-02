@@ -16,7 +16,6 @@ namespace Bronuh.Events
 		public Achievement Achievement;
 	}
 
-
 	public delegate void MemberGotXp(Member sender, MemberGotXpEventArgs eventArgs);
 	public class MemberGotXpEventArgs : EventArgs
 	{
@@ -28,13 +27,11 @@ namespace Bronuh.Events
 		public int Xp;
 	}
 
-
 	public delegate void MemberRankedUp(Member sender, MemberRankedUpEventArgs eventArgs);
 	public class MemberRankedUpEventArgs : EventArgs
 	{
 
 	}
-
 
 	public delegate void MemberJoinedVoice(Member sender, MemberJoinedVoiceEventArgs eventArgs);
 	public class MemberJoinedVoiceEventArgs : EventArgs
@@ -42,20 +39,17 @@ namespace Bronuh.Events
 
 	}
 
-
 	public delegate void MemberLeavedVoice(Member sender, MemberLeavedVoiceEventArgs eventArgs);
 	public class MemberLeavedVoiceEventArgs : EventArgs
 	{
 
 	}
 
-
 	public delegate void MemberUpdated(Member sender, MemberUpdatedEventArgs eventArgs);
 	public class MemberUpdatedEventArgs : EventArgs
 	{
 
 	}
-
 
 	public delegate void MemberSentMessage(Member sender, MemberSentMessageEventArgs eventArgs);
 	public class MemberSentMessageEventArgs : EventArgs
@@ -66,7 +60,6 @@ namespace Bronuh.Events
 		}
 		public ChatMessage Message;
 	}
-
 
 	public delegate void MemberExecutedCommand(Member sender, MemberExecutedCommandEventArgs eventArgs);
 	public class MemberExecutedCommandEventArgs : EventArgs
@@ -80,13 +73,11 @@ namespace Bronuh.Events
 		public Command Command;
 	}
 
-
 	public delegate void MemberUsedMention(Member sender, MemberUsedMentionEventArgs eventArgs);
 	public class MemberUsedMentionEventArgs : EventArgs
 	{
 		public Mention Mention;
 		public Member Author;
 		public Member Target;
-
 	}
 }

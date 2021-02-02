@@ -17,7 +17,6 @@ namespace Bronuh.Types
 			Text = source.Content;
 		}
 
-
 		public async Task<DiscordMessage> RespondAsync(string text)
 		{
 			if (!Author.IsConsole())
@@ -73,7 +72,6 @@ namespace Bronuh.Types
 			}
 			return null;
 		}
-
 
 		public ChatMessage(string text)
 		{

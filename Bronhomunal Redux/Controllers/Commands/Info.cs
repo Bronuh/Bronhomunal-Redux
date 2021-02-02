@@ -66,8 +66,6 @@ namespace Bronuh.Controllers.Commands
 			.AddTag("help")
 			.AddTag("info");
 
-
-
 			CommandsController.AddCommand("whois", async (m) =>
 			{
 				string text = m.Text;
@@ -100,8 +98,6 @@ namespace Bronuh.Controllers.Commands
 			.AddTag("misc")
 			.AddTag("info");
 
-
-
 			CommandsController.AddCommand("profile", async (m) =>
 			{
 				string text = m.Text;
@@ -119,8 +115,6 @@ namespace Bronuh.Controllers.Commands
 					target = m.Author;
 				}
 
-				//string respond = target?.GetInfo() ?? "";
-
 				await m.RespondAsync(new DiscordMessageBuilder()
 					.WithContent(":pencil: Профиль пользователя " + target.DisplayName)
 					.WithFile(target.DisplayName + ".png", target.GetBasicProfileImageStream()));
@@ -131,7 +125,6 @@ namespace Bronuh.Controllers.Commands
 			.AddTag("misc")
 			.AddTag("info")
 			.AddTag("test");
-
 
 			CommandsController.AddCommand("about", async (m) =>
 			{
@@ -149,7 +142,6 @@ namespace Bronuh.Controllers.Commands
 			.SetDescription("Изменяет информацию о себе")
 			.AddTag("misc")
 			.AddTag("info");
-
 
 			CommandsController.AddCommand("server", async (m) =>
 			{
@@ -179,9 +171,6 @@ namespace Bronuh.Controllers.Commands
 			.AddTag("misc")
 			.AddTag("info");
 
-
-
-
 			CommandsController.AddCommand("achievements", async (m) =>
 			{
 				string text = m.Text;
@@ -202,7 +191,6 @@ namespace Bronuh.Controllers.Commands
 				}
 
 				int images = 0;
-
 
 				List<Achievement> achs = new List<Achievement>();
 
@@ -234,7 +222,6 @@ namespace Bronuh.Controllers.Commands
 
 				}
 				await m.RespondAsync(messageBuilder);
-
 			})
 			.AddAlias("ачивки").AddAlias("достижения")
 			.SetUsage("<command> [username]")
@@ -242,7 +229,6 @@ namespace Bronuh.Controllers.Commands
 			.AddTag("misc")
 			.AddTag("info")
 			.AddTag("fun");
-
 
 			CommandsController.AddCommand("allachievements", async (m) =>
 			{
@@ -252,16 +238,12 @@ namespace Bronuh.Controllers.Commands
 
 				string args = text.Substring(parts[0].Length);
 
-
 				List<Achievement> achs = new List<Achievement>();
-
 
 				List<Achievement> sorted = new List<Achievement>(AchievementsController.Achievements
 					.OrderBy(a => a.Name));
 
-
 				string respond = ":pencil: Список достижений: \n\n";
-
 
 				int achievs = 0;
 
@@ -276,7 +258,6 @@ namespace Bronuh.Controllers.Commands
 					$"{achievement.Description}\n\n";
 					achievs++;
 
-
 					if (achievs >= 10)
 					{
 						await m.RespondAsync(respond);
@@ -285,10 +266,7 @@ namespace Bronuh.Controllers.Commands
 					}
 				}
 
-
-
 				await m.RespondAsync(respond);
-
 			})
 			.AddAlias("всеачивки").AddAlias("вседостижения")
 			.SetUsage("<command>")
@@ -296,7 +274,6 @@ namespace Bronuh.Controllers.Commands
 			.AddTag("misc")
 			.AddTag("info")
 			.AddTag("fun");
-
 
 			CommandsController.AddCommand("commandtags", async (m) =>
 			{
@@ -317,7 +294,6 @@ namespace Bronuh.Controllers.Commands
 				string respond = "Тэги команд:\n";
 				foreach (string tag in tags)
 					respond += tag + (tag == tags[^1] ? "" : ", ");
-
 
 				await m.RespondAsync(respond);
 			})

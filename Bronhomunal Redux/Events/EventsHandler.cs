@@ -8,7 +8,6 @@ namespace Bronuh.Events
 {
 	public static class EventsHandler
 	{
-
 		public static async Task HandleEvent(EventArgs e)
 		{
 			if (e is MessageCreateEventArgs messageCreateEventArgs)
@@ -38,16 +37,12 @@ namespace Bronuh.Events
 			}
 		}
 
-
-
 		private static async Task MessageCreateEventHandler(MessageCreateEventArgs e)
 		{
-
 			Member sender = e.Message.Author.ToMember();
 
 			if (!sender.IsBronomunal())
 			{
-
 				sender.LastMessage = new ChatMessage(e.Message);
 				Member.OnSentMessage(sender, new MemberSentMessageEventArgs(sender.LastMessage));
 
@@ -70,7 +65,6 @@ namespace Bronuh.Events
 					}
 				}
 
-
 				Logger.Log($"{e.Author.ToMember().DisplayName}: {e.Message.Content}");
 
 				if (!e.Channel.IsPrivate || sender.IsOp())
@@ -91,14 +85,11 @@ namespace Bronuh.Events
 			}
 		}
 
-
-
 		private static async Task GuildMemberAddEventHandler(GuildMemberAddEventArgs e)
 		{
 			await Bot.OutpostChannel.SendMessageAsync(e.Member.Username + "#" + e.Member.Discriminator + " зашел на сервер");
 			await MembersController.HardUpdate();
 		}
-
 
 		private static async Task GuildMemberRemoveEventHandler(GuildMemberRemoveEventArgs e)
 		{

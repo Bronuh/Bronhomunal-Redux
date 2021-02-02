@@ -10,15 +10,11 @@ namespace Bronuh.Graphics
 {
 	public static class SmallProfileBuilder
 	{
-
 		public static Stream Build(Member member)
 		{
-
 			var avatarImage = Image.Load(member.GetAvatar().ToArray());
 			var baseImage = Image.Load(Bronuh.Properties.Resources.Level.ToArray());
 			var crownImage = Image.Load(Bronuh.Properties.Resources.Crown.ToArray());
-
-
 
 			/// Prepare avatar
 			avatarImage.Mutate(x => x.Resize(new ResizeOptions
@@ -26,8 +22,6 @@ namespace Bronuh.Graphics
 				Size = new Size(110, 110),
 				Mode = ResizeMode.Crop
 			}).ApplyRoundedCorners(10));
-
-
 
 			///Base info
 			baseImage.Mutate(ctx =>
@@ -47,7 +41,6 @@ namespace Bronuh.Graphics
 
 				var col = member.Source.Color;
 
-
 				ctx.DrawText(new TextGraphicsOptions
 				{
 					TextOptions = {
@@ -58,8 +51,6 @@ namespace Bronuh.Graphics
 				SystemFonts.CreateFont("Arial", 50),
 				new Color(new Rgba32(col.R, col.G, col.B)),
 				new PointF(150, 5));
-
-
 
 				ctx.DrawLines(new Pen(
 					new Color(
@@ -84,9 +75,8 @@ namespace Bronuh.Graphics
 				SystemFonts.CreateFont("Arial", 14),
 				new Color(new Rgba32(255, 255, 255)),
 				new PointF(160, 68));
-				//new SixLabors.ImageSharp.PointF(150, 33));
-				/// XP Bar
 
+				/// XP Bar
 				int curXp = member.XP - Member.XpForRank(member.Rank);
 				int xPos = 250;
 				int length = 340;
@@ -119,15 +109,10 @@ namespace Bronuh.Graphics
 				SystemFonts.CreateFont("Arial", 14),
 				new Color(new Rgba32(255, 255, 255)),
 				new PointF(xPos - 100, yPos - 8));
-
 			});
-
-
 
 			if (member.IsOp())
 			{
-
-
 				crownImage.Mutate(ctx =>
 				{
 					ctx.Resize(new Size(65, 65));
@@ -140,10 +125,6 @@ namespace Bronuh.Graphics
 
 				});
 			}
-
-
-
-
 
 			baseImage.Mutate(x => x.ApplyRoundedCorners(10));
 

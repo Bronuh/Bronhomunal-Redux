@@ -1,5 +1,4 @@
-﻿//using SixLabors.ImageSharp;
-using System.Drawing;
+﻿using System.Drawing;
 using System.IO;
 
 public enum Rarity
@@ -33,7 +32,6 @@ namespace Bronuh.Types
 			Id = id.ToLower();
 		}
 
-
 		public Achievement SetRarity(Rarity rarity)
 		{
 			Rarity = rarity;
@@ -62,7 +60,6 @@ namespace Bronuh.Types
 
 			return this;
 		}
-
 
 		public Achievement SetIcon(byte[] bytes)
 		{
@@ -111,6 +108,5 @@ namespace Bronuh.Types
 			_cache.Position = 0;
 			return _cache;
 		}
-
 	}
 }

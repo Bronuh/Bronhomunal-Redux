@@ -33,7 +33,6 @@ namespace Bronuh.Graphics
 			ImageFactory imageBuilder = new ImageFactory().Load(achievement.Icon);
 			ImageFactory imageBgBuilder = new ImageFactory().Load(Properties.Achievements.IconBackground.ToArray());
 
-
 			imageBuilder
 				.Resize(new Size(iconSize, iconSize))
 				.RoundedCorners(cornerRadius);
@@ -99,14 +98,11 @@ namespace Bronuh.Graphics
 				});
 
 				var outStream = new MemoryStream();
-				//baseImage.SaveAsPng(outStream);
 				SixLabors.ImageSharp.ImageExtensions.SaveAsPng(baseImage, outStream);
 				outStream.Position = 0;
 
 				return outStream;
 			}
-
-
 		}
 	}
 }

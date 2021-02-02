@@ -19,7 +19,6 @@ namespace Bronuh
 			}
 		}
 
-
 		public static void Execute(Type interfaceType, string methodName)
 		{
 			List<Type> types = new List<Type>(Assembly.GetExecutingAssembly().GetTypes());

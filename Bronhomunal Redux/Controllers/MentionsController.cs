@@ -10,7 +10,6 @@ namespace Bronuh.Controllers
 		private static bool _initialized = false;
 		public static List<Mention> Mentions { get; private set; } = new List<Mention>();
 
-
 		/// <summary>
 		/// Попытка обработать сообщение как упоминание
 		/// </summary>
@@ -68,16 +67,13 @@ namespace Bronuh.Controllers
 										{
 											await author.GiveAchievement("overwhelming");
 										}
-									}
-
+									} 
 								}
-
 							}
 							else
 							{
 								msg += "Слишком низкий ранг для этого действия (" + author.Rank + "/" + mention.Rank + ")\n";
 							}
-
 
 							mentioned = true;
 							break;
@@ -122,7 +118,6 @@ namespace Bronuh.Controllers
 				}
 			};
 
-
 			new Mention()
 			{
 				Prefix = "",
@@ -140,7 +135,6 @@ namespace Bronuh.Controllers
 				}
 			};
 
-
 			new Mention()
 			{
 				Prefix = "",
@@ -157,7 +151,6 @@ namespace Bronuh.Controllers
 					}
 				}
 			};
-
 
 			new Mention()
 			{

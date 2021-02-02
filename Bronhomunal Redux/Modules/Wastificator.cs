@@ -22,7 +22,6 @@ namespace Bronuh.Libs
 			if (!Initialized)
 				Initialize();
 
-
 			Rnd = new Random(1);
 			Arg = Arg.ToUpper();
 
@@ -32,10 +31,8 @@ namespace Bronuh.Libs
 			foreach (string word in Words)
 				_Arg += RandomWord.TryPaste(Swap(Word.Parse(word))) + " ";
 
-
 			Arg = _Arg;
 			_Arg = "";
-
 
 			foreach (char Char in Arg)
 			{
@@ -191,11 +188,7 @@ namespace Bronuh.Libs
 			new RandomWord("esse?", 0.8);
 			new RandomWord(", ТРАХАНЫИ,", 0.1);
 			new RandomWord("(ФЫРКАЮТ)", 0.4);
-			// new RandomWord("",0.01);
-			// new Word("","",0.5);
-
 		}
-
 
 		/// <summary>
 		/// Заменяет слово на другое, но потраченое
@@ -214,7 +207,6 @@ namespace Bronuh.Libs
 				_words.Add(this);
 			}
 
-
 			public static string Parse(string arg)
 			{
 				foreach (Word word in _words)
@@ -230,8 +222,6 @@ namespace Bronuh.Libs
 				}
 				return arg;
 			}
-
-
 		}
 
 		/// <summary>
@@ -256,7 +246,6 @@ namespace Bronuh.Libs
 				{
 					foreach (RandomWord randomWord in _randomWords)
 					{
-
 						if (Prob(randomWord._prob))
 						{
 							return arg + " " + randomWord._word;
@@ -269,7 +258,4 @@ namespace Bronuh.Libs
 			}
 		}
 	}
-
-
-
 }

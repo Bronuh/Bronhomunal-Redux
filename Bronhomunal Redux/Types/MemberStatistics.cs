@@ -24,7 +24,6 @@ namespace Bronuh.Types
 
 		public long VoiceTime = 0;
 
-
 		public MemberStatistics() { }
 	}
 }

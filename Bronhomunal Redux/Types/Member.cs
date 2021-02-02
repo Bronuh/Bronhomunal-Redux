@@ -312,7 +312,6 @@ namespace Bronuh.Types
 
 					await Bot.BotChannel.SendMessageAsync(msgBuilder);
 
-
 					if (HasAchievement("stickpoke")
 						&& HasAchievement("stickhit")
 						&& HasAchievement("loghit")

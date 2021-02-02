@@ -11,8 +11,6 @@ namespace Bronuh.Controllers.Commands
 	{
 		public void InitializeCommands()
 		{
-
-
 			CommandsController.AddCommand("waste", async (m) =>
 			{
 				string text = m.Text;
@@ -30,7 +28,6 @@ namespace Bronuh.Controllers.Commands
 			.SetUsage("<command> текст который должен быть портачен")
 			.AddTag("fun");
 
-
 			CommandsController.AddCommand("infa", async (m) =>
 			{
 				string text = m.Text;
@@ -46,7 +43,6 @@ namespace Bronuh.Controllers.Commands
 			.SetDescription("Измеряет запрошенную инфу")
 			.SetUsage("<command> какая-то инфа")
 			.AddTag("fun");
-
 
 			CommandsController.AddCommand("popcat", async (m) =>
 			{

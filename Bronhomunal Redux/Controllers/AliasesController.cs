@@ -78,7 +78,6 @@ namespace Bronuh
 			StaticSave();
 		}
 
-
 		/// <summary>
 		/// Возвращает пару псевдоним-ID по псевдониму
 		/// </summary>
@@ -95,9 +94,6 @@ namespace Bronuh
 			}
 			return new Alias();
 		}
-
-
-
 
 		/// <summary>
 		/// Возвращает список псевдонгимов, соответствующих указанному Id
@@ -117,7 +113,5 @@ namespace Bronuh
 			}
 			return aliases;
 		}
-
-
 	}
 }

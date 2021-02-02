@@ -39,7 +39,6 @@ namespace Bronuh.Logic
 						Bot.GamesChannel.SendMessageAsync(":white_check_mark: " + minecraft + " Сервер abro.tech **ВКЛЮЧЕН**").GetAwaiter().GetResult();
 					}
 				}
-
 				else
 				{
 					if (Settings.ServerStatus)

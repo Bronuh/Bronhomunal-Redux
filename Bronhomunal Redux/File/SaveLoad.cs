@@ -23,9 +23,6 @@ namespace Bronuh.File
 			return text;
 		}
 
-
-
-
 		/// <summary>
 		/// Записывает строку в файл
 		/// </summary>
@@ -37,10 +34,6 @@ namespace Bronuh.File
 			StreamWriter writer = new StreamWriter(fs);
 			writer.Write(text);
 		}
-
-
-
-
 
 		/// <summary>
 		/// Загружает объект какого-то там типа Т, если покайфу
@@ -65,8 +58,6 @@ namespace Bronuh.File
 			}
 		}
 
-
-
 		/// <summary>
 		/// Сохраняет объект в файл
 		/// </summary>
@@ -77,7 +68,6 @@ namespace Bronuh.File
 		{
 			try
 			{
-
 				Logger.Log("Сохранение объекта " + typeof(T));
 				XmlSerializer xs = new XmlSerializer(typeof(T));
 

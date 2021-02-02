@@ -20,7 +20,6 @@ namespace Bronuh.Controllers.Commands
 			.AddAlias("запомни").AddAlias("алиас")
 			.AddTag("misc");
 
-
 			CommandsController.AddCommand("forget", async (m) =>
 			{
 				string text = m.Text;
