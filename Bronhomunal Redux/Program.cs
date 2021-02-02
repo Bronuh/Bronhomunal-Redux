@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using Bronuh.Events;
@@ -66,6 +67,12 @@ namespace Bronuh
 
 			_workerCallback = new TimerCallback(Worker.Work);
 			_workingChecker = new Timer(_workerCallback, null, 0, 1000);
+
+			
+
+
+			
+
 
 			while (true)
 			{

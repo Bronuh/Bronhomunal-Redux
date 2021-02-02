@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Bronuh.Events;
 using Bronuh.Logic;
 using System.Threading;
+using DSharpPlus.Net;
+using System.Linq;
 
 namespace Bronuh
 {
@@ -79,8 +81,7 @@ namespace Bronuh
 					}
 				}
 
-				//Guild = await Discord.GetGuildAsync(Guild.Id, true);
-
+				//Guild = await Discord.GetGuildAsync(Guild.Id, false);
 				if (Guild != null)
 				{
 					Channels = await Guild.GetChannelsAsync();
@@ -97,7 +98,6 @@ namespace Bronuh
 							break;
 						}
 					}
-
 
 					Logger.Log("Поиск канала для прибывающих...");
 					foreach (DiscordChannel currentChannel in Channels)
@@ -130,25 +130,15 @@ namespace Bronuh
 				}
 				MembersController.LinkDiscordMembers(DiscordMembers);
 
-				var _chans = Guild.Channels;
-
-				foreach (DiscordChannel chan in _chans.Values)
-				{
-					var users = new List<DiscordMember>(chan.Users);
-					if (chan.Type==ChannelType.Voice)
-					{
-						Logger.Log(chan.Name+": "+users.Count);
-					}
-				}
+				
 
 				Ready = true;
 
 				Logger.Log("Получен список участников");
 				Logger.Success("Бот запущен");
-
-				
-
 				await SendMessageAsync("("+DateTime.Now.ToLongTimeString()+") Запуск № "+Settings.LaunchCount);
+
+
 			};
 
 

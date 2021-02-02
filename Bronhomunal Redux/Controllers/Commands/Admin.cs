@@ -62,7 +62,7 @@ namespace Bronuh.Controllers.Commands
 				string respond = text.Replace(parts[0] + " ", "");
 				// Program.Server.PushMessage(respond);
 				await m.RespondAsync(respond);
-				await m.Source.DeleteAsync();
+				await m.Source?.DeleteAsync();
 				await m.Author.GiveAchievement("itsnotme");
 			})
 			.AddAlias("скажи")
