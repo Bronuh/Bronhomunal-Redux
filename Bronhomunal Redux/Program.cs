@@ -22,8 +22,8 @@ namespace Bronuh
 			Logger.Log("Загрузка...");
 
 #if DEBUG
-	Suffix = " [DEBUG]";
-	Prefix = "!";
+			Suffix = " [DEBUG]";
+			Prefix = "!";
 #endif
 
 			InterfaceExecutor.Execute(typeof(ILoadable), "Load");

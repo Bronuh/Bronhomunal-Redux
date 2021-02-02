@@ -1,10 +1,6 @@
 ﻿using RPGCore.Events;
 using RPGCore.Gameplay;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace RPGCore.Entities
 {
@@ -28,14 +24,10 @@ namespace RPGCore.Entities
 		public int SkillPoints = 1;
 		public static int XpPerLevel = 1000;
 
-
-
 		public Hero()
 		{
-			Inventory = new Inventory() { Limited = true, Size = 6};
+			Inventory = new Inventory() { Limited = true, Size = 6 };
 		}
-
-
 
 		/// <summary>
 		/// Расчитывает требуемое количество опыта для перехода на следующий уровень.
@@ -43,24 +35,21 @@ namespace RPGCore.Entities
 		/// <returns>Возвращает количество опыта, требуемого для достижения следующего уровня</returns>
 		public int ToNextLevel()
 		{
-			return LevelXP(Level + 1)-XP;
+			return LevelXP(Level + 1) - XP;
 		}
-
-
 
 		public void AddXP(int xp)
 		{
 			XP += xp;
-			if (LevelForXp(XP)>Level)
+			if (LevelForXp(XP) > Level)
 			{
 				int levels = LevelForXp(XP) - Level;
-				for (int i = 1; i<=levels; )
+				for (int i = 1; i <= levels;)
 				{
 					LevelUp();
 				}
 			}
 		}
-
 
 		/// <summary>
 		/// Возвращает требуемое количество опыта для получения указанного уровня
@@ -73,9 +62,6 @@ namespace RPGCore.Entities
 
 		}
 
-
-
-
 		/// <summary>
 		/// Возвращает значение уровня, достигаемое при заданном количестве опыта
 		/// </summary>
@@ -83,7 +69,7 @@ namespace RPGCore.Entities
 		/// <returns></returns>
 		public int LevelForXp(int xp)
 		{
-			return (int)Math.Floor((double)xp / XpPerLevel)+1;
+			return (int)Math.Floor((double)xp / XpPerLevel) + 1;
 		}
 
 		public virtual void LevelUp()
@@ -92,7 +78,5 @@ namespace RPGCore.Entities
 			Level++;
 			SkillPoints++;
 		}
-
-
 	}
 }

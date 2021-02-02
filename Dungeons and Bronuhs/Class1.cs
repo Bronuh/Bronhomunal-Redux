@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Dungeons_and_Bronuhs
+﻿namespace Dungeons_and_Bronuhs
 {
 	public class Class1
 	{

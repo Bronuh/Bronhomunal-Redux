@@ -1,13 +1,10 @@
 ﻿using RPGCore.Entities.Items;
+using RPGCore.Events;
 using RPGCore.Gameplay;
 using RPGCore.Gameplay.Effects;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using RPGCore.Events;
-	
+
 namespace RPGCore.Entities
 {
 	public delegate void DamageHandler(object sender);
@@ -41,39 +38,33 @@ namespace RPGCore.Entities
 		/// </summary>
 		public List<string> Tags { get; }
 
-
 		/// <summary>
 		/// Базовый наносимый урон
 		/// </summary>
-		public Damage 
-			BaseDamage = new Damage(10), 
+		public Damage
+			BaseDamage = new Damage(10),
 			TakenDamage;
 		public double TakenDamageAmount;
-		public double 
-			Health = 100, 
+		public double
+			Health = 100,
 			Energy = 100,
 			Armor = 0,
 			Shield = 0,
-			MaxHealth, MaxEnergy, MaxShield, 
+			MaxHealth, MaxEnergy, MaxShield,
 			HealthRegen = 1,
 			EnergyRegen = 1,
 			ShieldRegen = 1;
 
 		public int Level = 1;
-		public int 
+		public int
 			HealthRegenTicks = 1,
 			ShieldRegenTicks = 1;
 		public List<Effect> Effects = new List<Effect>();
 		public Inventory Inventory = new Inventory() { Limited = false, Size = 10 };
 
-
-
 		public event DamageHandler DamageTaken;
 
-
-
 		public virtual void Think() { }
-
 
 		public virtual void InflictDamage(Unit target)
 		{
@@ -92,13 +83,11 @@ namespace RPGCore.Entities
 			AfterAttack?.Invoke(this, new AftereAttackEventArgs());
 		}
 
-
 		public virtual void TakeDamage(double amount)
 		{
-			Damage damage = new Damage() { BaseDamage = amount, Source = Game.World};
+			Damage damage = new Damage() { BaseDamage = amount, Source = Game.World };
 			TakeDamage(damage);
 		}
-
 
 		public virtual void TakeDamage(Damage damage)
 		{
@@ -109,19 +98,17 @@ namespace RPGCore.Entities
 				double NormalDamage = damage.BaseDamage;
 				TakenDamageAmount = 0;
 
-				foreach (TagDamage tag in damage.Tags) 
+				foreach (TagDamage tag in damage.Tags)
 					if (HasTag(tag.Tag))
 						NormalDamage += tag.Value;
-					
-				
 
-				if (Shield>0)
+				if (Shield > 0)
 				{
 					if (damage.HasTag("shield"))
 					{
-						TakenDamageAmount += Math.Min(Shield,ShieldDamage);
+						TakenDamageAmount += Math.Min(Shield, ShieldDamage);
 						Shield -= ShieldDamage;
-						Shield = Math.Max(0,Shield);
+						Shield = Math.Max(0, Shield);
 					}
 					if (Shield > 0)
 					{
@@ -159,11 +146,10 @@ namespace RPGCore.Entities
 			RemovedEffect?.Invoke(this, new RemovedEffectEventArgs());
 		}
 
-
-
 		public virtual bool HasTag(string tag)
 		{
-			foreach (String s in Tags) {
+			foreach (String s in Tags)
+			{
 				if (s.ToLower().Equals(tag.ToLower()))
 				{
 					return true;
@@ -171,7 +157,6 @@ namespace RPGCore.Entities
 			}
 			return false;
 		}
-
 
 		public virtual void RemoveTag(string tag)
 		{

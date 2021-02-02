@@ -1,9 +1,9 @@
-﻿using System;
+﻿using NamedPipeWrapper;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using NamedPipeWrapper;
 
 namespace Launcher
 {
@@ -19,11 +19,11 @@ namespace Launcher
 
 		static DirectoryInfo Current = new DirectoryInfo(Directory.GetCurrentDirectory());
 		static DirectoryInfo Root = Current.Parent.Parent.Parent.Parent;
-		#if DEBUG
-			static string BuildPath = @"bin\debug\netcoreapp3.1\";
-		#else
+#if DEBUG
+		static string BuildPath = @"bin\debug\netcoreapp3.1\";
+#else
 			static string BuildPath = @"bin\release\netcoreapp3.1\";
-		#endif
+#endif
 		static string TargetApp = "Bronhomunal Redux";
 		static string TargetExe = TargetApp + ".exe";
 		static string TargetDll = TargetApp + ".dll";
@@ -42,7 +42,8 @@ namespace Launcher
 			Console.WriteLine("Подготовка...");
 			Prepare();
 
-			TimerCallback workingCallback = new TimerCallback((o) => {
+			TimerCallback workingCallback = new TimerCallback((o) =>
+			{
 				if (!CheckWorking())
 				{
 					if (CurrentStatus == Status.WORKING)
@@ -53,11 +54,11 @@ namespace Launcher
 				}
 			});
 
-			TimerCallback updateCallback = new TimerCallback((o) => {
+			TimerCallback updateCallback = new TimerCallback((o) =>
+			{
 				FileInfo
-					targetDll = new FileInfo(Root+@"\Bronhomunal Redux\"+BuildPath+TargetDll),
+					targetDll = new FileInfo(Root + @"\Bronhomunal Redux\" + BuildPath + TargetDll),
 					targetExe = new FileInfo(Root + @"\Bronhomunal Redux\" + BuildPath + TargetExe);
-
 
 				if (File.GetLastWriteTime(targetDll.FullName) != File.GetLastWriteTime(CurrentDll.FullName)
 				|| File.GetLastWriteTime(targetExe.FullName) != File.GetLastWriteTime(CurrentExe.FullName))
@@ -78,11 +79,9 @@ namespace Launcher
 							Console.WriteLine(e.Message);
 						}
 
-
 						CurrentStatus = Status.WORKING;
 					}
 				}
-
 			});
 
 			Console.WriteLine("Запуск таймеров");
@@ -92,36 +91,20 @@ namespace Launcher
 			Console.ReadLine();
 		}
 
-
-
-
-
-
 		public static bool CheckWorking()
 		{
 			Process[] pr = Process.GetProcessesByName(TargetApp);
 			return pr.Length > 0;
 		}
 
-
-
-
-
-
 		public static void Start()
 		{
 			Console.WriteLine("Запуск бота...");
-			ProcessStartInfo start = new ProcessStartInfo(Current+"\\"+TargetExe);
+			ProcessStartInfo start = new ProcessStartInfo(Current + "\\" + TargetExe);
 			Console.WriteLine(start.FileName);
 			start.UseShellExecute = true;
 			bot = Process.Start(start);
 		}
-
-
-
-
-
-
 
 		public static void Prepare()
 		{
@@ -136,9 +119,8 @@ namespace Launcher
 			CurrentDll = new FileInfo(Current + "\\" + TargetDll);
 
 			Console.WriteLine("Подготовка Pipe сервера...");
-			
 
-			var outer = Task.Factory.StartNew(() =>     
+			var outer = Task.Factory.StartNew(() =>
 			{
 				Client.ServerMessage += (connection, message) =>
 				{
@@ -150,24 +132,20 @@ namespace Launcher
 					}
 				};
 
-				Server.ClientConnected += (connection) => {
+				Server.ClientConnected += (connection) =>
+				{
 					Bot = connection;
 					Console.WriteLine("Подключен клиент");
 					Server.PushMessage("Eet som shiet");
 				};
 				Client.Start();
 				Server.Start();
-				
-			});
 
-			
+			});
 
 			Console.WriteLine("Подготовка завершена");
 			CurrentStatus = Status.WORKING;
 		}
-
-
-
 
 		public static void UpdateAll()
 		{
@@ -180,11 +158,9 @@ namespace Launcher
 			}
 		}
 
-
-
 		public static void UpdateFile(string target)
 		{
-			Console.WriteLine("Обновление файла "+target);
+			Console.WriteLine("Обновление файла " + target);
 			FileInfo foundLocal = null, found = null;
 
 			if (!File.Exists(target))
@@ -211,14 +187,14 @@ namespace Launcher
 					File.Delete(foundLocal.FullName + ".bak");
 				}
 
-				File.Move(foundLocal.FullName, foundLocal.FullName+".bak");
+				File.Move(foundLocal.FullName, foundLocal.FullName + ".bak");
 			}
 
 			try
 			{
 				File.Copy(target, Current + "\\" + found.Name);
 			}
-			catch(Exception e)
+			catch (Exception e)
 			{
 				Console.WriteLine(e.Message);
 			}
