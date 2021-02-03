@@ -8,10 +8,14 @@ namespace Bronuh
 {
 	class Program
 	{
-		private static TimerCallback _workerSecondCallback,
-			_worker30SecCallback;
-		private static Timer _workingSecondChecker,
-			_working30SecChecker;
+		private static TimerCallback 
+			_workerSecondCallback,
+			_worker30SecCallback,
+			_worker5MinCallback;
+		private static Timer 
+			_workingSecondChecker,
+			_working30SecChecker,
+			_working5MinChecker;
 		public static string Suffix = "";
 		public static string Prefix = "";
 
@@ -59,6 +63,9 @@ namespace Bronuh
 
 			_worker30SecCallback = new TimerCallback(Worker.Every30Sec);
 			_working30SecChecker = new Timer(_worker30SecCallback, null, 0, 30000);
+
+			_worker5MinCallback = new TimerCallback(Worker.Every5Min);
+			_working5MinChecker = new Timer(_worker5MinCallback, null, 0, 1000*60*5);
 
 			while (true)
 			{

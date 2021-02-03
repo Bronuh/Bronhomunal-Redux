@@ -17,22 +17,22 @@ namespace Bronuh
 
 		public void Save()
 		{
-			if (!Directory.Exists("logs\\"))
-			{
-				Console.WriteLine("Создана директория: " + "logs\\");
-				Directory.CreateDirectory("logs\\");
-			}
-			string log = "\n";
-			foreach (LogMessage logMessage in GlobalLog)
-			{
-				log += logMessage.fullText + "\n";
-			}
+			//if (!Directory.Exists("logs\\"))
+			//{
+			//	Console.WriteLine("Создана директория: " + "logs\\");
+			//	Directory.CreateDirectory("logs\\");
+			//}
+			//string log = "\n";
+			//foreach (LogMessage logMessage in GlobalLog)
+			//{
+			//	log += logMessage.fullText + "\n";
+			//}
 
-			Logger.Log("Сохранение Лога...");
-			SaveLoad.SaveObject<string>(log, $"logs\\Log " +
-				$"{DateTime.Now.ToShortDateString().Replace(".", "-")} " +
-				$"{DateTime.Now.ToLongTimeString().Replace(":", ".")}.txt");
-			Logger.Success("Сохранение завершено");
+			//Logger.Log("Сохранение Лога...");
+			//SaveLoad.SaveObject<string>(log, $"logs\\Log " +
+			//	$"{DateTime.Now.ToShortDateString().Replace(".", "-")} " +
+			//	$"{DateTime.Now.ToLongTimeString().Replace(":", ".")}.txt");
+			//Logger.Success("Сохранение завершено");
 		}
 
 		public static void Log(String text)

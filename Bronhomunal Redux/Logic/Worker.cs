@@ -21,6 +21,7 @@ namespace Bronuh.Logic
 			if (Bot.Ready)
 			{
 				string minecraft = "";
+				string key = MembersController.FindMember("Key_J").Source.Mention;
 				foreach (DiscordRole role in Bot.Guild.Roles.Values)
 				{
 					if (role.Name == "Minecraft")
@@ -34,19 +35,42 @@ namespace Bronuh.Logic
 				{
 					if (!Settings.ServerStatus)
 					{
+						Settings.ServerStatus = true;
 						Bot.GamesChannel.SendMessageAsync(":white_check_mark: " + minecraft + " Сервер abro.tech **ВКЛЮЧЕН**").GetAwaiter().GetResult();
 					}
 				}
 				else
 				{
-					if (Settings.ServerStatus)
+					MineStat ms2 = new MineStat("abro.tech", 25565);
+					if (!ms2.ServerUp)
 					{
-						Bot.GamesChannel.SendMessageAsync(":no_entry: " + minecraft + " Сервер abro.tech **ВЫКЛЮЧЕН**").GetAwaiter().GetResult();
+						MineStat ms3 = new MineStat("abro.tech", 25565);
+						if (!ms3.ServerUp)
+						{
+							MineStat ms4 = new MineStat("abro.tech", 25565, 10);
+							if (!ms4.ServerUp)
+							{
+								MineStat ms5 = new MineStat("abro.tech", 25565, 10);
+								if (!ms5.ServerUp)
+								{
+									if (Settings.ServerStatus)
+									{
+										Settings.ServerStatus = false;
+										Bot.GamesChannel.SendMessageAsync(":no_entry: " + key + " Сервер abro.tech **ВЫКЛЮЧЕН**").GetAwaiter().GetResult();
+									}
+								}
+							}
+						}
 					}
 				}
-				Settings.ServerStatus = ms.ServerUp;
+				
 				Logger.Debug("Server status " + ms.ServerUp);
 			}
+		}
+
+		public static void Every5Min(object state)
+		{
+			InterfaceExecutor.Execute(typeof(ISaveable), "Save");
 		}
 
 		private static void CheckVoiceTime()
