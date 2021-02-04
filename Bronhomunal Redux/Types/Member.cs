@@ -275,7 +275,7 @@ namespace Bronuh.Types
 			{
 				current = (int)(DateTime.Now - LastVoiceIn).TotalMilliseconds;
 			}
-			return Statistics.VoiceTime + current;
+			return (Statistics.VoiceTime + current).value;
 		}
 
 		/// <summary>

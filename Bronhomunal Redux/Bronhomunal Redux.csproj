@@ -24,7 +24,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NamedPipeWrapper\NamedPipeWrapper.csproj" />
-    <ProjectReference Include="..\RPGCore\RPGCore.csproj" />
   </ItemGroup>
 
   <ItemGroup>

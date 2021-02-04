@@ -38,6 +38,7 @@ namespace Bronuh.Controllers.Commands
 				string respond = args + "\nИнфа: " + Math.Round(Infa.CheckInfo(args).Value, 0) + "%";
 				await m.RespondAsync(respond);
 				await m.Author.GiveAchievement("infameter");
+				m.Author.Statistics.InfosMeasured++;
 			})
 			.AddAlias("info").AddAlias("инфа")
 			.SetDescription("Измеряет запрошенную инфу")

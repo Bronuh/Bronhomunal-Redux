@@ -7,7 +7,7 @@ namespace Bronuh
 	{
 		private static SettingsContainer _container = new SettingsContainer();
 
-		public static bool ServerStatus { get; set; } = false;
+		public static bool ServerStatus { get; set; } = true;
 		public static string BotToken { get; private set; }
 		public static string Sign { get; private set; } = "!";
 		private static readonly string _settingsPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + "\\BronhomunalSettings.xml";
@@ -59,6 +59,6 @@ namespace Bronuh
 		public string BotToken;
 		public string Sign = "!";
 		public bool DEBUG = false;
-		public bool ServerStatus = false;
+		public bool ServerStatus = true;
 	}
 }

@@ -10,6 +10,7 @@ namespace Bronuh.Controllers.Commands
 	{
 		public void InitializeCommands()
 		{
+			/// ==============================================================================================================
 			CommandsController.AddCommand("commands", async (m) =>
 			{
 				string text = m.Text;
@@ -66,6 +67,7 @@ namespace Bronuh.Controllers.Commands
 			.AddTag("help")
 			.AddTag("info");
 
+			/// ==============================================================================================================
 			CommandsController.AddCommand("whois", async (m) =>
 			{
 				string text = m.Text;
@@ -98,6 +100,7 @@ namespace Bronuh.Controllers.Commands
 			.AddTag("misc")
 			.AddTag("info");
 
+			/// ==============================================================================================================
 			CommandsController.AddCommand("profile", async (m) =>
 			{
 				string text = m.Text;
@@ -126,6 +129,7 @@ namespace Bronuh.Controllers.Commands
 			.AddTag("info")
 			.AddTag("test");
 
+			/// ==============================================================================================================
 			CommandsController.AddCommand("about", async (m) =>
 			{
 				string text = m.Text;
@@ -143,6 +147,7 @@ namespace Bronuh.Controllers.Commands
 			.AddTag("misc")
 			.AddTag("info");
 
+			/// ==============================================================================================================
 			CommandsController.AddCommand("server", async (m) =>
 			{
 				string text = m.Text;
@@ -171,6 +176,7 @@ namespace Bronuh.Controllers.Commands
 			.AddTag("misc")
 			.AddTag("info");
 
+			/// ==============================================================================================================
 			CommandsController.AddCommand("achievements", async (m) =>
 			{
 				string text = m.Text;
@@ -230,6 +236,7 @@ namespace Bronuh.Controllers.Commands
 			.AddTag("info")
 			.AddTag("fun");
 
+			/// ==============================================================================================================
 			CommandsController.AddCommand("allachievements", async (m) =>
 			{
 				string text = m.Text;
@@ -275,6 +282,7 @@ namespace Bronuh.Controllers.Commands
 			.AddTag("info")
 			.AddTag("fun");
 
+			/// ==============================================================================================================
 			CommandsController.AddCommand("commandtags", async (m) =>
 			{
 				string text = m.Text;
@@ -301,6 +309,52 @@ namespace Bronuh.Controllers.Commands
 			.SetUsage("<command>")
 			.SetDescription("Выводит известные теги для команд, для использования с !commands [tag]")
 			.AddTag("help")
+			.AddTag("info");
+
+			/// ==============================================================================================================
+			CommandsController.AddCommand("stats", async (m) =>
+			{
+				string text = m.Text;
+				string[] parts = text.Split(' ');
+				int userRank = m.Author.Rank;
+
+				Member target = null;
+
+				if (parts.Length > 1)
+				{
+					target = MembersController.FindMember(parts[1]);
+				}
+				else if (parts.Length == 1)
+				{
+					target = m.Author;
+				}
+
+				if (target==null)
+				{
+					await m.RespondAsync("Пользователь не найден");
+				}
+
+				string respond = "**Статистика:**\n";
+
+				var fields = typeof(MemberStatistics).GetFields();
+				foreach (var field in fields)
+				{
+					string fieldAbout = "";
+					object[] attrs = field.GetCustomAttributes(false);
+					foreach (AboutAttribute attr in attrs)
+					{
+						fieldAbout = attr.About;
+						break;
+					}
+					var value = field.GetValue(target.Statistics);
+					respond += fieldAbout + ": " + value+"\n";
+				}
+
+				await m.RespondAsync(respond);
+			})
+			.AddAlias("статы").AddAlias("статистика")
+			.SetUsage("<command>")
+			.SetDescription("Выводит значения статистики")
 			.AddTag("info");
 		}
 	}
