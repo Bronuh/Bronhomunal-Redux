@@ -153,7 +153,7 @@ namespace Bronuh.Controllers.Commands
 				string text = m.Text;
 				string[] parts = text.Split(' ');
 				int userRank = m.Author.Rank;
-				MineStat ms = new MineStat("abro.tech", 25565);
+				MineStat ms = new MineStat("localhost", 25565);
 
 				string args = text.Substring(parts[0].Length);
 				string respond = "**Статус сервера: **\n";
@@ -162,7 +162,9 @@ namespace Bronuh.Controllers.Commands
 					respond += ":white_check_mark: ВКЛЮЧЕН\n";
 					respond += "Версия: " + ms.Version + "\n";
 					respond += "Игроков: " + ms.CurrentPlayers + "/" + ms.MaximumPlayers + "\n";
-					respond += "MOTD: " + ms.Motd;
+					respond += "MOTD: " + ms.Motd+"\n";
+					respond += "Список игроков: "+AbroServer.Request("localhost",25566,"@playerslist").Trim()
+						.Replace("@text//","");
 				}
 				else
 				{

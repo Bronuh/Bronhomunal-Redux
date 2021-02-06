@@ -1,4 +1,5 @@
 ﻿using Bronuh.Events;
+using Bronuh.Modules;
 using Bronuh.Types;
 using DSharpPlus;
 using DSharpPlus.Entities;
