@@ -46,6 +46,10 @@ namespace Bronuh.Controllers.Commands
 				await m.RespondAsync(respond);
 				await m.Source?.DeleteAsync();
 				await m.Author.GiveAchievement("itsnotme");
+				if (respond.StartsWith(Program.Prefix+Settings.Sign))
+				{
+					await m.Author.GiveAchievement("tricky");
+				}
 			})
 			.AddAlias("скажи")
 			.SetOp(false)

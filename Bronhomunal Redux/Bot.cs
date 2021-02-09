@@ -1,4 +1,5 @@
-﻿using Bronuh.Events;
+﻿using Bronuh.Controllers;
+using Bronuh.Events;
 using Bronuh.Modules;
 using Bronuh.Types;
 using DSharpPlus;
@@ -161,6 +162,7 @@ namespace Bronuh
 						{
 							var mamba = member.ToMember();
 							mamba.JoinVoice();
+							mamba.RealLastVoiceIn = DateTime.Now;
 							Member.OnJoinedVoice(mamba, new MemberJoinedVoiceEventArgs());
 						}
 					}
@@ -218,7 +220,7 @@ namespace Bronuh
 						}
 					}
 
-					if (list.Count >= 6)
+					if (list.Count >= AchievementsController.Party.CustomValue)
 					{
 						foreach (DiscordMember member in list)
 						{
@@ -226,7 +228,7 @@ namespace Bronuh
 						}
 					}
 
-					if (list.Count >= 8)
+					if (list.Count >= AchievementsController.Crowd.CustomValue)
 					{
 						foreach (DiscordMember member in list)
 						{
@@ -234,7 +236,7 @@ namespace Bronuh
 						}
 					}
 
-					if (list.Count >= 10)
+					if (list.Count >= AchievementsController.Zerg.CustomValue)
 					{
 						foreach (DiscordMember member in list)
 						{
@@ -253,6 +255,7 @@ namespace Bronuh
 							{
 								var mamba = member.ToMember();
 								mamba.JoinVoice();
+								mamba.RealLastVoiceIn = DateTime.Now;
 								Member.OnJoinedVoice(mamba, new MemberJoinedVoiceEventArgs());
 							}
 						}

@@ -118,6 +118,9 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="About" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\achievements\images\about.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="AI" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\achievements\images\ai.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -126,6 +129,9 @@
   </data>
   <data name="Another" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\achievements\images\another.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Artist" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\achievements\images\artist.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Ascension" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\achievements\images\ascension.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -139,8 +145,14 @@
   <data name="Btard" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\achievements\images\btard.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Chat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\achievements\images\chat.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="CJ" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\achievements\images\cj.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Colored" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\achievements\images\colored.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Coolhacker" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\achievements\images\coolhacker.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -148,17 +160,47 @@
   <data name="Crowd" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\achievements\images\crowd.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Curious" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\achievements\images\curious.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Disgusting" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\achievements\images\disgusting.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="DIY" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\achievements\images\diy.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Empty" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\achievements\images\empty.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Fitting" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\achievements\images\fitting.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Gaems" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\achievements\images\gaems.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="IconBackground" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\achievements\imagebackground.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Logged" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\achievements\images\logged.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Loghit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\achievements\images\loghit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Major" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\achievements\images\major.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Maybe" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\achievements\images\maybe.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="No" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\achievements\images\no.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="NSFW" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\achievements\images\nsfw.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Others" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\achievements\images\others.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Overwhelming" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\achievements\images\overwhelming.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -181,8 +223,26 @@
   <data name="Stonks" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\achievements\images\stonks.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="TotalVoice1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\achievements\images\totalvoice1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TotalVoice2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\achievements\images\totalvoice2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="TotalVoice3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\achievements\images\totalvoice3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Treed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\achievements\images\treed.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Treehit" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\achievements\images\treehit.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Tricky" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\achievements\images\tricky.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Veteran" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\achievements\images\veteran.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Voice_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\achievements\images\voice 1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -199,11 +259,17 @@
   <data name="Voice_5" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\achievements\images\voice 5.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="WhoAmI" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\achievements\images\whoami.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Why" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\achievements\images\why.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Woodenwarrior" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\achievements\images\woodenwarrior.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Yes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\achievements\images\yes.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Zerg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\achievements\images\zerg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

@@ -29,7 +29,7 @@ namespace Bronuh.Types
 		public ulong Id;
 		public int Rank = 1;
 		public int XP = 0;
-		public static readonly int XpPerRank = 50;
+		public static readonly int XpPerRank = 100;
 
 		public bool IsOP = false;
 
@@ -46,6 +46,8 @@ namespace Bronuh.Types
 
 		[System.Xml.Serialization.XmlIgnore]
 		public DateTime LastVoiceIn;
+		[System.Xml.Serialization.XmlIgnore]
+		public DateTime RealLastVoiceIn;
 
 		public List<string> Achievements = new List<string>();
 
@@ -163,6 +165,10 @@ namespace Bronuh.Types
 						.WithContent(":up: " + DisplayName + " повысил свой ранг!" + Program.Suffix)
 						.WithFile("RankUp.png", RankUpBuilder.Build(this));
 			await Bot.SendMessageAsync(msgBuilder);
+			if (Rank >= AchievementsController.Veteran.CustomValue)
+			{
+				await GiveAchievement("veteran");
+			}
 		}
 
 		/// <summary>
@@ -265,6 +271,8 @@ namespace Bronuh.Types
 				Logger.Log(DisplayName + " отключен от войса " + delay);
 				IsInVoice = false;
 				Statistics.VoiceTime += delay;
+				
+				Statistics.MaxVoiceSessionTime.value = GetMaxVoiceTime();
 			}
 		}
 
@@ -276,6 +284,21 @@ namespace Bronuh.Types
 				current = (int)(DateTime.Now - LastVoiceIn).TotalMilliseconds;
 			}
 			return (Statistics.VoiceTime + current).value;
+		}
+
+		public long GetCurrentVoiceTime()
+		{
+			int current = 0;
+			if (IsInVoice)
+			{
+				current = (int)(DateTime.Now - RealLastVoiceIn).TotalMilliseconds;
+			}
+			return current;
+		}
+
+		public long GetMaxVoiceTime()
+		{
+			return Math.Max(GetCurrentVoiceTime(), Statistics.MaxVoiceSessionTime.value);
 		}
 
 		/// <summary>

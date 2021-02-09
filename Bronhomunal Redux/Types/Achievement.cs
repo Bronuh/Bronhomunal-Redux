@@ -21,6 +21,7 @@ namespace Bronuh.Types
 		public int Lightness = 0;
 		public Color BorderColor = Color.FromArgb(150, 150, 150);
 		public static int BaseXP = 5;
+		public long CustomValue;
 		public Rarity Rarity = Rarity.COMMON;
 
 		private bool _cached = false;
@@ -95,6 +96,17 @@ namespace Bronuh.Types
 		{
 			Lightness = lightness;
 			return this;
+		}
+
+		public Achievement SetValue(long value)
+		{
+			CustomValue = value;
+			return this;
+		}
+
+		public string GetDescription()
+		{
+			return Description.Replace("<value>", CustomValue.ToString());
 		}
 
 		public Stream GetImage()

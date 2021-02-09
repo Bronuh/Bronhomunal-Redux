@@ -90,7 +90,7 @@ namespace Bronuh.Graphics
 							WrapTextWidth = 900
 						}
 					},
-					achievement.Description + "",
+					achievement.GetDescription() + "",
 					SixLabors.Fonts.SystemFonts.CreateFont("Arial", 37),
 					new SixLabors.ImageSharp.Color(new Rgba32(255, 255, 255)),
 					new SixLabors.ImageSharp.PointF(300, 125));

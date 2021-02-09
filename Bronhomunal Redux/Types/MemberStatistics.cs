@@ -32,8 +32,12 @@ namespace Bronuh.Types
 		public int WhoisOther = 0;
 		[About("Посмотрел инфу (раз)")]
 		public int WhoisTotal = 0;
-		[About("Времени проведено в войсе")]
+		[About("Всего времени проведено в войсе")]
 		public Time VoiceTime = new Time{ value = 0 };
+		[About("Самая продолжительная сессия в войсе")]
+		public Time MaxVoiceSessionTime = new Time { value = 0 };
+		[About("Отправлено сообщений")]
+		public int SentMessages = 0;
 
 		public MemberStatistics() { }
 
@@ -54,16 +58,21 @@ namespace Bronuh.Types
 			public static Time operator +(Time time, long num)
 			{
 				time.value += num;
-				//var _time = new Time(time);
 				return time;
 			}
 
 			public static Time operator +(long num, Time time)
 			{
 				time.value += num;
-				//var _time = new Time(time);
 				return time;
 			}
+
+			public static Time operator +(Time time1, Time time2)
+			{
+				return new Time(time1.value+time2.value);
+			}
+
+			
 		}
 	}
 }

@@ -1,6 +1,6 @@
 ﻿using Bronuh.Types;
 using DSharpPlus.Entities;
-
+using System;
 
 namespace Bronuh.Controllers.Commands
 {
@@ -31,7 +31,7 @@ namespace Bronuh.Controllers.Commands
 
 				var roles = Bot.Guild.Roles.Values;
 
-				string respond = "Роли: \n";
+				string respond = "Доступные для выдачи роли: \n";
 
 				foreach (DiscordRole role in roles)
 				{
@@ -87,6 +87,7 @@ namespace Bronuh.Controllers.Commands
 					string respond = "Выдана роль: " + foundRole.Name;
 					await m.RespondAsync(respond);
 					await MembersController.HardUpdate();
+					await user.GiveAchievement("fitting");
 				}
 
 			})
@@ -162,13 +163,61 @@ namespace Bronuh.Controllers.Commands
 
 				if (!Exists(other))
 				{
-					await Bot.Guild.CreateRoleAsync(other, mentionable: true);
+					var role = await Bot.Guild.CreateRoleAsync(other, mentionable: true);
+					await user.Source.GrantRoleAsync(role, "По запросу");
+					string respond = "Создана и выдана роль: " + role.Name;
+					await m.RespondAsync(respond);
+					await MembersController.HardUpdate();
+					await user.GiveAchievement("diy");
 				}
 
 			})
-			.SetDescription("Создает новую роль")
+			.SetDescription("Создает новую роль и выдает её пользователю")
 			.SetUsage("<command> название_роли")
-			.SetRank(2)
+			.SetRank(4)
+			.AddTag("misc");
+
+			CommandsController.AddCommand("rolecolor", async (m) =>
+			{
+				string text = m.Text;
+				string[] parts = text.Split(' ');
+				string args = text.Replace(parts[0] + " ", "");
+				Member user = m.Author;
+				int userRank = user.Rank;
+				byte r, g, b;
+				try
+				{
+					r = Byte.Parse(parts[2]);
+					g = Byte.Parse(parts[3]);
+					b = Byte.Parse(parts[4]);
+				}
+				catch (Exception e)
+				{
+					Logger.Error(e.Message);
+					return;
+				}
+
+				if (parts.Length == 5) {
+					if (Exists(parts[1]))
+					{
+						DiscordRole foundDole = null;
+						foreach (DiscordRole role in Bot.Guild.Roles.Values)
+						{
+							if (role.Name.ToLower() == parts[1].ToLower())
+							{
+								await role.ModifyAsync(color: new DiscordColor(r,g,b));
+								string respond = "Изменяется цвет роли: " + role.Name;
+								await user.GiveAchievement("colored");
+								await m.RespondAsync(respond);
+							}
+						}
+					}
+				}
+
+			})
+			.SetDescription("Меняет цвет роли")
+			.SetUsage("<command> название_роли R G B\n\t или <command> название_роли цветовой_код")
+			.SetRank(4)
 			.AddTag("misc");
 		}
 

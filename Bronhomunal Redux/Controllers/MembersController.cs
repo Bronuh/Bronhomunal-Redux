@@ -57,6 +57,18 @@ namespace Bronuh
 					Logger.Warning("Не найден: " + discordMember.DisplayName + ". Создан новый участник");
 				}
 			}
+
+			foreach (Member member in Members)
+			{
+				if (member.Source==null)
+				{
+					Logger.Warning("Обнаружен лишний участник в списке. Удаление...");
+					Members.Remove(member);
+					Program.SaveAll();
+					Environment.Exit(0);
+					Logger.Warning("Удоление завершино");
+				}
+			}
 		}
 
 		/// <summary>

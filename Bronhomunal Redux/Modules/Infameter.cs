@@ -1,5 +1,6 @@
 ﻿using Bronuh.File;
 using Bronuh.Logic;
+using Bronuh.Types;
 using System;
 
 namespace Bronuh.Modules
@@ -23,7 +24,7 @@ namespace Bronuh.Modules
 			Logger.Success("Сохранение завершено");
 		}
 
-		public static Infa FindInfo(String search)
+		public static Infa FindInfo(String search, Member sender)
 		{
 			if (!_initialized)
 			{
@@ -44,8 +45,25 @@ namespace Bronuh.Modules
 				found = new Infa()
 				{
 					Text = search,
-					Value = new Random().NextDouble() * 100
+					Value = Math.Round(new Random().NextDouble() * 100),
+					Author = sender.Id
 				};
+
+				if (found.Value == 0)
+				{
+					sender.GiveAchievement("no");
+				}
+
+				if (found.Value == 50)
+				{
+					sender.GiveAchievement("maybe");
+				}
+
+				if (found.Value == 100)
+				{
+					sender.GiveAchievement("yes");
+				}
+
 				Infos.Add(found);
 				new Infameter().Save();
 			}
@@ -58,11 +76,12 @@ namespace Bronuh.Modules
 	{
 		public string Text;
 		public double Value;
+		public ulong Author;
 
-		public static Infa CheckInfo(String infa)
+		public static Infa CheckInfo(String infa, Member sender)
 		{
 			String text = infa.ToLower().Replace("?", "").Replace("!", "").Replace(".", "").Replace("ё", "е").Trim().Replace("   ", "").Replace("  ", " ");
-			return Modules.Infameter.FindInfo(text);
+			return Modules.Infameter.FindInfo(text, sender);
 		}
 	}
 }

@@ -35,7 +35,7 @@ namespace Bronuh.Controllers.Commands
 				string args = text.Replace(parts[0] + " ", "");
 				int userRank = m.Author.Rank;
 
-				string respond = args + "\nИнфа: " + Math.Round(Infa.CheckInfo(args).Value, 0) + "%";
+				string respond = args + "\nИнфа: " + Math.Round(Infa.CheckInfo(args, m.Author).Value, 0) + "%";
 				await m.RespondAsync(respond);
 				await m.Author.GiveAchievement("infameter");
 				m.Author.Statistics.InfosMeasured++;

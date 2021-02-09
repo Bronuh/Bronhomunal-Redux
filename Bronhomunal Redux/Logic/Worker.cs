@@ -1,4 +1,5 @@
-﻿using Bronuh.Modules;
+﻿using Bronuh.Controllers;
+using Bronuh.Modules;
 using Bronuh.Types;
 using DSharpPlus.Entities;
 
@@ -68,38 +69,31 @@ namespace Bronuh.Logic
 			}
 		}
 
+
 		public static void Every5Min(object state)
 		{
 			InterfaceExecutor.Execute(typeof(ISaveable), "Save");
 		}
 
+
 		private static void CheckVoiceTime()
 		{
 			foreach (Member member in MembersController.Members)
 			{
-				if (member.GetVoiceTime() >= 60 * 1000)
+				for (int i = 1; i<=5; i++)
 				{
-					member.GiveAchievement("voice1").GetAwaiter().GetResult();
+					if (member.GetMaxVoiceTime() >= AchievementsController.Find("voice"+i).CustomValue)
+					{
+						member.GiveAchievement("voice"+i).GetAwaiter().GetResult();
+					}
 				}
 
-				if (member.GetVoiceTime() >= 600 * 1000)
+				for (int i = 1; i <= 3; i++)
 				{
-					member.GiveAchievement("voice2").GetAwaiter().GetResult();
-				}
-
-				if (member.GetVoiceTime() >= 3600 * 1000)
-				{
-					member.GiveAchievement("voice3").GetAwaiter().GetResult();
-				}
-
-				if (member.GetVoiceTime() >= 3600 * 6 * 1000)
-				{
-					member.GiveAchievement("voice4").GetAwaiter().GetResult();
-				}
-
-				if (member.GetVoiceTime() >= 3600 * 12 * 1000)
-				{
-					member.GiveAchievement("voice5").GetAwaiter().GetResult();
+					if (member.GetVoiceTime() >= AchievementsController.Find("totalvoice" + i).CustomValue * 1000 * 60 * 60)
+					{
+						member.GiveAchievement("totalvoice" + i).GetAwaiter().GetResult();
+					}
 				}
 			}
 		}

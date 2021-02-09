@@ -23,6 +23,10 @@ namespace Bronuh.Controllers.Commands
 				if (parts.Length > 1)
 				{
 					respond = "Список команд с тегом " + parts[1] + ": \n\n";
+					if (parts[1].ToLower()=="admin" && !m.Author.IsOp())
+					{
+						await m.Author.GiveAchievement("curious");
+					}
 				}
 
 				foreach (Command command in CommandsController.Commands)
@@ -44,6 +48,7 @@ namespace Bronuh.Controllers.Commands
 						if (parts.Length > 1)
 						{
 							Logger.Debug("Поиск по тегу " + parts[1] + " среди тегов " + command.Tags.ToLine());
+							
 							if (command.HasTag(parts[1]))
 							{
 								Logger.Debug("Тег " + parts[1] + " имется");
@@ -85,9 +90,13 @@ namespace Bronuh.Controllers.Commands
 				{
 					target = m.Author;
 					m.Author.Statistics.WhoisSelf++;
+					if (m.Author.Statistics.WhoisSelf >= AchievementsController.WhoAmI.CustomValue)
+					{
+						await m.Author.GiveAchievement("whoami");
+					}
 				}
 				m.Author.Statistics.WhoisTotal++;
-				if (m.Author.Statistics.WhoisTotal == 10)
+				if (m.Author.Statistics.WhoisTotal == AchievementsController.Major.CustomValue)
 				{
 					await m.Author.GiveAchievement("major");
 				}
@@ -140,6 +149,7 @@ namespace Bronuh.Controllers.Commands
 
 				m.Author.About = args;
 				await m.RespondAsync("Информация изменена");
+				await m.Author.GiveAchievement("about");
 			})
 			.AddAlias("осебе")
 			.SetUsage("<command> текст описания")
@@ -196,6 +206,11 @@ namespace Bronuh.Controllers.Commands
 				else if (parts.Length == 1)
 				{
 					target = m.Author;
+				}
+
+				if (target != m.Author)
+				{
+					await m.Author.GiveAchievement("others");
 				}
 
 				int images = 0;
@@ -264,7 +279,7 @@ namespace Bronuh.Controllers.Commands
 						has = ":green_circle:";
 					}
 					respond += $"**{has}{achievement.Name}**\n" +
-					$"{achievement.Description}\n\n";
+					$"{achievement.GetDescription()}\n\n";
 					achievs++;
 
 					if (achievs >= 10)

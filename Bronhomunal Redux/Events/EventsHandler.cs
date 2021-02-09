@@ -47,6 +47,12 @@ namespace Bronuh.Events
 				Member.OnSentMessage(sender, new MemberSentMessageEventArgs(sender.LastMessage));
 
 				await sender.AddXPAsync(1);
+				sender.Statistics.SentMessages++;
+				if (sender.Statistics.SentMessages >= AchievementsController.Chat.CustomValue)
+				{
+					await sender.GiveAchievement("chat");
+				}
+
 				if (!e.Channel.IsPrivate)
 				{
 					if (e.Channel.Name.StartsWith("bot"))
@@ -62,6 +68,21 @@ namespace Bronuh.Events
 					if (e.Channel.Name.StartsWith("dev"))
 					{
 						await sender.GiveAchievement("coolhacker");
+					}
+
+					if (e.Channel.Name.StartsWith("arts"))
+					{
+						await sender.GiveAchievement("artist");
+					}
+
+					if (e.Channel.Name.StartsWith("gaems"))
+					{
+						await sender.GiveAchievement("gaems");
+					}
+
+					if (e.Channel.Name.StartsWith("nsfw"))
+					{
+						await sender.GiveAchievement("nsfw");
 					}
 				}
 

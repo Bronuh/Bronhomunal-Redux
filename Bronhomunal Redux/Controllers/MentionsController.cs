@@ -107,13 +107,13 @@ namespace Bronuh.Controllers
 				Suffix = ".",
 				Message = "%MENTION%, веточкой тык.",
 				Rank = 1,
-				CustomAction = (sender, target) =>
+				CustomAction = async (sender, target) =>
 				{
 					sender.Statistics.StickPokes++;
 					target.Statistics.PokedByStick++;
-					if (sender.Statistics.StickPokes == 10)
+					if (sender.Statistics.StickPokes == AchievementsController.StickPoke.CustomValue)
 					{
-						sender.GiveAchievement("stickpoke");
+						await sender.GiveAchievement("stickpoke");
 					}
 				}
 			};
@@ -124,13 +124,19 @@ namespace Bronuh.Controllers
 				Suffix = "!!!",
 				Message = "%MENTION%, бревном хуяк!!!",
 				Rank = 2,
-				CustomAction = (sender, target) =>
+				CustomAction = async (sender, target) =>
 				{
 					sender.Statistics.LogHits++;
 					target.Statistics.HitByLog++;
-					if (sender.Statistics.LogHits == 20)
+
+					if (sender.Statistics.LogHits == AchievementsController.LogHit.CustomValue)
 					{
-						sender.GiveAchievement("loghit");
+						await sender.GiveAchievement("loghit");
+					}
+
+					if (sender.Statistics.HitByLog == AchievementsController.Logged.CustomValue)
+					{
+						await sender.GiveAchievement("logged");
 					}
 				}
 			};
@@ -141,13 +147,13 @@ namespace Bronuh.Controllers
 				Suffix = "!",
 				Message = "%MENTION%, палкой пиздык!",
 				Rank = 1,
-				CustomAction = (sender, target) =>
+				CustomAction = async (sender, target) =>
 				{
 					sender.Statistics.StickHits++;
 					target.Statistics.HitByStick++;
-					if (sender.Statistics.StickHits == 20)
+					if (sender.Statistics.StickHits == AchievementsController.StickHit.CustomValue)
 					{
-						sender.GiveAchievement("stickhit");
+						await sender.GiveAchievement("stickhit");
 					}
 				}
 			};
@@ -158,18 +164,24 @@ namespace Bronuh.Controllers
 				Suffix = "",
 				Message = "%MENTION%, деревом еблысь!!11!1!1111",
 				Rank = 3,
-				CustomAction = (sender, target) =>
+				CustomAction = async (sender, target) =>
 				{
 					sender.Statistics.TreeHits++;
 					target.Statistics.HitByTree++;
-					if (sender.Statistics.TreeHits == 30)
+
+					if (sender.Statistics.TreeHits == AchievementsController.TreeHit.CustomValue)
 					{
-						sender.GiveAchievement("treehit");
+						await sender.GiveAchievement("treehit");
+					}
+
+					if (sender.Statistics.HitByTree == AchievementsController.Treed.CustomValue)
+					{
+						await sender.GiveAchievement("treed");
 					}
 
 					if (target.IsOp())
 					{
-						sender.GiveAchievement("riot");
+						await sender.GiveAchievement("riot");
 					}
 				}
 			};
