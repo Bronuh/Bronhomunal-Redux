@@ -7,7 +7,8 @@ public enum Rarity
 	UNCOMMON,
 	RARE,
 	LEGENDARY,
-	EXOTIC
+	EXOTIC,
+	UNREAL
 }
 namespace Bronuh.Types
 {
@@ -20,7 +21,7 @@ namespace Bronuh.Types
 		public int ColorShift = 0;
 		public int Lightness = 0;
 		public Color BorderColor = Color.FromArgb(150, 150, 150);
-		public static int BaseXP = 5;
+		public static int BaseXP = 10;
 		public long CustomValue;
 		public Rarity Rarity = Rarity.COMMON;
 
@@ -53,6 +54,9 @@ namespace Bronuh.Types
 					break;
 				case Rarity.EXOTIC:
 					BorderColor = Color.Gold;
+					break;
+				case Rarity.UNREAL:
+					BorderColor = Color.Red;
 					break;
 				default:
 					BorderColor = Color.FromArgb(150, 150, 150);

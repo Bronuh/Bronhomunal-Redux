@@ -147,24 +147,24 @@ namespace Bronuh.Controllers
 
 			Zerg = AddAchievement("zerg")
 				.SetName("Зерги")
-				.SetValue(10)
+				.SetValue(12)
 				.SetDescription("Побывать в войсе толпой в <value> человек и больше")
 				.SetIcon(Properties.Achievements.Zerg)
-				.SetRarity(Rarity.EXOTIC);
+				.SetRarity(Rarity.UNREAL);
 
 			Crowd = AddAchievement("crowd")
 				.SetName("Толпа")
-				.SetValue(8)
+				.SetValue(10)
 				.SetDescription("Побывать в войсе толпой в <value> человек и больше")
 				.SetIcon(Properties.Achievements.Crowd)
-				.SetRarity(Rarity.RARE);
+				.SetRarity(Rarity.EXOTIC);
 
 			Party = AddAchievement("party")
 				.SetName("Пати")
-				.SetValue(6)
+				.SetValue(8)
 				.SetDescription("Побывать в войсе толпой в <value> человек и больше")
 				.SetIcon(Properties.Achievements.Party)
-				.SetRarity(Rarity.UNCOMMON);
+				.SetRarity(Rarity.LEGENDARY);
 
 			Bronuh = AddAchievement("bronuh")
 				.SetName("Лови его!")
@@ -267,13 +267,13 @@ namespace Bronuh.Controllers
 				.SetName("Концентрат")
 				.SetDescription("Получить сверхчистую 100% инфу")
 				.SetIcon(Properties.Achievements.Yes)
-				.SetRarity(Rarity.EXOTIC);
+				.SetRarity(Rarity.UNREAL);
 
 			No = AddAchievement("no")
 				.SetName("Ниет")
 				.SetDescription("Получить нечто с содержанием инфы 0%")
 				.SetIcon(Properties.Achievements.No)
-				.SetRarity(Rarity.RARE);
+				.SetRarity(Rarity.EXOTIC);
 
 			Maybe = AddAchievement("maybe")
 				.SetName("Хз")
@@ -283,7 +283,7 @@ namespace Bronuh.Controllers
 
 			Chat = AddAchievement("chat")
 				.SetName("Буквометчик")
-				.SetValue(250)
+				.SetValue(100)
 				.SetDescription("Так много букав, что можно было бы написать книгу")
 				.SetIcon(Properties.Achievements.Chat)
 				.SetRarity(Rarity.RARE);

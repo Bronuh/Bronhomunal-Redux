@@ -111,7 +111,7 @@ namespace Bronuh.Controllers
 				{
 					sender.Statistics.StickPokes++;
 					target.Statistics.PokedByStick++;
-					if (sender.Statistics.StickPokes == AchievementsController.StickPoke.CustomValue)
+					if (sender.Statistics.StickPokes >= AchievementsController.StickPoke.CustomValue)
 					{
 						await sender.GiveAchievement("stickpoke");
 					}
@@ -129,12 +129,12 @@ namespace Bronuh.Controllers
 					sender.Statistics.LogHits++;
 					target.Statistics.HitByLog++;
 
-					if (sender.Statistics.LogHits == AchievementsController.LogHit.CustomValue)
+					if (sender.Statistics.LogHits >= AchievementsController.LogHit.CustomValue)
 					{
 						await sender.GiveAchievement("loghit");
 					}
 
-					if (sender.Statistics.HitByLog == AchievementsController.Logged.CustomValue)
+					if (sender.Statistics.HitByLog >= AchievementsController.Logged.CustomValue)
 					{
 						await sender.GiveAchievement("logged");
 					}
@@ -151,7 +151,7 @@ namespace Bronuh.Controllers
 				{
 					sender.Statistics.StickHits++;
 					target.Statistics.HitByStick++;
-					if (sender.Statistics.StickHits == AchievementsController.StickHit.CustomValue)
+					if (sender.Statistics.StickHits >= AchievementsController.StickHit.CustomValue)
 					{
 						await sender.GiveAchievement("stickhit");
 					}
@@ -169,12 +169,12 @@ namespace Bronuh.Controllers
 					sender.Statistics.TreeHits++;
 					target.Statistics.HitByTree++;
 
-					if (sender.Statistics.TreeHits == AchievementsController.TreeHit.CustomValue)
+					if (sender.Statistics.TreeHits >= AchievementsController.TreeHit.CustomValue)
 					{
 						await sender.GiveAchievement("treehit");
 					}
 
-					if (sender.Statistics.HitByTree == AchievementsController.Treed.CustomValue)
+					if (sender.Statistics.HitByTree >= AchievementsController.Treed.CustomValue)
 					{
 						await sender.GiveAchievement("treed");
 					}

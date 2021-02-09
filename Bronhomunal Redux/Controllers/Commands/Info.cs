@@ -23,7 +23,7 @@ namespace Bronuh.Controllers.Commands
 				if (parts.Length > 1)
 				{
 					respond = "Список команд с тегом " + parts[1] + ": \n\n";
-					if (parts[1].ToLower()=="admin" && !m.Author.IsOp())
+					if (parts[1].ToLower()=="admin")
 					{
 						await m.Author.GiveAchievement("curious");
 					}
@@ -96,7 +96,7 @@ namespace Bronuh.Controllers.Commands
 					}
 				}
 				m.Author.Statistics.WhoisTotal++;
-				if (m.Author.Statistics.WhoisTotal == AchievementsController.Major.CustomValue)
+				if (m.Author.Statistics.WhoisTotal >= AchievementsController.Major.CustomValue)
 				{
 					await m.Author.GiveAchievement("major");
 				}
