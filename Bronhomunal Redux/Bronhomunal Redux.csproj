@@ -32,6 +32,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Achievements.resx</DependentUpon>
     </Compile>
+    <Compile Update="Properties\Memes.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Memes.resx</DependentUpon>
+    </Compile>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
@@ -44,6 +49,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Achievements.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Properties\Memes.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Memes.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Update="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -52,6 +61,7 @@
 
   <ItemGroup>
     <Folder Include="Assets\Achievements\Images\" />
+    <Folder Include="Assets\Memes\" />
     <Folder Include="Resources\" />
   </ItemGroup>
 

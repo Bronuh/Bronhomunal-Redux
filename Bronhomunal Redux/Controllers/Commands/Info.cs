@@ -1,6 +1,7 @@
 ﻿using Bronuh.Modules;
 using Bronuh.Types;
 using DSharpPlus.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -163,7 +164,10 @@ namespace Bronuh.Controllers.Commands
 				string text = m.Text;
 				string[] parts = text.Split(' ');
 				int userRank = m.Author.Rank;
-				MineStat ms = new MineStat("localhost", 25565);
+				string serverIp = "abro.tech";
+				ushort mainPort = 25565;
+				ushort pluginPort = 25566;
+				MineStat ms = new MineStat(serverIp, mainPort);
 
 				string args = text.Substring(parts[0].Length);
 				string respond = "**Статус сервера: **\n";
@@ -173,8 +177,16 @@ namespace Bronuh.Controllers.Commands
 					respond += "Версия: " + ms.Version + "\n";
 					respond += "Игроков: " + ms.CurrentPlayers + "/" + ms.MaximumPlayers + "\n";
 					respond += "MOTD: " + ms.Motd+"\n";
-					respond += "Список игроков: "+AbroServer.Request("localhost",25566,"@playerslist").Trim()
-						.Replace("@text//","");
+					try
+					{
+						respond += "Список игроков: " + AbroServer.Request(serverIp, pluginPort, "@playerslist").Trim()
+							.Replace("@text//", "");
+					}
+					catch (Exception e)
+					{
+						Logger.Warning(e.Message);
+						respond += "Список игроков не получен";
+					}
 				}
 				else
 				{

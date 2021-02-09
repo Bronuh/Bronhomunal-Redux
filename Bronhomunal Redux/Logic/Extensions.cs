@@ -113,6 +113,14 @@ namespace Bronuh
 			return memoryStream;
 		}
 
+		public static Stream ToGifStream(this Bitmap bitmap)
+		{
+			MemoryStream memoryStream = new MemoryStream();
+			bitmap.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Gif);
+			memoryStream.Position = 0;
+			return memoryStream;
+		}
+
 		// This method can be seen as an inline implementation of an `IImageProcessor`:
 		// (The combination of `IImageOperations.Apply()` + this could be replaced with an `IImageProcessor`)
 		public static IImageProcessingContext ApplyRoundedCorners(this IImageProcessingContext ctx, float cornerRadius)

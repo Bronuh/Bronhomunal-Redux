@@ -81,6 +81,20 @@ namespace Bronuh.Types
 		}
 
 		/// <summary>
+		/// Добавляет теги команде
+		/// </summary>
+		/// <param name="tag">название тега</param>
+		/// <returns>Текущая команда</returns>
+		public Command AddTags(params string[] tags)
+		{
+			foreach (string tag in tags)
+			{
+				Tags.Add(tag.ToLower());
+			}
+			return this;
+		}
+
+		/// <summary>
 		/// Добавляет описание использования команды. Доступны теги форматирования
 		/// </summary>
 		/// <param name="usage">Текст описания</param>

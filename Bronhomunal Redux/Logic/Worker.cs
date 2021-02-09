@@ -80,6 +80,8 @@ namespace Bronuh.Logic
 		{
 			foreach (Member member in MembersController.Members)
 			{
+				member.Statistics.MaxVoiceSessionTime.value = member.GetMaxVoiceTime();
+
 				for (int i = 1; i<=5; i++)
 				{
 					if (member.GetMaxVoiceTime() >= AchievementsController.Find("voice"+i).CustomValue)
