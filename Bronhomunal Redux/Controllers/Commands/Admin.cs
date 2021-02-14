@@ -1,4 +1,5 @@
 ﻿using Bronuh.Graphics;
+using Bronuh.Logic;
 using Bronuh.Types;
 using DSharpPlus.Entities;
 using System;
@@ -26,13 +27,17 @@ namespace Bronuh.Controllers.Commands
 				string text = m.Text;
 				string[] parts = text.Split(' ');
 				string token = parts[1];
-				Settings.SetToken(token);
+				if (m.Author.IsOwner())
+				{
+					Settings.SetToken(token);
 
-				await CommandsController.TryExecuteConsoleCommand("kill");
+					await CommandsController.TryExecuteConsoleCommand("kill");
 
-				string respond = "Установлен токен: " + token;
-				await m.RespondAsync(respond);
-			}).SetOp(true).AddTag("admin");
+					string respond = "Установлен токен: " + token;
+					await m.RespondAsync(respond);
+				}
+				
+			}).SetOp(true).AddTags("admin", "owner"); ;
 
 			CommandsController.AddCommand("say", async (m) =>
 			{
@@ -63,12 +68,7 @@ namespace Bronuh.Controllers.Commands
 				string[] parts = text.Split(' ');
 				string args = text.Replace(parts[0] + " ", "");
 				int userRank = m.Author.Rank;
-
-				var msgBuilder = new DiscordMessageBuilder()
-						.WithContent(":trophy: " + m.Author.DisplayName + " повысил ранг!")
-						.WithFile("Rankup.png", RankUpBuilder.Build(m.Author));
-
-				await m.RespondAsync(msgBuilder);
+				
 			})
 			.AddAlias("тест")
 			.SetDescription("Делает какую-то произвольную хардкодную дичь")
@@ -79,18 +79,18 @@ namespace Bronuh.Controllers.Commands
 			CommandsController.AddCommand("shutdown", async e =>
 			{
 				Member sender = e.Author;
-				if (sender.IsOp())
+				if (sender.IsOwner())
 				{
 					Program.SaveAll();
 					System.Diagnostics.Process.Start("cmd", "/c shutdown /s /t 0");
 				}
 			}).SetOp(true)
-			.AddTag("admin");
+			.AddTags("admin", "owner");
 
 			CommandsController.AddCommand("kill", async e =>
 			{
 				Member sender = e.Author;
-				if (sender.IsOp())
+				if (sender.IsOwner())
 				{
 					Program.Server.PushMessage("Shutdown");
 					await e.RespondAsync("DED");
@@ -99,7 +99,7 @@ namespace Bronuh.Controllers.Commands
 					Environment.Exit(0);
 				}
 			}).SetOp(true).AddAlias("умри").AddAlias("die")
-			.AddTag("admin");
+			.AddTags("admin","owner");
 
 			CommandsController.AddCommand("restart", async e =>
 			{
@@ -170,6 +170,8 @@ namespace Bronuh.Controllers.Commands
 				}
 			}).SetOp(true)
 			.AddTag("admin");
+
+			
 		}
 	}
 }

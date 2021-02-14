@@ -12,7 +12,7 @@ namespace Bronuh.Libs
 		{
 			if (word.Length >= 2 && Prob(0.05))
 			{
-				return word[1] + word[0] + word[2..^(-1)];
+				return word[1] + word[0] + word.Substring(2,word.Length-2);
 			}
 			return word;
 		}

@@ -20,9 +20,9 @@ namespace Launcher
 		static DirectoryInfo Current = new DirectoryInfo(Directory.GetCurrentDirectory());
 		static DirectoryInfo Root = Current.Parent.Parent.Parent.Parent;
 #if DEBUG
-		static string BuildPath = @"bin\debug\netcoreapp3.1\";
+		static string BuildPath = @"bin\debug\net5.0\";
 #else
-			static string BuildPath = @"bin\release\netcoreapp3.1\";
+			static string BuildPath = @"bin\release\net5.0\";
 #endif
 		static string TargetApp = "Bronhomunal Redux";
 		static string TargetExe = TargetApp + ".exe";

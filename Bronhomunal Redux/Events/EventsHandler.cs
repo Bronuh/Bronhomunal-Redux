@@ -1,5 +1,6 @@
 ﻿using Bronuh.Controllers;
 using Bronuh.Types;
+using DSharpPlus.Entities;
 using DSharpPlus.EventArgs;
 using System;
 using System.Threading.Tasks;
@@ -48,6 +49,9 @@ namespace Bronuh.Events
 
 				await sender.AddXPAsync(1);
 				sender.Statistics.SentMessages++;
+				
+
+
 				if (sender.Statistics.SentMessages >= AchievementsController.Chat.CustomValue)
 				{
 					await sender.GiveAchievement("chat");

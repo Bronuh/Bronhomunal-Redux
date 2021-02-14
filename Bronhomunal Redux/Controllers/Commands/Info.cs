@@ -330,7 +330,7 @@ namespace Bronuh.Controllers.Commands
 
 				string respond = "Тэги команд:\n";
 				foreach (string tag in tags)
-					respond += tag + (tag == tags[^1] ? "" : ", ");
+					respond += tag + (tag == tags[tags.Count-1] ? "" : ", ");
 
 				await m.RespondAsync(respond);
 			})

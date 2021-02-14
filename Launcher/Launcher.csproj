@@ -2,15 +2,13 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <RootNamespace>Launcher</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Bronhomunal Redux\Bronhomunal Redux.csproj" />
-    <ProjectReference Include="..\Dungeons and Bronuhs\Dungeons and Bronuhs.csproj" />
     <ProjectReference Include="..\NamedPipeWrapper\NamedPipeWrapper.csproj" />
-    <ProjectReference Include="..\RPGCore\RPGCore.csproj" />
   </ItemGroup>
 
 </Project>

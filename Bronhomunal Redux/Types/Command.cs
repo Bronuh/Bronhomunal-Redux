@@ -38,11 +38,11 @@ namespace Bronuh.Types
 			string aliases = "";
 			foreach (string alias in Aliases)
 			{
-				aliases += alias + (alias == Aliases[^1] ? "" : ", ");
+				aliases += alias + (alias == Aliases[Aliases.Count-1] ? "" : ", ");
 			}
 			string tags = "";
 			foreach (string tag in Tags)
-				tags += tag + (tag == Tags[^1] ? "" : ", ");
+				tags += tag + (tag == Tags[Tags.Count-1] ? "" : ", ");
 
 			info += "Команда [" + (CommandsController.Commands.IndexOf(this) + 1) + "/" + CommandsController.Commands.Count + "]: " +
 				"**" + Settings.Sign + Name + "**\n";
@@ -146,6 +146,22 @@ namespace Bronuh.Types
 		public Command AddAlias(string alias)
 		{
 			Aliases.Add(alias);
+			return this;
+		}
+
+
+		/// <summary>
+		/// Добавляет альтернативное название команды
+		/// </summary>
+		/// <param name="alias">Альтернативное название</param>
+		/// <returns>Текущая команда</returns>
+		public Command AddAliases(params string[] aliases)
+		{
+			foreach (var alias in aliases)
+			{
+				Aliases.Add(alias);
+			}
+			
 			return this;
 		}
 

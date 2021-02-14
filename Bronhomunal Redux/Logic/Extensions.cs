@@ -64,7 +64,7 @@ namespace Bronuh
 		{
 			string respond = "";
 			foreach (string word in list)
-				respond += word + (word == list[^1] ? "" : ", ");
+				respond += word + (word == list[list.Count-1] ? "" : ", ");
 
 			return respond;
 		}

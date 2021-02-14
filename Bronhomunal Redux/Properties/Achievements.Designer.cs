@@ -373,6 +373,16 @@ namespace Bronuh.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap Stealth {
+            get {
+                object obj = ResourceManager.GetObject("Stealth", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Stickhit {
             get {
                 object obj = ResourceManager.GetObject("Stickhit", resourceCulture);

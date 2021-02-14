@@ -91,7 +91,7 @@ namespace Bronuh.Types
 			var aliasList = AliasesController.FindAliases(Id);
 			foreach (Alias alias in aliasList)
 			{
-				aliases += alias.Name + (alias == aliasList[^1] ? "" : ", ");
+				aliases += alias.Name + (alias == aliasList[aliasList.Count-1] ? "" : ", ");
 			}
 
 			string info = $"Информация о пользователе {DisplayName} ({Username}, {Nickname}):\n" +
