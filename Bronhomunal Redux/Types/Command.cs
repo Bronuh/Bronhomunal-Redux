@@ -187,7 +187,7 @@ namespace Bronuh.Types
 		/// </summary>
 		/// <param name="text">Искомая команда</param>
 		/// <returns></returns>
-		private bool CheckCommand(string text)
+		public bool CheckCommand(string text)
 		{
 			string command = text.Split(' ')[0];
 

@@ -30,6 +30,7 @@ namespace Bronuh.Types
 		public int Rank = 1;
 		public int XP = 0;
 		public static readonly int XpPerRank = 100;
+		private int _maxRank = 99;
 
 		public bool IsOP = false;
 
@@ -113,12 +114,15 @@ namespace Bronuh.Types
 		{
 			XP += xp;
 			GotXp?.Invoke(this, new MemberGotXpEventArgs(xp));
-			if (RankForXp(XP) > Rank)
+			if (Rank<99)
 			{
-				int levels = RankForXp(XP) - Rank;
-				for (int i = 1; i <= levels; i++)
+				if (RankForXp(XP) > Rank)
 				{
-					await RankUpAsync();
+					int levels = RankForXp(XP) - Rank;
+					for (int i = 1; i <= levels; i++)
+					{
+						await RankUpAsync();
+					}
 				}
 			}
 		}

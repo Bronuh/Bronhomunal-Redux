@@ -71,7 +71,7 @@ namespace Bronuh
 
 		public static T GetRandom<T>(this List<T> list)
 		{
-			return list[new Random().Next(0, list.Count - 1)];
+			return list[new Random().Next(0, list.Count)];
 		}
 
 		public static bool HasRole(this Member member, DiscordRole role)

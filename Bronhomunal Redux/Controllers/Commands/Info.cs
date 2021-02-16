@@ -21,56 +21,72 @@ namespace Bronuh.Controllers.Commands
 				int cmdInMessage = 0;
 
 				string respond = "Список команд: \n\n";
-				if (parts.Length > 1)
+
+				List<string> tags = new List<string>();
+				Dictionary<string, List<string>> sortedCommands = new Dictionary<string, List<string>>();
+				List<string> hide = new List<string>(new[] { "[ДАННЫЕ УДАЛЕНЫ]", "█████████" });
+
+				CommandsController.Commands.ForEach(command =>
 				{
-					respond = "Список команд с тегом " + parts[1] + ": \n\n";
-					if (parts[1].ToLower()=="admin")
+					command.Tags.ForEach(tag =>
 					{
-						await m.Author.GiveAchievement("curious");
+						if (!tags.Contains(tag))
+						{
+							tags.Add(tag);
+							sortedCommands.Add(tag, new List<string>());
+						}
+						sortedCommands[tag].Add((!command.OpOnly || m.Author.IsOp()) ? command.Name : hide.GetRandom());
+					});
+				});
+
+
+				foreach (var kv in sortedCommands)
+				{
+					respond += $"**{kv.Key}:** ";
+					foreach (var cmd in kv.Value)
+					{
+						respond += $"`{cmd}` ";
 					}
+					respond += "\n";
 				}
 
-				foreach (Command command in CommandsController.Commands)
-				{
-					Logger.Debug("Команда " + command.Name);
-					if (userRank >= command.Rank)
-					{
-						if (command.OpOnly && !m.Author.IsOp())
-						{
-							continue;
-						}
-						if (cmdInMessage >= maxCommandsPerMessage)
-						{
-							Logger.Debug("Слишком много команд. Новое сообщение...");
-							await m.RespondPersonalAsync(respond);
-							cmdInMessage = 0;
-							respond = " \n\n";
-						}
-						if (parts.Length > 1)
-						{
-							Logger.Debug("Поиск по тегу " + parts[1] + " среди тегов " + command.Tags.ToLine());
-							
-							if (command.HasTag(parts[1]))
-							{
-								Logger.Debug("Тег " + parts[1] + " имется");
-								respond += command.GetInfo() + "\n\n";
-								cmdInMessage++;
-							}
-						}
-						else
-						{
-							respond += command.GetInfo() + "\n\n";
-							cmdInMessage++;
-						}
-					}
-				}
 
-				await m.RespondPersonalAsync(respond);
+				await m.RespondAsync(respond);
 			})
-			.AddAlias("команды").AddAlias("help").AddAlias("хелп").AddAlias("помощь")
+			.AddAlias("команды")//.AddAlias("help").AddAlias("хелп").AddAlias("помощь")
 			.SetDescription("Выводит список доступных команд")
 			.SetUsage("<command> [tag]")
 			.AddTag("help")
+			.AddTag("info");
+			/// ==============================================================================================================
+
+			CommandsController.AddCommand("commandinfo", async (m) =>
+			{
+				string text = m.Text;
+				string[] parts = text.Split(' ');
+				int userRank = m.Author.Rank;
+
+				Member target = m.Author;
+
+				if (parts.Length > 1)
+				{
+					try
+					{
+						string respond = CommandsController.FindCommand(parts[1]).GetInfo();
+						await m.RespondAsync(respond);
+					}
+					catch 
+					{
+						Logger.Warning("Not found: "+parts[1]);
+					}
+					
+				}
+
+			})
+			.AddAlias("help").AddAliases("хелп","помощь")
+			.SetUsage("<command> команда")
+			.SetDescription("Выводит информацию о команде")
+			.AddTag("misc")
 			.AddTag("info");
 
 			/// ==============================================================================================================

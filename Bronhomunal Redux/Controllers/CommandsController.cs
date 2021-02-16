@@ -25,6 +25,28 @@ namespace Bronuh
 		}
 
 		/// <summary>
+		/// Ищет команду по строке
+		/// </summary>
+		/// <param name="name">Сама команда</param>
+		/// <param name="action">Делегат действия</param>
+		/// <returns>Ссылка на добавленную команду</returns>
+		public static Command FindCommand(string name)
+		{
+			Command command = null;
+
+			foreach (var cmd in Commands)
+			{
+				if (cmd.CheckCommand(name))
+				{
+					command = cmd;
+					break;
+				}
+			}
+
+			return command;
+		}
+
+		/// <summary>
 		/// Пробует выполнить команду, отправленную из дискорда
 		/// </summary>
 		/// <param name="e"></param>
