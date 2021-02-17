@@ -10,14 +10,11 @@ namespace Bronuh.Modules
 {
 	class AbroServer
 	{
-		private static string targetIp = "localhost";
-		private static int targetPort = 25566;
-
 		public static string Request(string ip, int port, string request)
 		{
 			Console.WriteLine("Starting connection");
 			TcpClient tcpClient = new TcpClient();
-			tcpClient.Connect(targetIp, targetPort);
+			tcpClient.Connect(ip, port);
 			Console.WriteLine("Connected");
 
 			NetworkStream stream = tcpClient.GetStream();

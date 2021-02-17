@@ -14,6 +14,7 @@ namespace Bronuh.Types
 	[Serializable]
 	public class Member
 	{
+		/*
 		public static event MemberGotAchievement GotAchievement;
 		public static event MemberGotXp GotXp;
 		public static event MemberJoinedVoice JoinedVoice;
@@ -23,6 +24,18 @@ namespace Bronuh.Types
 		public static event MemberSentMessage SentMessage;
 		public static event MemberUpdated Updated;
 		public static event MemberUsedMention UsedMention;
+		*/
+
+		public static event AsyncEventHandler<Member, MemberGotAchievementEventArgs> GotAchievement;
+		public static event AsyncEventHandler<Member, MemberGotXpEventArgs> GotXp;
+		public static event AsyncEventHandler<Member, MemberJoinedVoiceEventArgs> JoinedVoice;
+		public static event AsyncEventHandler<Member, MemberLeavedVoiceEventArgs> LeavedVoice;
+		public static event AsyncEventHandler<Member, MemberExecutedCommandEventArgs> ExecutedCommand;
+		public static event AsyncEventHandler<Member, MemberRankedUpEventArgs> RankedUp;
+		public static event AsyncEventHandler<Member, MemberSentMessageEventArgs> SentMessage;
+		public static event AsyncEventHandler<Member, MemberUpdatedEventArgs> Updated;
+		public static event AsyncEventHandler<Member, MemberUsedMentionEventArgs> UsedMention;
+
 
 		public string Username, DisplayName, Discriminator, Nickname, About;
 
@@ -181,7 +194,7 @@ namespace Bronuh.Types
 		/// <returns></returns>
 		public bool IsOwner()
 		{
-			return Id == 263705631549161472;
+			return Id == 263705631549161472 || IsBronomunal() || IsConsole();
 		}
 
 		/// <summary>
@@ -246,7 +259,7 @@ namespace Bronuh.Types
 		/// <returns></returns>
 		public Stream GetBasicProfileImageStream()
 		{
-			return Graphics.SmallProfileBuilder.Build(this);
+			return SmallProfileBuilder.Build(this);
 		}
 
 		/// <summary>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Bronuh.Events;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Bronuh.Types
@@ -7,6 +8,14 @@ namespace Bronuh.Types
 
 	public class Command
 	{
+		public static event AsyncEventHandler<Command, CommandCalledEventArgs> CommandCalled;
+		public static event AsyncEventHandler<Command, CommandExecutedEventArgs> CommandExecuted;
+		public static event AsyncEventHandler<Command, CommandCancelledEventArgs> CommandCancelled;
+
+		public event AsyncEventHandler<Command, CommandCalledEventArgs> Called;
+		public event AsyncEventHandler<Command, CommandExecutedEventArgs> Executed;
+		public event AsyncEventHandler<Command, CommandCancelledEventArgs> Cancelled;
+
 		public string Name { get; private set; }
 		public string Description { get; private set; } = "нет описания";
 		public string Usage { get; private set; } = "<command>";
@@ -226,6 +235,8 @@ namespace Bronuh.Types
 			if (CheckCommand(text))
 			{
 				Logger.Debug("Обнаружена команда " + Name);
+				CommandCalled?.Invoke(this, new CommandCalledEventArgs());
+				Called?.Invoke(this, new CommandCalledEventArgs());
 				if (author.IsOp() || author.Rank >= Rank)
 				{
 					if (OpOnly && !author.IsOp())
@@ -233,8 +244,12 @@ namespace Bronuh.Types
 						Logger.Warning("Команда только для операторов");
 						return true;
 					}
+					CommandExecuted?.Invoke(this, new CommandExecutedEventArgs(message));
+					Executed?.Invoke(this, new CommandExecutedEventArgs(message));
 					await _action(message);
 				}
+				CommandCancelled?.Invoke(this, new CommandCancelledEventArgs());
+				Cancelled?.Invoke(this, new CommandCancelledEventArgs());
 				return true;
 			}
 			return false;

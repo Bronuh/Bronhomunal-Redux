@@ -182,7 +182,7 @@ namespace Bronuh.Controllers.Commands
 				int userRank = m.Author.Rank;
 				string serverIp = "abro.tech";
 				ushort mainPort = 25565;
-				ushort pluginPort = 25566;
+				ushort pluginPort = 25564;
 				MineStat ms = new MineStat(serverIp, mainPort);
 
 				string args = text.Substring(parts[0].Length);
@@ -379,7 +379,7 @@ namespace Bronuh.Controllers.Commands
 					await m.RespondAsync("Пользователь не найден");
 				}
 
-				string respond = "**Статистика:**\n";
+				string respond = "**Статистика "+target.DisplayName+":**\n";
 
 				var fields = typeof(MemberStatistics).GetFields();
 				foreach (var field in fields)

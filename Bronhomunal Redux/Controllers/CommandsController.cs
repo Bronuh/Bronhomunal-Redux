@@ -80,9 +80,6 @@ namespace Bronuh
 		/// <returns></returns>
 		public static async Task<bool> TryExecuteConsoleCommand(string cmd)
 		{
-			if (!_initialized)
-				InitializeCommands();
-
 			bool executed;
 			foreach (Command command in Commands)
 			{
@@ -101,8 +98,6 @@ namespace Bronuh
 		/// </summary>
 		private static void InitializeCommands()
 		{
-			InterfaceExecutor.Execute(typeof(ICommands), "InitializeCommands");
-
 			_initialized = true;
 		}
 	}

@@ -9,6 +9,8 @@ namespace Bronuh.Controllers.Commands
 {
 	class Memes : ICommands
 	{
+		private int _hmmId = 1;
+		private int _okayId = 1;
 		public void InitializeCommands()
 		{
 			CommandsController.AddCommand("killfrog", async (m) =>
@@ -36,34 +38,42 @@ namespace Bronuh.Controllers.Commands
 				Member sender = m.Author;
 
 				var builder = new DiscordMessageBuilder();
-				
+				int maxHmm = 15 + 1;
 
-				switch (new Random().Next(1, 6))
-				{
-					case 1:
-						builder.WithFile("Hmm.png", Properties.Memes.Hmm1.ToStream()); ;
-						break;
-					case 2:
-						builder.WithFile("Hmm.png", Properties.Memes.Hmm2.ToStream()); ;
-						break;
-					case 3:
-						builder.WithFile("Hmm.png", Properties.Memes.Hmm3.ToStream()); ;
-						break;
-					case 4:
-						builder.WithFile("Hmm.png", Properties.Memes.Hmm4.ToStream()); ;
-						break;
-					case 5:
-						builder.WithFile("Hmm.png", Properties.Memes.Hmm5.ToStream()); ;
-						break;
-					case 6:
-						builder.WithFile("Hmm.png", Properties.Memes.Hmm6.ToStream()); ;
-						break;
-				}
+				var prop = typeof(Properties.Memes).GetProperty("Hmm"+  _hmmId);
+				var bmp = (System.Drawing.Bitmap)prop.GetValue(null);
+				builder.WithFile("Hmm.png", bmp.ToStream());
+				_hmmId++;
+				_hmmId = _hmmId == maxHmm ? 1 : _hmmId;
 
 				await m.RespondAsync(builder);
 			})
 			.AddAliases("хмм", "думает", "думоет")
 			.SetDescription("Постит мыслительный процесс")
+			.AddTag("fun")
+			.AddTag("meme")
+			.AddTag("png");
+
+			CommandsController.AddCommand("сойдет", async (m) =>
+			{
+				string text = m.Text;
+				string[] parts = text.Split(' ');
+				int userRank = m.Author.Rank;
+				Member sender = m.Author;
+
+				var builder = new DiscordMessageBuilder();
+				int maxOkay = 2 + 1;
+				var prop = typeof(Properties.Memes).GetProperty("GoodEnough" +  _okayId);
+				var bmp = (System.Drawing.Bitmap)prop.GetValue(null);
+				builder.WithFile("ItsOkay.png", bmp.ToStream());
+				_okayId++;
+				_okayId = _okayId == maxOkay ? 1 : _okayId;
+
+
+				await m.RespondAsync(builder);
+			})
+			.AddAliases("итаксойдет", "похуй", "норм")
+			.SetDescription("Вам, вероятно, похуй")
 			.AddTag("fun")
 			.AddTag("meme")
 			.AddTag("png");

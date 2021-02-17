@@ -118,8 +118,32 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="GoodEnough1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\memes\goodenough1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="GoodEnough2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\memes\goodenough2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Hmm1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\memes\hmm1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Hmm10" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\memes\hmm10.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Hmm11" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\memes\hmm11.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Hmm12" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\memes\hmm12.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Hmm13" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\memes\hmm13.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Hmm14" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\memes\hmm14.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Hmm15" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\memes\hmm15.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Hmm2" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\memes\hmm2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -135,6 +159,15 @@
   </data>
   <data name="Hmm6" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\memes\hmm6.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Hmm7" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\memes\hmm7.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Hmm8" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\memes\hmm8.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Hmm9" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\memes\hmm9.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Killfrog" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\memes\killfrog.gif;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

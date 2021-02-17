@@ -1,4 +1,5 @@
-﻿using DSharpPlus.Entities;
+﻿using Bronuh.Events;
+using DSharpPlus.Entities;
 using System;
 using System.Threading.Tasks;
 
@@ -6,6 +7,9 @@ namespace Bronuh.Types
 {
 	public class ChatMessage
 	{
+		public static event AsyncEventHandler<ChatMessage, MessageCreatedEventArgs> MessageCreated;
+		public static event AsyncEventHandler<ChatMessage, MessageCreatedEventArgs> ConsoleMessageCreated;
+
 		public DiscordMessage Source;
 		public Member Author;
 		public string Text;
@@ -15,6 +19,7 @@ namespace Bronuh.Types
 			Source = source;
 			Author = MembersController.FindMember(source.Author.Id);
 			Text = source.Content;
+			MessageCreated?.Invoke(this, new MessageCreatedEventArgs());
 		}
 
 		public async Task<DiscordMessage> RespondAsync(string text)
@@ -75,6 +80,7 @@ namespace Bronuh.Types
 
 		public ChatMessage(string text)
 		{
+			ConsoleMessageCreated?.Invoke(this, new MessageCreatedEventArgs());
 			Source = null;
 			Author = new Member()
 			{

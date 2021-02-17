@@ -32,6 +32,7 @@ namespace Bronuh
 
 			InterfaceExecutor.Execute(typeof(ILoadable), "Load");
 			InterfaceExecutor.Execute(typeof(IInitializable), "Initialize");
+			InterfaceExecutor.Execute(typeof(ICommands), "InitializeCommands");
 
 			Logger.Log("Инициализация бота...");
 
@@ -39,6 +40,7 @@ namespace Bronuh
 			{
 				Bot.Initialize(Settings.BotToken);
 			})).Start();
+
 
 			Logger.Log("Подключение к Pipe серверу...");
 
@@ -70,6 +72,7 @@ namespace Bronuh
 			while (true)
 			{
 				string cmd = Console.ReadLine();
+				Logger.Log("Executing console command " + cmd + "...");
 				CommandsController.TryExecuteConsoleCommand(cmd).ConfigureAwait(false).GetAwaiter().GetResult();
 			}
 		}
