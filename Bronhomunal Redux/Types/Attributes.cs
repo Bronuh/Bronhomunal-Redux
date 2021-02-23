@@ -17,4 +17,11 @@ namespace Bronuh.Types
             About = about;
         }
     }
+
+    [AttributeUsage(AttributeTargets.Class)]
+    public class PreSaveAttribute : System.Attribute
+    {
+        public PreSaveAttribute()
+        { }
+    }
 }

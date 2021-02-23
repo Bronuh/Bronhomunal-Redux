@@ -1,4 +1,5 @@
-﻿using Bronuh.Types;
+﻿using Bronuh.Interfaces;
+using Bronuh.Types;
 using ImageProcessor;
 using ImageProcessor.Imaging;
 using SixLabors.Fonts;
@@ -10,7 +11,7 @@ using System.IO;
 
 namespace Bronuh.Graphics
 {
-	class AchievementBuilderTest
+	public class AchievementBuilderTest
 	{
 		/// <summary>
 		/// Создает изображение достижения. 
@@ -18,7 +19,7 @@ namespace Bronuh.Graphics
 		/// </summary>
 		/// <param name="achievement">Целевое достижение</param>
 		/// <returns></returns>
-		public static Stream Build(Achievement achievement)
+		public static Stream Build(IAchievement achievement)
 		{
 			MemoryStream memoryStream = new MemoryStream();
 
@@ -29,8 +30,8 @@ namespace Bronuh.Graphics
 			int baseHeight = 256;
 			int baseWidth = 1280;
 
-			ImageFactory baseBuilder = new ImageFactory().Load(Properties.Achievements.Background.ToArray());
-			ImageFactory imageBuilder = new ImageFactory().Load(achievement.Icon);
+			ImageFactory baseBuilder = new ImageFactory().Load(achievement.GetBackground());
+			ImageFactory imageBuilder = new ImageFactory().Load(achievement.GetIcon());
 			ImageFactory imageBgBuilder = new ImageFactory().Load(Properties.Achievements.IconBackground.ToArray());
 
 			imageBuilder

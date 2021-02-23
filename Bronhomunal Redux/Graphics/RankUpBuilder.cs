@@ -8,7 +8,7 @@ using System.IO;
 
 namespace Bronuh.Graphics
 {
-	class RankUpBuilder
+	public class RankUpBuilder
 	{
 		/// <summary>
 		/// Возвращает картинку-уведомление о повышении ранга

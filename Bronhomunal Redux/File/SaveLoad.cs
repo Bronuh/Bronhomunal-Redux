@@ -4,7 +4,7 @@ using System.Xml.Serialization;
 
 namespace Bronuh.File
 {
-	class SaveLoad
+	public class SaveLoad
 	{
 		/// <summary>
 		/// Метод загрузки файла в строку

@@ -14,18 +14,6 @@ namespace Bronuh.Types
 	[Serializable]
 	public class Member
 	{
-		/*
-		public static event MemberGotAchievement GotAchievement;
-		public static event MemberGotXp GotXp;
-		public static event MemberJoinedVoice JoinedVoice;
-		public static event MemberLeavedVoice LeavedVoice;
-		public static event MemberExecutedCommand ExecutedCommand;
-		public static event MemberRankedUp RankedUp;
-		public static event MemberSentMessage SentMessage;
-		public static event MemberUpdated Updated;
-		public static event MemberUsedMention UsedMention;
-		*/
-
 		public static event AsyncEventHandler<Member, MemberGotAchievementEventArgs> GotAchievement;
 		public static event AsyncEventHandler<Member, MemberGotXpEventArgs> GotXp;
 		public static event AsyncEventHandler<Member, MemberJoinedVoiceEventArgs> JoinedVoice;
@@ -66,7 +54,7 @@ namespace Bronuh.Types
 		public List<string> Achievements = new List<string>();
 
 		public MemberStatistics Statistics = new MemberStatistics();
-
+		public Data CustomValues = new Data();
 		public Member() { }
 
 		public Member(DiscordUser user)
@@ -125,7 +113,8 @@ namespace Bronuh.Types
 		/// <returns></returns>
 		public async Task AddXPAsync(int xp)
 		{
-			XP += xp;
+			if(Rank <_maxRank)
+				XP += xp;
 			GotXp?.Invoke(this, new MemberGotXpEventArgs(xp));
 			if (Rank<99)
 			{
@@ -361,6 +350,12 @@ namespace Bronuh.Types
 					}
 				}
 			}
+		}
+
+		public void PreSave()
+		{
+			Statistics.PreSave();
+			CustomValues.ForEach(v => v.PreSave());
 		}
 
 		public static void OnJoinedVoice(Member sender, MemberJoinedVoiceEventArgs eventArgs)

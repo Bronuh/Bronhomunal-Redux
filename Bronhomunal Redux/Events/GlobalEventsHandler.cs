@@ -11,7 +11,7 @@ using DSharpPlus.Entities;
 
 namespace Bronuh.Events
 {
-	class GlobalEventsHandler : IInitializable
+	public class GlobalEventsHandler : IInitializable
 	{
 		public void Initialize()
 		{

@@ -381,19 +381,7 @@ namespace Bronuh.Controllers.Commands
 
 				string respond = "**Статистика "+target.DisplayName+":**\n";
 
-				var fields = typeof(MemberStatistics).GetFields();
-				foreach (var field in fields)
-				{
-					string fieldAbout = "";
-					object[] attrs = field.GetCustomAttributes(false);
-					foreach (AboutAttribute attr in attrs)
-					{
-						fieldAbout = attr.About;
-						break;
-					}
-					var value = field.GetValue(target.Statistics);
-					respond += fieldAbout + ": " + value+"\n";
-				}
+				respond += target.Statistics.ToString();
 
 				await m.RespondAsync(respond);
 			})

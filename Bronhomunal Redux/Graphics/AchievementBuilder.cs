@@ -8,7 +8,7 @@ using System.IO;
 
 namespace Bronuh.Graphics
 {
-	class AchievementBuilder
+	public class AchievementBuilder
 	{
 		/// <summary>
 		/// Создает изображение достижения

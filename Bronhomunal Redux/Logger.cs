@@ -14,30 +14,32 @@ namespace Bronuh
 		public static List<LogMessage> SuccessesLog = new List<LogMessage>();
 		public static List<LogMessage> MessagesLog = new List<LogMessage>();
 		public static List<LogMessage> DebugsLog = new List<LogMessage>();
+		public static List<LogMessage> SavePool = new List<LogMessage>();
 
 		public void Save()
 		{
-			//if (!Directory.Exists("logs\\"))
-			//{
-			//	Console.WriteLine("Создана директория: " + "logs\\");
-			//	Directory.CreateDirectory("logs\\");
-			//}
-			//string log = "\n";
-			//foreach (LogMessage logMessage in GlobalLog)
-			//{
-			//	log += logMessage.fullText + "\n";
-			//}
+			if (!Directory.Exists("logs\\"))
+			{
+				Console.WriteLine("Создана директория: " + "logs\\");
+				Directory.CreateDirectory("logs\\");
+			}
+			string log = "\n";
+			foreach (LogMessage logMessage in SavePool)
+			{
+				log += logMessage.fullText + "\n";
+			}
 
-			//Logger.Log("Сохранение Лога...");
-			//SaveLoad.SaveObject<string>(log, $"logs\\Log " +
-			//	$"{DateTime.Now.ToShortDateString().Replace(".", "-")} " +
-			//	$"{DateTime.Now.ToLongTimeString().Replace(":", ".")}.txt");
-			//Logger.Success("Сохранение завершено");
+			Logger.Log("Сохранение Лога...");
+			SaveLoad.SaveObject<string>(log, $"logs\\Log " +
+				$"{DateTime.Now.ToShortDateString().Replace(".", "-")} " +
+				$"{DateTime.Now.ToLongTimeString().Replace(":", ".")}.txt");
+			Logger.Success("Сохранение завершено");
+			SavePool = new List<LogMessage>();
 		}
 
 		public static void Log(String text)
 		{
-			new LogMessage(text);
+			new LogMessage(text, LogMessage.Type.Message);
 		}
 
 		public static void Error(String text)
@@ -101,6 +103,7 @@ namespace Bronuh
 			fullText = "[" + time.ToLongTimeString() + "] " + "(" + Thread.CurrentThread.Name + ") " + _type + ": " + text;
 
 			Logger.GlobalLog.Add(this);
+			Logger.SavePool.Add(this);
 
 			if (type == Type.Message)
 			{

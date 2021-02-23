@@ -8,7 +8,7 @@ using System.Threading;
 
 namespace Bronuh.Modules
 {
-	class AbroServer
+	public class AbroServer
 	{
 		public static string Request(string ip, int port, string request)
 		{

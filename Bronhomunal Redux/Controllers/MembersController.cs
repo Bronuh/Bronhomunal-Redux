@@ -8,8 +8,15 @@ using System.Threading.Tasks;
 
 namespace Bronuh
 {
+
+	[PreSaveAttribute]
 	public class MembersController : ISaveable, ILoadable
 	{
+		public static void PreSave()
+		{
+			Logger.Debug("Pre-saving members");
+			Members.ForEach(m => m.PreSave());
+		}
 		public static Sequence<Member> Members { get; private set; } = new Sequence<Member>();
 
 		public void Load()

@@ -1,4 +1,6 @@
-﻿using Bronuh.Logic;
+﻿using Bronuh.Controllers;
+using Bronuh.Logic;
+using Bronuh.Types;
 using NamedPipeWrapper;
 using System;
 using System.Threading;
@@ -8,6 +10,7 @@ namespace Bronuh
 {
 	class Program
 	{
+		public static PluginController Plugins = new PluginController();
 		private static TimerCallback 
 			_workerSecondCallback,
 			_worker30SecCallback,
@@ -29,10 +32,12 @@ namespace Bronuh
 			Suffix = " [DEBUG]";
 			Prefix = "!";
 #endif
-
-			InterfaceExecutor.Execute(typeof(ILoadable), "Load");
 			InterfaceExecutor.Execute(typeof(IInitializable), "Initialize");
 			InterfaceExecutor.Execute(typeof(ICommands), "InitializeCommands");
+			Plugins.Initialize();
+			InterfaceExecutor.Execute(typeof(ILoadable), "Load");
+			
+			
 
 			Logger.Log("Инициализация бота...");
 
@@ -61,14 +66,14 @@ namespace Bronuh
 			});
 
 			_workerSecondCallback = new TimerCallback(Worker.EverySecond);
-			_workingSecondChecker = new Timer(_workerSecondCallback, null, 0, 1000);
+			_workingSecondChecker = new Timer(_workerSecondCallback, null, 0, 5000);
 
 			_worker30SecCallback = new TimerCallback(Worker.Every30Sec);
 			_working30SecChecker = new Timer(_worker30SecCallback, null, 0, 30000);
 
 			_worker5MinCallback = new TimerCallback(Worker.Every5Min);
-			_working5MinChecker = new Timer(_worker5MinCallback, null, 0, 1000*60*5);
-
+			//_working5MinChecker = new Timer(_worker5MinCallback, null, 0, 1000*60*5);
+			_working5MinChecker = new Timer(_worker5MinCallback, null, 0, 1000 * 60 * 15);
 			while (true)
 			{
 				string cmd = Console.ReadLine();
@@ -79,7 +84,17 @@ namespace Bronuh
 
 		public static void SaveAll()
 		{
-			InterfaceExecutor.Execute(typeof(ISaveable), "Save");
+			try
+			{
+				Logger.Debug("Saving all...");
+				InterfaceExecutor.ExecuteStatic(typeof(PreSaveAttribute), "PreSave");
+				InterfaceExecutor.Execute(typeof(ISaveable), "Save");
+			}
+			catch (Exception e)
+			{
+				Logger.Warning("Исключение вызвано в Program.SaveAll()");
+				Logger.Warning(e.Message);
+			}
 		}
 	}
 }

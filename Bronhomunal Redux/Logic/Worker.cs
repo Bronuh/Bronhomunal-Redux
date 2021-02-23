@@ -9,7 +9,7 @@ namespace Bronuh.Logic
 	{
 		public static void EverySecond(object state)
 		{
-			Logger.Debug("Checking voice time...");
+			Logger.Debug("Every 5 seconds executed");
 			if (Bot.Ready)
 			{
 				CheckVoiceTime();
@@ -25,7 +25,7 @@ namespace Bronuh.Logic
 				string key = MembersController.FindMember("Key_J").Source.Mention;
 				foreach (DiscordRole role in Bot.Guild.Roles.Values)
 				{
-					if (role.Name == "Minecraft")
+					if (role.Name.ToLower() == "minecraft-event")
 					{
 						minecraft = role.Mention;
 					}
@@ -37,7 +37,8 @@ namespace Bronuh.Logic
 					if (!Settings.ServerStatus)
 					{
 						Settings.ServerStatus = true;
-						Bot.GamesChannel.SendMessageAsync(":white_check_mark: " + minecraft + " Сервер abro.tech **ВКЛЮЧЕН**").GetAwaiter().GetResult();
+						Bot.GamesChannel.SendMessageAsync(":white_check_mark: " + minecraft + " Сервер abro.tech **ВКЛЮЧЕН**\n" +
+							"Подписаться на уведомления: !giverole minecraft-event").GetAwaiter().GetResult();
 					}
 				}
 				else
@@ -45,7 +46,7 @@ namespace Bronuh.Logic
 					MineStat ms2 = new MineStat("abro.tech", 25565);
 					if (!ms2.ServerUp)
 					{
-						MineStat ms3 = new MineStat("abro.tech", 25565);
+						MineStat ms3 = new MineStat("abro.tech", 25565, 10);
 						if (!ms3.ServerUp)
 						{
 							MineStat ms4 = new MineStat("abro.tech", 25565, 10);
@@ -54,10 +55,14 @@ namespace Bronuh.Logic
 								MineStat ms5 = new MineStat("abro.tech", 25565, 10);
 								if (!ms5.ServerUp)
 								{
-									if (Settings.ServerStatus)
+									MineStat ms6 = new MineStat("abro.tech", 25565, 10);
+									if (!ms6.ServerUp)
 									{
-										Settings.ServerStatus = false;
-										Bot.GamesChannel.SendMessageAsync(":no_entry: " + key + " Сервер abro.tech **ВЫКЛЮЧЕН**").GetAwaiter().GetResult();
+										if (Settings.ServerStatus)
+										{
+											Settings.ServerStatus = false;
+											Bot.GamesChannel.SendMessageAsync(":no_entry: " + key + " Сервер abro.tech **ВЫКЛЮЧЕН**").GetAwaiter().GetResult();
+										}
 									}
 								}
 							}
@@ -72,12 +77,14 @@ namespace Bronuh.Logic
 
 		public static void Every5Min(object state)
 		{
-			InterfaceExecutor.Execute(typeof(ISaveable), "Save");
+			Logger.Debug("Every 5 min");
+			Program.SaveAll();
 		}
 
 
 		private static void CheckVoiceTime()
 		{
+			Logger.Debug("Checking max and total voice time");
 			foreach (Member member in MembersController.Members)
 			{
 				member.Statistics.MaxVoiceSessionTime.value = member.GetMaxVoiceTime();

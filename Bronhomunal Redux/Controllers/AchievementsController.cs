@@ -371,8 +371,6 @@ namespace Bronuh.Controllers
 				.SetDescription("Просидеть в войсе суммарно <value> часов")
 				.SetIcon(Properties.Achievements.TotalVoice1)
 				.SetRarity(Rarity.LEGENDARY);
-
-			
 		}
 	}
 }

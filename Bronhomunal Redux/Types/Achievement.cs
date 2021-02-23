@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using Bronuh.Interfaces;
+using System.Drawing;
 using System.IO;
 
 public enum Rarity
@@ -12,18 +13,18 @@ public enum Rarity
 }
 namespace Bronuh.Types
 {
-	public class Achievement
+	public class Achievement : IAchievement
 	{
 		public string Id;
-		public string Name;
+		public string Name { get; set; }
 		public string Description;
-		public Image Icon;
+		public Image Icon { get; set; }
 		public int ColorShift = 0;
 		public int Lightness = 0;
-		public Color BorderColor = Color.FromArgb(150, 150, 150);
+		public Color BorderColor { get; set; } = Color.FromArgb(150, 150, 150);
 		public static int BaseXP = 10;
 		public long CustomValue;
-		public Rarity Rarity = Rarity.COMMON;
+		public Rarity Rarity { get; set; } = Rarity.COMMON;
 
 		private bool _cached = false;
 		private Stream _cache;
@@ -123,6 +124,16 @@ namespace Bronuh.Types
 
 			_cache.Position = 0;
 			return _cache;
+		}
+
+		public Image GetIcon()
+		{
+			return Icon;
+		}
+
+		public byte[] GetBackground()
+		{
+			return Properties.Achievements.Background.ToArray();
 		}
 	}
 }

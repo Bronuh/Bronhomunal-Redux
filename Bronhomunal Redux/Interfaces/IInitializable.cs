@@ -1,6 +1,6 @@
 ﻿namespace Bronuh
 {
-	interface IInitializable
+	public interface IInitializable
 	{
 		public void Initialize();
 	}

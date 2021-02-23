@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Text;
+using System.Xml.Serialization;
 
 namespace Bronuh.Types
 {
@@ -38,41 +42,123 @@ namespace Bronuh.Types
 		public Time MaxVoiceSessionTime = new Time { value = 0 };
 		[About("Отправлено сообщений")]
 		public int SentMessages = 0;
-
+		[About("Дополнительная статистика")]
+		public List<SerializableKeyValuePair> CustomStats = new List<SerializableKeyValuePair>();
 		public MemberStatistics() { }
 
-		[Serializable]
-		public struct Time
+		public void PreSave()
 		{
-			public long value;
+			CustomStats.ForEach(s => s.PreSave());
+		}
 
-			public Time(long val) { value = val; }
-			public Time(Time other) { value = other.value; }
-
-			public override string ToString()
+		public void Set(string key, object value, string description)
+		{
+			SerializableKeyValuePair stat = null;
+			if (!CustomStats.Exists(s => s.Key == key))
 			{
-				TimeSpan span = TimeSpan.FromMilliseconds(value);
-				return String.Format("{0}:{1:d2}:{2:d2}",span.Hours,span.Minutes,span.Seconds);
+				stat = new SerializableKeyValuePair()
+				{
+					Key = key,
+					Value = value
+				};
+				
+				CustomStats.Add(stat);
+			}
+			else
+			{
+				stat = CustomStats.Find(s => s.Key == key);
+				stat.Value = value;
 			}
 
-			public static Time operator +(Time time, long num)
+			if (description != null)
 			{
-				time.value += num;
-				return time;
+				stat.Description = description;
 			}
+		}
 
-			public static Time operator +(long num, Time time)
+		public void Set(string key, object value)
+		{
+			Set(key,value,null);
+		}
+
+		public object Get(string key)
+		{
+			SerializableKeyValuePair stat = null;
+			stat = CustomStats.Find(s => s.Key == key);
+			stat.Deserialize();
+
+			return stat.Value;
+		}
+
+		/// <summary>
+		/// Собирает всю статистику в список, с учетом пользовательских параметров
+		/// </summary>
+		/// <returns></returns>
+		public override string ToString()
+		{
+			string respond = "";
+			var fields = typeof(MemberStatistics).GetFields();
+			foreach (var field in fields)
 			{
-				time.value += num;
-				return time;
-			}
+				string fieldAbout = "";
+				object[] attrs = field.GetCustomAttributes(false);
 
-			public static Time operator +(Time time1, Time time2)
-			{
-				return new Time(time1.value+time2.value);
+				foreach (AboutAttribute attr in attrs)
+				{
+					fieldAbout = attr.About;
+					break;
+				}
+				if (fieldAbout != "Дополнительная статистика") 
+				{
+					var value = field.GetValue(this);
+					respond += fieldAbout + ": " + value + "\n";
+				}
+				else
+				{
+					respond += "Дополнительная статистика:\n";
+					foreach (var stat in CustomStats)
+					{
+						respond += $"{stat.Description} ({stat.Key}): {stat.Value}\n";
+					}
+				}
 			}
-
-			
+			return respond;
 		}
 	}
+
+
+	[Serializable]
+	public struct Time
+	{
+		public long value;
+
+		public Time(long val) { value = val; }
+		public Time(Time other) { value = other.value; }
+
+		public override string ToString()
+		{
+			TimeSpan span = TimeSpan.FromMilliseconds(value);
+			return String.Format("{0}:{1:d2}:{2:d2}", span.Hours, span.Minutes, span.Seconds);
+		}
+
+		public static Time operator +(Time time, long num)
+		{
+			time.value += num;
+			return time;
+		}
+
+		public static Time operator +(long num, Time time)
+		{
+			time.value += num;
+			return time;
+		}
+
+		public static Time operator +(Time time1, Time time2)
+		{
+			return new Time(time1.value + time2.value);
+		}
+	}
+
+
+	
 }

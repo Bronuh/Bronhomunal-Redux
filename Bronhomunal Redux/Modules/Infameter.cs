@@ -5,7 +5,7 @@ using System;
 
 namespace Bronuh.Modules
 {
-	class Infameter : ISaveable, ILoadable
+	public class Infameter : ISaveable, ILoadable
 	{
 		private static Sequence<Infa> Infos = new Sequence<Infa>();
 		private static bool _initialized = false;

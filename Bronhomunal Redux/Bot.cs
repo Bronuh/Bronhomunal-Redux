@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Bronuh
 {
-	static class Bot
+	public static class Bot
 	{
 		public static string Token;
 		public static DiscordClient Discord { get; private set; }
@@ -18,8 +18,8 @@ namespace Bronuh
 		public static IReadOnlyList<DiscordChannel> Channels = new List<DiscordChannel>();
 		public static DiscordChannel BotChannel, LastChannel, OutpostChannel, GamesChannel;
 		public static DiscordGuild Guild;
-		private static readonly ulong RequiredGuildId = 308653152054280195;
-		private static readonly ulong BotID = 696952183572267028;
+		public static readonly ulong RequiredGuildId = 308653152054280195;
+		public static readonly ulong BotID = 696952183572267028;
 		public static List<DiscordMember> DiscordMembers = new List<DiscordMember>();
 
 		public static void Initialize(string token)
