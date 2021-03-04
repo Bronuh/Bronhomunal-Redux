@@ -11,6 +11,7 @@ namespace Bronuh.Controllers.Commands
 {
 	class Info : ICommands
 	{
+		private bool _cached = false;
 		public void InitializeCommands()
 		{
 			/// ==============================================================================================================
@@ -221,6 +222,18 @@ namespace Bronuh.Controllers.Commands
 			/// ==============================================================================================================
 			CommandsController.AddCommand("achievements", async (m) =>
 			{
+				if (!_cached)
+				{
+					int cached = 0;
+					AchievementsController.Achievements.EachAsync((a) =>
+					{
+						cached++;
+						a.GetImage();
+						Logger.Log($"{cached}) Закэширована ачивка " + a.Name);
+					});
+					_cached = true;
+				}
+
 				await PrintCustomAchievements(m);
 				await PrintAchievements(m);
 				
@@ -433,11 +446,11 @@ namespace Bronuh.Controllers.Commands
 			List<CustomAchievement> achs = new List<CustomAchievement>();
 
 			target.CustomValues.ForEach(v => {
-				Logger.Log("checking custom value...");
-				Logger.Log("custom value is "+v.GetValueType());
+				//Logger.Log("checking custom value...");
+				//Logger.Log("custom value is "+v.GetValueType());
 				if (v.GetValueType() == typeof(CustomAchievement))
 				{
-					Logger.Log("custom value is achievement");
+					//Logger.Log("custom value is achievement");
 					achs.Add((CustomAchievement)v.Value);
 				}
 			});

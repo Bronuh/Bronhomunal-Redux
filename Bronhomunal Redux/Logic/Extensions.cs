@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace Bronuh
 {
@@ -72,6 +74,42 @@ namespace Bronuh
 		public static T GetRandom<T>(this List<T> list)
 		{
 			return list[new Random().Next(0, list.Count)];
+		}
+
+		public static IEnumerable<List<T>> ToChunks<T>(this IEnumerable<T> items, int chunkSize)
+		{
+			List<T> chunk = new List<T>(chunkSize);
+			foreach (var item in items)
+			{
+				chunk.Add(item);
+				if (chunk.Count == chunkSize)
+				{
+					yield return chunk;
+					chunk = new List<T>(chunkSize);
+				}
+			}
+			if (chunk.Any())
+				yield return chunk;
+		}
+		public static void EachAsync<T>(this List<T> list, Action<T> action)
+		{
+			int threads = Environment.ProcessorCount;
+			int listCount = list.Count;
+			int perThread = (int) Math.Ceiling((double)listCount / threads);
+
+			List<Task> tasks = new List<Task>();
+			var parts = list.ToChunks(perThread);
+
+			foreach (var part in parts)
+			{
+				tasks.Add(Task.Factory.StartNew(() => {
+					foreach (var item in part)
+					{
+						action(item);
+					}
+				}));
+			}
+			Task.WaitAll(tasks.ToArray());
 		}
 
 		public static bool HasRole(this Member member, DiscordRole role)

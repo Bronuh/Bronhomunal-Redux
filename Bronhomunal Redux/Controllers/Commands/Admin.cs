@@ -27,16 +27,24 @@ namespace Bronuh.Controllers.Commands
 			/// ============================================================================================================================
 			CommandsController.AddCommand("regenerate", async (m) =>
 			{
-				await m.RespondAsync("Кэширование ачивок...");
 				int cached = 0;
-				foreach (var ach in AchievementsController.Achievements)
+
+				//await m.RespondAsync("Кэширование ачивок...");
+				//foreach (var ach in AchievementsController.Achievements)
+				//{
+				//	cached++;
+				//	ach.GetImage();
+				//	Logger.Log($"{cached}) Закэширована ачивка "+ach.Name);
+				//}
+
+				AchievementsController.Achievements.EachAsync((a) =>
 				{
 					cached++;
-					ach.GetImage();
-					Logger.Log($"{cached}) Закэширована ачивка "+ach.Name);
-				}
+					a.GetImage();
+					Logger.Log($"{cached}) Закэширована ачивка " + a.Name);
+				});
 
-				string respond = $"Закэшгировано {cached} ачивок";
+				string respond = $"Закэшировано {cached} ачивок";
 
 				await m.RespondAsync(respond);
 			})
