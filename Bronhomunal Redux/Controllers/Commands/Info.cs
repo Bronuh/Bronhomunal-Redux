@@ -1,9 +1,11 @@
-﻿using Bronuh.Modules;
+﻿using Bronuh.Events;
+using Bronuh.Modules;
 using Bronuh.Types;
 using DSharpPlus.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Bronuh.Controllers.Commands
 {
@@ -219,60 +221,9 @@ namespace Bronuh.Controllers.Commands
 			/// ==============================================================================================================
 			CommandsController.AddCommand("achievements", async (m) =>
 			{
-				string text = m.Text;
-				string[] parts = text.Split(' ');
-				int userRank = m.Author.Rank;
-
-				string args = text.Substring(parts[0].Length);
-
-				Member target = null;
-
-				if (parts.Length > 1)
-				{
-					target = MembersController.FindMember(parts[1]);
-				}
-				else if (parts.Length == 1)
-				{
-					target = m.Author;
-				}
-
-				if (target != m.Author)
-				{
-					await m.Author.GiveAchievement("others");
-				}
-
-				int images = 0;
-
-				List<Achievement> achs = new List<Achievement>();
-
-				foreach (string achivementId in target.Achievements)
-				{
-					var achievement = AchievementsController.Find(achivementId);
-					if (achievement != null)
-					{
-						achs.Add(achievement);
-					}
-				}
-
-				List<Achievement> sorted = new List<Achievement>(achs.OrderByDescending(a => a.Rarity).ThenBy(a => a.Name));
-
-				var messageBuilder = new DiscordMessageBuilder()
-				.WithContent(":pencil: Достижения пользователя " + target.DisplayName + $"[{sorted.Count}/{AchievementsController.Achievements.Count}]");
-
-				foreach (Achievement achievement in sorted)
-				{
-					messageBuilder.WithFile(achievement.Name + ".png", achievement.GetImage());
-					images++;
-
-					if (images >= 10)
-					{
-						await m.RespondAsync(messageBuilder);
-						messageBuilder = new DiscordMessageBuilder();
-						images = 0;
-					}
-
-				}
-				await m.RespondAsync(messageBuilder);
+				await PrintCustomAchievements(m);
+				await PrintAchievements(m);
+				
 			})
 			.AddAlias("ачивки").AddAlias("достижения")
 			.SetUsage("<command> [username]")
@@ -284,6 +235,8 @@ namespace Bronuh.Controllers.Commands
 			/// ==============================================================================================================
 			CommandsController.AddCommand("allachievements", async (m) =>
 			{
+				
+
 				string text = m.Text;
 				string[] parts = text.Split(' ');
 				int userRank = m.Author.Rank;
@@ -389,6 +342,125 @@ namespace Bronuh.Controllers.Commands
 			.SetUsage("<command>")
 			.SetDescription("Выводит значения статистики")
 			.AddTag("info");
+		}
+
+
+
+		private static async Task PrintAchievements(ChatMessage m)
+		{
+			string text = m.Text;
+			string[] parts = text.Split(' ');
+			int userRank = m.Author.Rank;
+
+			string args = text.Substring(parts[0].Length);
+
+			Member target = null;
+
+			if (parts.Length > 1)
+			{
+				target = MembersController.FindMember(parts[1]);
+			}
+			else if (parts.Length == 1)
+			{
+				target = m.Author;
+			}
+
+			if (target != m.Author)
+			{
+				await m.Author.GiveAchievement("others");
+			}
+
+			int images = 0;
+
+			List<Achievement> achs = new List<Achievement>();
+
+			foreach (string achivementId in target.Achievements)
+			{
+				var achievement = AchievementsController.Find(achivementId);
+				if (achievement != null)
+				{
+					achs.Add(achievement);
+				}
+			}
+
+			List<Achievement> sorted = new List<Achievement>(achs.OrderByDescending(a => a.Rarity).ThenBy(a => a.Name));
+
+			var messageBuilder = new DiscordMessageBuilder()
+			.WithContent(":pencil: Достижения пользователя " + target.DisplayName + $"[{sorted.Count}/{AchievementsController.Achievements.Count}]");
+
+			foreach (Achievement achievement in sorted)
+			{
+				messageBuilder.WithFile(achievement.Name + ".png", achievement.GetImage());
+				images++;
+
+				if (images >= 10)
+				{
+					await m.RespondAsync(messageBuilder);
+					messageBuilder = new DiscordMessageBuilder();
+					images = 0;
+				}
+
+			}
+			await m.RespondAsync(messageBuilder);
+		}
+
+
+
+
+		private static async Task PrintCustomAchievements(ChatMessage _args)
+		{
+			var msg = _args;
+			string text = _args.Text;
+			string[] parts = text.Split(' ');
+			int userRank = msg.Author.Rank;
+
+			string args = text.Substring(parts[0].Length);
+
+			Member target = null;
+
+			if (parts.Length > 1)
+			{
+				target = MembersController.FindMember(parts[1]);
+			}
+			else if (parts.Length == 1)
+			{
+				target = msg.Author;
+			}
+
+
+			int images = 0;
+
+			List<CustomAchievement> achs = new List<CustomAchievement>();
+
+			target.CustomValues.ForEach(v => {
+				Logger.Log("checking custom value...");
+				Logger.Log("custom value is "+v.GetValueType());
+				if (v.GetValueType() == typeof(CustomAchievement))
+				{
+					Logger.Log("custom value is achievement");
+					achs.Add((CustomAchievement)v.Value);
+				}
+			});
+
+			List<CustomAchievement> sorted = new List<CustomAchievement>(achs.OrderByDescending(a => a.Rarity).ThenBy(a => a.Name));
+
+			var messageBuilder = new DiscordMessageBuilder()
+			.WithContent(":pencil: Особые достижения пользователя " + target.DisplayName);
+
+			foreach (CustomAchievement achievement in sorted)
+			{
+				messageBuilder.WithFile(achievement.Name + ".png", achievement.GetImage());
+				images++;
+
+				if (images >= 10)
+				{
+					await msg.RespondAsync(messageBuilder);
+					messageBuilder = new DiscordMessageBuilder();
+					images = 0;
+				}
+
+			}
+			await msg.RespondAsync(messageBuilder);
 		}
 	}
 }

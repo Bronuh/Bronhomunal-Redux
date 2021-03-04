@@ -17,12 +17,7 @@ namespace Bronuh.Types
 			SerializableKeyValuePair stat = null;
 			if (!Values.Exists(s => s.Key == key))
 			{
-				stat = new SerializableKeyValuePair()
-				{
-					Key = key,
-					Value = value
-				};
-
+				stat = new SerializableKeyValuePair(key, value);
 				Values.Add(stat);
 			}
 			else
@@ -74,7 +69,8 @@ namespace Bronuh.Types
 
 		public string Key;
 		public string ValueCode;
-		public Type ValueType;
+
+		public string ValueType;
 		public string Description = "НЕТ ОПИСАНИЯ";
 
 		private bool _deserialized = false;
@@ -87,23 +83,40 @@ namespace Bronuh.Types
 			Key = key;
 			Value = value;
 			Description = description;
+			_deserialized = true;
+		}
+
+		public Type GetValueType()
+		{
+			if (Value != null || ValueCode!=null || ValueCode!="")
+			{
+				if (ValueType == null || ValueType == "")
+				{
+					ValueType = Value.GetType().FullName;
+				}
+				return Type.GetType(ValueType);
+			}
+			return null;
 		}
 
 		public SerializableKeyValuePair(string key, object value)
 		{
 			Key = key;
 			Value = value;
+			_deserialized = true;
 		}
 
 		public void Deserialize()
 		{
 			if (!_deserialized)
 			{
+				Logger.Log("Deserializing " + Key);
 				try
 				{
-					XmlSerializer xs = new XmlSerializer(ValueType);
+					XmlSerializer xs = new XmlSerializer(GetValueType());
 					using (Stream stream = ValueCode.ToStream())
 					{
+						Logger.Log("Deserialized "+Key);
 						using StreamReader sr = new StreamReader(stream);
 						Value = xs.Deserialize(sr);
 						_deserialized = true;
@@ -123,12 +136,12 @@ namespace Bronuh.Types
 
 		public void Serialize()
 		{
-			if (!_serialized)
+			if (_deserialized)
 			{
-				ValueType = Value.GetType();
+				ValueType = Value.GetType().FullName;
 				try
 				{
-					XmlSerializer xs = new XmlSerializer(ValueType);
+					XmlSerializer xs = new XmlSerializer(GetValueType());
 					using (MemoryStream stream = new MemoryStream())
 					{
 						using (StreamWriter writer = new StreamWriter(stream))

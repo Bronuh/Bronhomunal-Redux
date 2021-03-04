@@ -22,7 +22,8 @@ namespace Bronuh.Logic
 			if (Bot.Ready)
 			{
 				string minecraft = "";
-				string key = MembersController.FindMember("Key_J").Source.Mention;
+				var keyMember = MembersController.FindMember("Key_J");
+				string key = keyMember.Source.Mention;
 				foreach (DiscordRole role in Bot.Guild.Roles.Values)
 				{
 					if (role.Name.ToLower() == "minecraft-event")
@@ -37,7 +38,7 @@ namespace Bronuh.Logic
 					if (!Settings.ServerStatus)
 					{
 						Settings.ServerStatus = true;
-						Bot.GamesChannel.SendMessageAsync(":white_check_mark: " + minecraft + " Сервер abro.tech **ВКЛЮЧЕН**\n" +
+						keyMember.Source.SendMessageAsync(":white_check_mark: " + minecraft + " Сервер abro.tech **ВКЛЮЧЕН**\n" +
 							"Подписаться на уведомления: !giverole minecraft-event").GetAwaiter().GetResult();
 					}
 				}
@@ -61,7 +62,7 @@ namespace Bronuh.Logic
 										if (Settings.ServerStatus)
 										{
 											Settings.ServerStatus = false;
-											Bot.GamesChannel.SendMessageAsync(":no_entry: " + key + " Сервер abro.tech **ВЫКЛЮЧЕН**").GetAwaiter().GetResult();
+											keyMember.Source.SendMessageAsync(":no_entry: " + key + " Сервер abro.tech **ВЫКЛЮЧЕН**").GetAwaiter().GetResult();
 										}
 									}
 								}

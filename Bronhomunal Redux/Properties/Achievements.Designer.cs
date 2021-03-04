@@ -213,6 +213,16 @@ namespace Bronuh.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap CustomBackground {
+            get {
+                object obj = ResourceManager.GetObject("CustomBackground", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Disgusting {
             get {
                 object obj = ResourceManager.GetObject("Disgusting", resourceCulture);

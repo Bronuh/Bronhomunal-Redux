@@ -135,5 +135,10 @@ namespace Bronuh.Types
 		{
 			return Properties.Achievements.Background.ToArray();
 		}
+
+		public Color GetColor()
+		{
+			return BorderColor;
+		}
 	}
 }

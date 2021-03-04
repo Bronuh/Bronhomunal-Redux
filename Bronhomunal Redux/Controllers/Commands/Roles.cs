@@ -22,6 +22,7 @@ namespace Bronuh.Controllers.Commands
 		};
 		public void InitializeCommands()
 		{
+			/// ============================================================================================================================
 			CommandsController.AddCommand("roles", async (m) =>
 			{
 				string text = m.Text;
@@ -46,6 +47,7 @@ namespace Bronuh.Controllers.Commands
 			.SetDescription("Выводит список ролей, доступных для использования")
 			.AddTag("info");
 
+			/// ============================================================================================================================
 			CommandsController.AddCommand("giverole", async (m) =>
 			{
 				string text = m.Text;
@@ -79,6 +81,11 @@ namespace Bronuh.Controllers.Commands
 					}
 				}
 
+				if (foundRole == null)
+				{
+					await m.RespondAsync("Роль не найдена");
+				}
+
 				if (CheckRole(foundRole, user.Source))
 				{
 					Logger.Debug("Проверки пройдены, выдача роли...");
@@ -91,10 +98,11 @@ namespace Bronuh.Controllers.Commands
 				}
 
 			})
-			.SetDescription("Выдает пользователю роль")
+			.SetDescription("Выдает вызвавшему пользователю указанную роль")
 			.SetUsage("<command> название_роли")
 			.AddTag("misc");
 
+			/// ============================================================================================================================
 			CommandsController.AddCommand("takerole", async (m) =>
 			{
 				string text = m.Text;
@@ -128,6 +136,11 @@ namespace Bronuh.Controllers.Commands
 					}
 				}
 
+				if (foundRole == null)
+				{
+					await m.RespondAsync("Роль не найдена");
+				}
+
 				if (user.HasRole(foundRole))
 				{
 					Logger.Debug("Проверки пройдены, отмена роли...");
@@ -137,12 +150,12 @@ namespace Bronuh.Controllers.Commands
 					await m.RespondAsync(respond);
 					await MembersController.HardUpdate();
 				}
-
 			})
-			.SetDescription("Отменяет роль пользователя")
+			.SetDescription("Отменяет роль вызвавщему пользователю")
 			.SetUsage("<command> название_роли")
 			.AddTag("misc");
 
+			/// ============================================================================================================================
 			CommandsController.AddCommand("createrole", async (m) =>
 			{
 				string text = m.Text;
@@ -177,6 +190,7 @@ namespace Bronuh.Controllers.Commands
 			.SetRank(4)
 			.AddTag("misc");
 
+			/// ============================================================================================================================
 			CommandsController.AddCommand("rolecolor", async (m) =>
 			{
 				string text = m.Text;

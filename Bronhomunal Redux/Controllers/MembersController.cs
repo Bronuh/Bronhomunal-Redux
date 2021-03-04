@@ -23,6 +23,7 @@ namespace Bronuh
 		{
 			Logger.Log("Загрузка списка пользователей...");
 			Members = SaveLoad.LoadObject<Sequence<Member>>("Members.xml") ?? new Sequence<Member>();
+			Members.Each(m=>m.CustomValues.ForEach(v=>v.Deserialize()));
 			Logger.Success("Пользователи загружены");
 		}
 

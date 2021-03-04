@@ -14,6 +14,7 @@ namespace Bronuh.Interfaces
 		public string Name { get; set; }
 		public Color BorderColor { get; set; }
 
+		public Color GetColor();
 		public Image GetIcon();
 		public string GetDescription();
 

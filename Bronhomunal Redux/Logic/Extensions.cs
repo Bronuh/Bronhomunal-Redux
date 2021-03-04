@@ -178,6 +178,11 @@ namespace Bronuh
 		}
 
 
+		public static void GiveCustomAchievement(this Member target, CustomAchievement achievement, string id)
+		{
+			target.CustomValues.Set(id, achievement);
+		}
+
 
 		public static Stream ToStream(this string s)
 		{

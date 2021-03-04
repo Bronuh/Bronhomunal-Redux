@@ -41,12 +41,12 @@ namespace Bronuh.Graphics
 			imageBgBuilder
 				.Resize(new Size(iconSize + borderSize, iconSize + borderSize))
 				.RoundedCorners((int)(cornerRadius * 1.5))
-				.ReplaceColor(Color.FromArgb(255, 0, 0), achievement.BorderColor, 5);
+				.ReplaceColor(Color.FromArgb(255, 0, 0), achievement.GetColor(), 5);
 
 			Image iconBgImage = imageBgBuilder.Image;
 			Image iconImage = imageBuilder.Image;
 
-			baseBuilder.Load(Properties.Achievements.Background.ToStream())
+			baseBuilder
 				.Overlay(new ImageLayer()
 				{
 					Image = iconBgImage,
@@ -64,7 +64,7 @@ namespace Bronuh.Graphics
 				{
 					Text = achievement.Name,
 					FontFamily = new System.Drawing.FontFamily("Arial"),
-					FontColor = achievement.BorderColor,
+					FontColor = achievement.GetColor(),
 					FontSize = 60,
 					Position = new Point(300, 30)
 				})
@@ -72,7 +72,7 @@ namespace Bronuh.Graphics
 				{
 					Text = achievement.Rarity + " (" + (Achievement.BaseXP * (int)achievement.Rarity) + " XP)",
 					FontFamily = new System.Drawing.FontFamily("Arial"),
-					FontColor = achievement.BorderColor,
+					FontColor = achievement.GetColor(),
 					FontSize = 30,
 					Style = System.Drawing.FontStyle.Bold,
 					Position = new Point(950, 10)

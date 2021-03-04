@@ -56,11 +56,7 @@ namespace Bronuh.Types
 			SerializableKeyValuePair stat = null;
 			if (!CustomStats.Exists(s => s.Key == key))
 			{
-				stat = new SerializableKeyValuePair()
-				{
-					Key = key,
-					Value = value
-				};
+				stat = new SerializableKeyValuePair(key, value);
 				
 				CustomStats.Add(stat);
 			}
