@@ -2,6 +2,7 @@
 using Bronuh.Modules;
 using Bronuh.Types;
 using DSharpPlus.Entities;
+using System.Threading.Tasks;
 
 namespace Bronuh.Logic
 {
@@ -19,6 +20,9 @@ namespace Bronuh.Logic
 		public static void Every30Sec(object state)
 		{
 			Logger.Debug("Checking server status...");
+
+			ServerChecker.Checkers.EachAsync(c=>c.Check());
+
 			if (Bot.Ready)
 			{
 				string minecraft = "";
@@ -32,37 +36,43 @@ namespace Bronuh.Logic
 					}
 				}
 
-				MineStat ms = new MineStat("abro.tech", 25565);
+				MineStat ms = new MineStat("abro.cc", 25567);
+				string respond = "";
 				if (ms.ServerUp)
 				{
 					if (!Settings.ServerStatus)
 					{
+
 						Settings.ServerStatus = true;
-						keyMember.Source.SendMessageAsync(":white_check_mark: " + minecraft + " Сервер abro.tech **ВКЛЮЧЕН**\n" +
-							"Подписаться на уведомления: !giverole minecraft-event").GetAwaiter().GetResult();
+						//keyMember.Source.SendMessageAsync(":white_check_mark: " + minecraft + " Сервер abro.tech **ВКЛЮЧЕН**\n" +
+						//	"Подписаться на уведомления: !giverole minecraft-event").GetAwaiter().GetResult();
 					}
+					respond += "✅ ";
+					respond += "Версия: " + ms.Version + ", ";
+					respond += "Игроков: " + ms.CurrentPlayers + "/" + ms.MaximumPlayers + "\n";
 				}
 				else
 				{
-					MineStat ms2 = new MineStat("abro.tech", 25565);
+					MineStat ms2 = new MineStat("abro.cc", 25567,15);
 					if (!ms2.ServerUp)
 					{
-						MineStat ms3 = new MineStat("abro.tech", 25565, 10);
+						MineStat ms3 = new MineStat("abro.cc", 25567, 15);
 						if (!ms3.ServerUp)
 						{
-							MineStat ms4 = new MineStat("abro.tech", 25565, 10);
+							MineStat ms4 = new MineStat("abro.cc", 25567, 15);
 							if (!ms4.ServerUp)
 							{
-								MineStat ms5 = new MineStat("abro.tech", 25565, 10);
+								MineStat ms5 = new MineStat("abro.cc", 25567, 15);
 								if (!ms5.ServerUp)
 								{
-									MineStat ms6 = new MineStat("abro.tech", 25565, 10);
+									MineStat ms6 = new MineStat("abro.cc", 25567, 15);
 									if (!ms6.ServerUp)
 									{
 										if (Settings.ServerStatus)
 										{
 											Settings.ServerStatus = false;
-											keyMember.Source.SendMessageAsync(":no_entry: " + key + " Сервер abro.tech **ВЫКЛЮЧЕН**").GetAwaiter().GetResult();
+											//keyMember.Source.SendMessageAsync(":no_entry: " + key + " Сервер abro.tech **ВЫКЛЮЧЕН**").GetAwaiter().GetResult();
+											respond += "❌ ВЫКЛЮЧЕН\n";
 										}
 									}
 								}
@@ -70,7 +80,7 @@ namespace Bronuh.Logic
 						}
 					}
 				}
-				
+				Bot.Discord.UpdateStatusAsync(new DiscordActivity("AbroTech server:\n" + respond, ActivityType.ListeningTo)).GetAwaiter().GetResult(); ;
 				Logger.Debug("Server status " + ms.ServerUp);
 			}
 		}

@@ -1,5 +1,6 @@
 ﻿using Bronuh.Graphics;
 using Bronuh.Logic;
+using Bronuh.Modules;
 using Bronuh.Types;
 using DSharpPlus.Entities;
 using System;
@@ -28,14 +29,6 @@ namespace Bronuh.Controllers.Commands
 			CommandsController.AddCommand("regenerate", async (m) =>
 			{
 				int cached = 0;
-
-				//await m.RespondAsync("Кэширование ачивок...");
-				//foreach (var ach in AchievementsController.Achievements)
-				//{
-				//	cached++;
-				//	ach.GetImage();
-				//	Logger.Log($"{cached}) Закэширована ачивка "+ach.Name);
-				//}
 
 				AchievementsController.Achievements.EachAsync((a) =>
 				{
@@ -101,6 +94,24 @@ namespace Bronuh.Controllers.Commands
 				string[] parts = text.Split(' ');
 				string args = text.Replace(parts[0] + " ", "");
 				int userRank = m.Author.Rank;
+				string serverIp = "abro.cc";
+				ushort mainPort = 25567;
+				ushort pluginPort = 25564;
+				MineStat ms = new MineStat(serverIp, mainPort);
+
+				string respond = "";
+				if (ms.ServerUp)
+				{
+					respond += "✅ ВКЛЮЧЕН, ";
+					respond += "Версия: " + ms.Version + ", ";
+					respond += "Игроков: " + ms.CurrentPlayers + "/" + ms.MaximumPlayers + "\n";
+				}
+				else
+				{
+					respond += "❌ ВЫКЛЮЧЕН\n";
+				}
+
+				await Bot.Discord.UpdateStatusAsync(new DiscordActivity("AbroTech server:\n" + respond, ActivityType.ListeningTo));
 				
 			})
 			.AddAlias("тест")

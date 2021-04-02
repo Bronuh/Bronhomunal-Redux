@@ -50,6 +50,7 @@ namespace Bronuh
 			Logger.Debug("Обработчик события Ready");
 			Discord.Ready += async (Discord, e) =>
 			{
+				//await Discord.UpdateStatusAsync(new DiscordActivity("Чекает сервер майнкрафта...",ActivityType.Custom));
 				Logger.Log("Поиск целевого сервера...");
 				if (Discord.Guilds.Count == 1)
 				{

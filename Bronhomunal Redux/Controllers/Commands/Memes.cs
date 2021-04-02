@@ -135,6 +135,40 @@ namespace Bronuh.Controllers.Commands
 			.AddAliases("ууу", "ъуъ", "уъу")
 			.SetDescription("УЪУ!")
 			.AddTag("meme");
+
+			CommandsController.AddCommand("plan", async (m) =>
+			{
+				string text = m.Text;
+				string[] parts = text.Split(' ');
+				int userRank = m.Author.Rank;
+				Member sender = m.Author;
+
+				var builder = new DiscordMessageBuilder();
+
+				builder.WithFile("Plan.png", GetMemeStream("Plan"));
+
+				await m.RespondAsync(builder);
+			})
+			.AddAliases("план", "надежно", "охуенныйплан")
+			.SetDescription("Великолепный план, просто охуенный если я правильно понял. Надежный, блять, как швейцарские часы.")
+			.AddTag("meme");
+
+			CommandsController.AddCommand("fuck", async (m) =>
+			{
+				string text = m.Text;
+				string[] parts = text.Split(' ');
+				int userRank = m.Author.Rank;
+				Member sender = m.Author;
+
+				var builder = new DiscordMessageBuilder();
+
+				builder.WithFile("Fuck.png", GetMemeStream("Fuck"));
+
+				await m.RespondAsync(builder);
+			})
+			.AddAliases("пиздец", "oof", "больно")
+			.SetDescription("Что-то пошло не по плану...")
+			.AddTag("meme");
 		}
 
 
@@ -147,7 +181,8 @@ namespace Bronuh.Controllers.Commands
 				memeIds.Add(memeName,1);
 			int count = props.Count();
 
-			var bmp = (System.Drawing.Bitmap)props[memeIds[memeName]-1].GetValue(null);
+			//var bmp = (System.Drawing.Bitmap)props[memeIds[memeName]-1].GetValue(null);
+			var bmp = (System.Drawing.Bitmap)props.GetRandom().GetValue(null);
 
 			memeIds[memeName]++;
 			memeIds[memeName] = memeIds[memeName] == (count + 1) ? 1 : memeIds[memeName];

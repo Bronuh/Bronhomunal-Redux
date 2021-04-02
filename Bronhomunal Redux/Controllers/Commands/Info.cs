@@ -183,8 +183,8 @@ namespace Bronuh.Controllers.Commands
 				string text = m.Text;
 				string[] parts = text.Split(' ');
 				int userRank = m.Author.Rank;
-				string serverIp = "abro.tech";
-				ushort mainPort = 25565;
+				string serverIp = "abro.cc";
+				ushort mainPort = 25567;
 				ushort pluginPort = 25564;
 				MineStat ms = new MineStat(serverIp, mainPort);
 

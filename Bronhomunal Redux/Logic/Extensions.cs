@@ -219,6 +219,11 @@ namespace Bronuh
 		public static void GiveCustomAchievement(this Member target, CustomAchievement achievement, string id)
 		{
 			target.CustomValues.Set(id, achievement);
+			var msgBuilder = new DiscordMessageBuilder()
+						.WithContent(":trophy: " + target.Source.Mention + " получил достижение!" + Program.Suffix)
+						.WithFile(achievement.Name + ".png", achievement.GetImage());
+
+			Bot.BotChannel.SendMessageAsync(msgBuilder);
 		}
 
 

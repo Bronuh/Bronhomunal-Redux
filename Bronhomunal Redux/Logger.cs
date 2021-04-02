@@ -24,9 +24,16 @@ namespace Bronuh
 				Directory.CreateDirectory("logs\\");
 			}
 			string log = "\n";
-			foreach (LogMessage logMessage in SavePool)
+			try
 			{
-				log += logMessage.fullText + "\n";
+				foreach (LogMessage logMessage in SavePool)
+				{
+					log += logMessage.fullText + "\n";
+				}
+			}
+			catch 
+			{
+
 			}
 
 			Logger.Log("Сохранение Лога...");

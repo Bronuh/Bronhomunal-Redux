@@ -183,6 +183,36 @@ namespace Bronuh.Properties {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap Fuck1 {
+            get {
+                object obj = ResourceManager.GetObject("Fuck1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Fuck2 {
+            get {
+                object obj = ResourceManager.GetObject("Fuck2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Fuck3 {
+            get {
+                object obj = ResourceManager.GetObject("Fuck3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap GoodEnough1 {
             get {
                 object obj = ResourceManager.GetObject("GoodEnough1", resourceCulture);
@@ -446,6 +476,16 @@ namespace Bronuh.Properties {
         public static System.Drawing.Bitmap Omg9 {
             get {
                 object obj = ResourceManager.GetObject("Omg9", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Plan1 {
+            get {
+                object obj = ResourceManager.GetObject("Plan1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
