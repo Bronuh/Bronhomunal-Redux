@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Bronuh.Logic
@@ -112,6 +113,8 @@ namespace Bronuh.Logic
 				{
 					_isChecking = true;
 
+					Logger.Success("["+Name+"] Начинаю проверку. Попыток: "+Attempts+" по "+Timeout+" секунд");
+
 					bool up = TryCheck(Attempts);
 
 					if (!up && IsUp)
@@ -126,6 +129,10 @@ namespace Bronuh.Logic
 					}
 
 					_isChecking = false;
+				}
+				else
+				{
+					Logger.Warning("[" + Name + "] Слушатель в состоянии проверки");
 				}
 			}
 		}
@@ -150,17 +157,19 @@ namespace Bronuh.Logic
 
 		private bool TryCheck(int attempts)
 		{
-			bool isUp = new MineStat(Host, Port, Timeout).ServerUp;
-
-			if (!isUp)
+			bool isUp = new MineStat(Host, Port, 1).ServerUp;
+			Logger.Log("[" + Name + "] Осталось попыток... " + attempts);
+			if (!isUp && attempts > 0)
 			{
-				if (attempts > 0)
-				{
-					isUp = TryCheck(attempts - 1);
-				}
+				Thread.Sleep(Timeout*1000);
+				Logger.Log("[" + Name + "] Попытка не удалась. Повторное подключение..." + attempts);
+				return TryCheck(attempts - 1);
 			}
-
-			return isUp;
+			else
+			{
+				Logger.Log("[" + Name + "] Сервер включен.");
+				return isUp;
+			}
 		}
 
 
@@ -299,7 +308,7 @@ namespace Bronuh.Logic
 							{
 								int timeout = int.Parse(parts[3]);
 								int before = listener.Timeout;
-								listener.Timeout = Math.Max(1,Math.Min(timeout,60));
+								listener.Timeout = Math.Max(1,Math.Min(timeout,20));
 								int after = listener.Timeout;
 								respond = ">>> "+listener.Name+": изменен параметр "+param+" ("+before+" -> "+after+")";
 							}
@@ -314,7 +323,7 @@ namespace Bronuh.Logic
 							{
 								int attempts = int.Parse(parts[3]);
 								int before = listener.Attempts;
-								listener.Attempts = Math.Max(1, Math.Min(attempts, 20));
+								listener.Attempts = Math.Max(1, Math.Min(attempts, 60));
 								int after = listener.Attempts;
 								respond = ">>> " + listener.Name + ": изменен параметр " + param + " (" + before + " -> " + after + ")";
 							}
@@ -327,6 +336,7 @@ namespace Bronuh.Logic
 						{
 							if (parts.Length == 3)
 							{
+								listener.Notify("Слушатель "+listener.Name+" удален");
 								Checkers.Remove(listener);
 								respond = ">>> " + listener.Name + ": удален";
 							}
@@ -354,8 +364,8 @@ namespace Bronuh.Logic
 				await m.RespondAsync(respond);
 			})
 			.SetDescription("Меняет параметры слушателя:\n" +
-			"timeout - время ожидания ответа в секундах при каждой попытке подключения (min: 1, max:60, def: 10)\n" +
-			"attempts - количество попыток подключения при периодической проверке (min: 1, max: 20, def: 5)")
+			"timeout - время ожидания ответа в секундах при каждой попытке подключения (min: 1, max:20, def: 10)\n" +
+			"attempts - количество попыток подключения при периодической проверке (min: 1, max: 60, def: 5)")
 			.SetUsage("<command> имя_слушателя параметр значение, либо <command> имя_слушателя параметр")
 			.AddTags("admin", "misc")
 			.SetOp(true);

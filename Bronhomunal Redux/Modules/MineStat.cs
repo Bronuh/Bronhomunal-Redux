@@ -30,13 +30,14 @@ namespace Bronuh.Modules
 			Port = port;
 			Timeout = timeout * 1000;   // milliseconds
 
+			var stopWatch = new Stopwatch();
+			var tcpclient = new TcpClientEx();
+
 			try
 			{
-				var stopWatch = new Stopwatch();
-				var tcpclient = new TcpClient();
 				tcpclient.ReceiveTimeout = Timeout;
 				stopWatch.Start();
-				tcpclient.Connect(address, port);
+				tcpclient.Connect(address, port, Timeout);
 				stopWatch.Stop();
 				Latency = stopWatch.ElapsedMilliseconds;
 				var stream = tcpclient.GetStream();
@@ -45,8 +46,12 @@ namespace Bronuh.Modules
 				stream.Read(rawServerData, 0, dataSize);
 				tcpclient.Close();
 			}
-			catch (Exception)
+			catch (Exception e)
 			{
+				stopWatch.Stop();
+				Latency = stopWatch.ElapsedMilliseconds;
+				//Logger.Warning(e.Message);
+				//Logger.Warning("("+address+":"+port+") Нимагу патключица спустя "+Math.Round(Latency/1000.0,2)+" с");
 				ServerUp = false;
 				return;
 			}
@@ -166,5 +171,20 @@ namespace Bronuh.Modules
 		}
 
 		#endregion
+	}
+
+	public class TcpClientEx : TcpClient
+	{
+		public void Connect(string address, int port, int timeout)
+		{
+			var result = base.Client.BeginConnect(address, port, null, null);
+			Logger.Log("["+address+":"+port+"]: waiting for "+timeout);
+			while (!result.AsyncWaitHandle.WaitOne(timeout, true))
+			{
+				base.Client.Dispose();
+				Logger.Log("[" + address + ":" + port + "]: Timeout error!");
+				throw new Exception("Timeout error!");
+			}
+		}
 	}
 }
