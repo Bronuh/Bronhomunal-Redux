@@ -14,6 +14,9 @@ namespace Bronuh
 		public static bool DEBUG = false;
 		public static int LaunchCount = 0;
 
+		public static string VKLogin, VKPassword, VKToken;
+		public static ulong AppId;
+
 		public void Load()
 		{
 			Logger.Log("Загрузка настроек...");
@@ -24,6 +27,11 @@ namespace Bronuh
 			DEBUG = _container.DEBUG;
 			LaunchCount = _container.LaunchCount;
 			ServerStatus = _container.ServerStatus;
+
+			VKLogin = _container.VKLogin;
+			VKPassword = _container.VKPassword;
+			AppId = _container.AppId;
+			VKToken = _container.VKToken;
 
 			LaunchCount++;
 			Logger.Success("Настройки загружены");
@@ -38,6 +46,12 @@ namespace Bronuh
 			_container.DEBUG = DEBUG;
 			_container.LaunchCount = LaunchCount;
 			_container.ServerStatus = ServerStatus;
+
+			_container.VKLogin = VKLogin;
+			_container.VKPassword = VKPassword;
+			_container.AppId = AppId;
+			_container.VKToken = VKToken;
+
 
 			SaveLoad.SaveObject<SettingsContainer>(_container, _settingsPath);
 			Logger.Success("Сохранение завершено");
@@ -60,5 +74,7 @@ namespace Bronuh
 		public string Sign = "!";
 		public bool DEBUG = false;
 		public bool ServerStatus = true;
+		public string VKLogin, VKPassword, VKToken;
+		public ulong AppId;
 	}
 }

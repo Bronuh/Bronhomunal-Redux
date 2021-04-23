@@ -20,11 +20,12 @@ namespace Launcher
 		static DirectoryInfo Current = new DirectoryInfo(Directory.GetCurrentDirectory());
 		static DirectoryInfo Root = Current.Parent.Parent.Parent.Parent;
 		static DirectoryInfo PluginsRoot = Current.Parent.Parent.Parent.Parent.Parent.Parent;
+		static DirectoryInfo AssetsRoot = Current.Parent.Parent.Parent;
 
 #if DEBUG
 		static string BuildPath = @"bin\debug\net5.0\";
 #else
-			static string BuildPath = @"bin\release\net5.0\";
+		static string BuildPath = @"bin\release\net5.0\";
 #endif
 		static string TargetApp = "Bronhomunal Redux";
 		static string TargetExe = TargetApp + ".exe";
@@ -47,6 +48,13 @@ namespace Launcher
 				Directory.CreateDirectory("Plugins\\");
 			}
 			PluginsRoot = new DirectoryInfo(PluginsRoot.FullName + @"\Libs\BronhomunalPlugins\");
+
+			if (!Directory.Exists("Assets\\"))
+			{
+				Console.WriteLine("Создана директория: " + "Assets\\");
+				Directory.CreateDirectory("Assets\\");
+			}
+			AssetsRoot = new DirectoryInfo(AssetsRoot.FullName + @"\Assets");
 
 			Console.WriteLine("Подготовка...");
 			Prepare();
@@ -166,6 +174,10 @@ namespace Launcher
 					UpdateFile(file.FullName);
 				}
 			}
+
+			Utils.CheckDirectory("Assets");
+			Utils.ForceDeleteDirectory("Assets");
+			Utils.DirectoryCopy(Root.FullName + "\\Bronhomunal Redux\\" + BuildPath+"Assets", "Assets",true);
 
 			foreach (var dir in new DirectoryInfo(PluginsRoot.FullName).GetDirectories())
 			{

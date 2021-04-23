@@ -1,5 +1,6 @@
 ﻿using Bronuh.Controllers;
 using Bronuh.Logic;
+using Bronuh.Modules.VK;
 using Bronuh.Types;
 using NamedPipeWrapper;
 using System;
@@ -46,6 +47,10 @@ namespace Bronuh
 				Bot.Initialize(Settings.BotToken);
 			})).Start();
 
+			new Thread(new ThreadStart(() =>
+			{
+				VkBot.StartVkBot();
+			})).Start();
 
 			Logger.Log("Подключение к Pipe серверу...");
 
