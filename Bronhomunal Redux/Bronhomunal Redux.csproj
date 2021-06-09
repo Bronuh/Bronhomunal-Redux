@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AngleSharp" Version="1.0.0-alpha-844" />
     <PackageReference Include="DSharpPlus" Version="4.0.0-nightly-00786" />
     <PackageReference Include="ImageProcessor" Version="2.9.1" />
     <PackageReference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform" Version="3.6.0" />

@@ -87,9 +87,11 @@ namespace Bronhomunal_VK
 		static string GetMemeFile(string name)
 		{
 			Console.WriteLine("Getting random file...");
+
 			var mems = new List<String>(files.Where(f => f.ToLower().StartsWith(name.ToLower())));
 
-			return Path.Combine(Environment.CurrentDirectory,"AssEts","Memes",mems.GetRandom());
+			Console.WriteLine("Found "+mems.Count+" files");
+			return Path.Combine(Environment.CurrentDirectory,"Assets","Memes",mems.GetRandom());
 		}
 
 
