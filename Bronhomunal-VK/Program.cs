@@ -25,7 +25,7 @@ namespace Bronhomunal_VK
 
 			API.Authorize(new ApiAuthParams()
 			{
-				AccessToken = "1e3e8d31e3c8094f00bddac3431fa1dde34ef4845b3807ad620ff4cd5584c85808da338eba2f535313ddd"
+				AccessToken = "succ"
 			});
 			Initialize();
 
